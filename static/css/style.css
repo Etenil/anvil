@@ -1,0 +1,23 @@
+html {
+
+}
+
+body {
+    width: 100%;
+}
+
+#wrapper {
+    width: 100%;
+}
+
+#header {
+    width: 80%;
+    margin: 0 auto;
+}
+#header h1 {
+    font-size: 32px;
+}
+#header img { /* logo */
+    float: left;
+    margin-right: 5px;
+}
