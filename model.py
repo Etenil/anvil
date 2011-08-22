@@ -11,8 +11,8 @@ def create_user(name, email, password, description):
 #end create_user
 
 def user_login(email, password):
-    result = db.select('user', where="email="+sqlquote(email)+
-                       " and password="+sqlquote(sha256(password).hexdigest()))
+    result = db.select('user', where="email="+web.db.sqlquote(email)+
+                       " and password="+web.db.sqlquote(sha256(password).hexdigest()))
     if(result == 0):
         return False
     else:
@@ -27,7 +27,7 @@ class User:
     description = ""
 
     def __init__(self, id):
-        users = db.select('user', where="id=" + sqlquote(id))
+        users = db.select('user', where="id=" + web.db.sqlquote(id))
         if len(users) > 0:
             user = users[0]
             self.id          = user.id

@@ -1,5 +1,9 @@
 <%inherit file="layout.html" />
 
+% if error:
+    <p class="error">${error}</p>
+% endif
+
 <form action="login" method="post">
   ${form.render()}
 </form>

@@ -37,7 +37,7 @@ class main:
 
 class login:
     form = form.Form(
-        form.Textbox('username'),
+        form.Textbox('email'),
         form.Password('password'),
         form.Button('Login')
         )
@@ -54,7 +54,14 @@ class login:
             return render.login(form=f,
                                 title=title,
                                 htTitle="Login")
-        session.user = f.d.username
+        i = web.input()
+        user = model.user_login(email=i.email, password = i.password)
+        if not user:
+            return render.login(error="Incorrect username or password.",
+                                form=f,
+                                title=title,
+                                htTitle="Login")
+        session.user = user.name
         raise web.seeother('/')
 
 class logout:
