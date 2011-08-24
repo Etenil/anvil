@@ -3,28 +3,30 @@
 <h2>${htTitle}</h2>
 
 % if not msgs:
-  <p>No messages yet!</p>
+  <table id="msg-list">
+    <tr><td>No messages to display</td></tr>
+  </table>
 % else:
   <table id="msg-list">
     <tr><th>From</th><th>Subject</th><th>Date</th></tr>
   % for msg in msgs:
     <tr>
-      <td><a href="/message/${msg.id}">${msg.sender}</a></td>
+      <td><a href="/*${msg.sender}">${msg.sender}</a></td>
       <td><a href="/message/${msg.id}">${msg.subject}</a></td>
-      <td><a href="/message/${msg.id}">${msg.created}</a></td>
+      <td>${msg.created}</td>
     </tr>
   % endfor
   </table>
 % endif
 
-  <ul id="profile-actions" class="buttons">
+  <ul id="actions" class="buttons">
     <li><a href="/message/new">Write a new message</a></li>
     % if show_all:
       <li><a href="/messages">Hide read messages</a></li>
     % else:
-      <li><a href="/messages/all">Show read messages</a></li>
+      <li><a href="/message/all">Show read messages</a></li>
     % endif
-    <li><a href="/messages/sent">Sent messages</a></li>
+    <li><a href="/message/sent">Sent messages</a></li>
   </ul>
 
 <div class="clear"></div>

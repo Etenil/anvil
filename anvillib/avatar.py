@@ -14,7 +14,7 @@ def url_exists(site, path):
         return False
 
 
-def pavatar(url):
+def pavatar(url, avatar="pavatar.png"):
     if not re.match("^http://.+", str(url)):
         return False
 
@@ -29,7 +29,7 @@ def pavatar(url):
 
     if not path.endswith('/'):
         path += "/"
-    path += "pavatar.png"
+    path += avatar
 
     if url_exists(host, path):
         return "http://" + host + path

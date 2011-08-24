@@ -6,18 +6,33 @@
 
 <div class="message">
   <div class="msg-header">
-    % if user == msg.sender.name:
-      <div class="msg-hdr-elt">From: Me</div>
-    % else:
-      <div class="msg-hdr-elt">From: <a href="/*${msg.sender.name}">${msg.sender.name}</a></div>
-    % endif
-    % if user == msg.dest.name:
-      <div class="msg-hdr-elt">To: Me</div>
-    % else:
-      <div class="msg-hdr-elt">To: <a href="/*${msg.dest.name}">${msg.dest.name}</a></div>
-    % endif
-    <div class="msg-hdr-elt">Date: ${msg.created}</div>
-    <div class="msg-hdt-subject">Subject: ${msg.subject}</div>
+    <div class="msg-hdr-elts">
+      <div class="msg-hdr-elt textleft">
+        <label>From:</label>
+        % if user == msg.sender.name:
+          Me
+        % else:
+          <a href="/*${msg.sender.name}">${msg.sender.name}</a>
+        % endif
+      </div>
+      <div class="msg-hdr-elt textcenter">
+        <label>To:</label>
+        % if user == msg.dest.name:
+          Me
+        % else:
+          <a href="/*${msg.dest.name}">${msg.dest.name}</a>
+        % endif
+      </div>
+      <div class="msg-hdr-elt textright">
+        <label>Date:</label>
+        ${msg.created}
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="msg-hdt-subject">
+      <label>Subject:</label>
+      ${msg.subject}
+    </div>
   </div>
   <div class="msg-body">
     ${markdown.markdown(msg.content)}

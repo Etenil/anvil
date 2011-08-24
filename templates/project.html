@@ -1,0 +1,23 @@
+<%inherit file="layout.html" />
+
+<%
+import markdown
+%>
+
+<div class="main-body">
+  <p><img class="avatar" src="${proj.logo()}" alt="logo" /></p>
+  <div id="project-details">
+    <h2>${proj.name}</h2>
+    <p>Homepage: <a href="${proj.homepage}" target="_blank">${proj.homepage}</a></p>
+    <br />
+    ${markdown.markdown(proj.description)}
+  </div>
+</div>
+  % if canedit:
+  <ul id="actions" class="buttons">
+    <li><a href="/${proj.name}/edit">Edit project</a></li>
+    <li><a href="/team/new">Create a team</a></li>
+  </ul>
+  % endif
+  <div class="clear"></div>
+

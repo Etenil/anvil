@@ -4,6 +4,7 @@ from common import *
 from web import form
 from web.contrib.template import render_mako
 from anvillib.form import AjaxTextbox
+import re
 
 urls = (
     '/', 'Main',
@@ -11,14 +12,14 @@ urls = (
     '/logout', 'Logout',
     '/register', 'Register',
     '/\*([a-z0-9._-]+)$', 'User',
-    '/\*([a-z0-9._-]+)/edit$', 'UserProfile',
-    '/messages(?:/(.+))?$', 'UserMessages',
-    '/message/(\d+)$', 'UserMessage',
-    '/message/new$', 'NewMessage',
+    '/([a-z0-9._-]+)(?:/(.+))?$', 'Project',
+    '/profile$', 'UserProfile',
+    '/message(?:/(.+))?$', 'UserMessage',
     '/ajax/listusers', 'AjaxListUsers',
+    '/project(?:/(.+))?$', 'Project',
     )
 
-app = web.application(urls, globals())
+app = web.application(urls, globals(), autoreload=False)
 render = render_mako(
         directories=['templates'],
         input_encoding='utf-8',
@@ -118,7 +119,6 @@ class Register:
                               email=i.email,
                               password=i.password,
                               homepage=i.homepage,
-                              msg_count=model.num_unread_msgs(session.user),
                               description=i.description)
             session.user = i.name
             raise web.seeother('/')
@@ -153,9 +153,9 @@ class User:
 class UserProfile:
     user = None
 
-    def GET(self, username):
+    def GET(self):
         try:
-            self.user = model.User(name=username)
+            self.user = model.User(name=session.user)
             f = self.makeform()
             return render.editprofile(title=title,
                                       user=session.user,
@@ -186,8 +186,8 @@ class UserProfile:
                       form.Button('Save'))
         return f
 
-    def POST(self, username):
-        self.user = model.User(name=username)
+    def POST(self):
+        self.user = model.User(name=session.user)
         f = self.makeform()
 
         if not f.validates():
@@ -213,8 +213,30 @@ class UserProfile:
                                    title=title,
                                    htTitle="Register")
 
-class UserMessages:
-    def GET(self, extra=None):
+class UserMessage:
+    new_form = form.Form(AjaxTextbox('to', '/ajax/listusers'),
+                         form.Textbox('subject'),
+                         form.Textarea('message'),
+                         form.Button('Send'))
+
+    def GET(self, action=None):
+        if action == None or action == "all":
+            return self.list_messages(action)
+        elif re.match("^\d+$", action):
+            return self.get_message(action)
+        elif action == "new":
+            return self.new_message()
+        else:
+            return self.list_messages(None)
+
+    def POST(self, action=None):
+        if action == "new":
+            self.make_new_message()
+        else:
+            raise web.seeother('message/list')
+
+
+    def list_messages(self, extra):
         user = model.User(name=session.user)
         read = (extra != None)
         msgs = model.get_user_inbox(user.id, read)
@@ -226,8 +248,7 @@ class UserMessages:
                                title=title,
                                htTitle="Inbox")
 
-class UserMessage:
-    def GET(self, msgid):
+    def get_message(self, msgid):
         msg = model.Message(msgid)
         # Marking read
         msg.read = True
@@ -237,21 +258,14 @@ class UserMessage:
                               msg_count=model.num_unread_msgs(session.user),
                               title=title,
                               htTitle="Message")
-
-class NewMessage:
-    f = form.Form(AjaxTextbox('to', '/ajax/listusers'),
-                  form.Textbox('subject'),
-                  form.Textarea('message'),
-                  form.Button('Send'))
-
-    def GET(self):
+    def new_message(self):
         return render.newmessage(user=session.user,
                                  title=title,
                                  msg_count=model.num_unread_msgs(session.user),
                                  htTitle="New message",
-                                 form=self.f)
+                                 form=self.new_form)
 
-    def POST(self):
+    def make_new_message(self):
         msg = model.Message()
         i = web.input()
         user = model.User(name=session.user)
@@ -280,8 +294,8 @@ class NewMessage:
                                      title=title,
                                      msg_count=model.num_unread_msgs(session.user),
                                      htTitle="New message",
-                                     form=self.f)
-        raise web.seeother('/*' + username + "/messages")
+                                     form=self.new_form)
+        raise web.seeother('/message/list')
 
 class AjaxListUsers:
     def POST(self):
@@ -291,5 +305,142 @@ class AjaxListUsers:
             return render.autocomplete(users=users)
         else:
             return ""
+#end AjaxListUsers
+
+class Project:
+    new_form = form.Form(
+        form.Textbox('name',
+                     form.notnull,
+                     form.regexp('^[a-z0-9._-]+$', "Name must only include low-case letters, digits, '.'. '_' and '-'")),
+        form.Textbox('homepage'),
+        form.Textarea('description'),
+        form.Button('Register'))
+
+    def GET(self, action=None, other=None):
+        if action == "new":
+            return self.new_project()
+        else:
+            name = action
+            if other == "edit":
+                return self.edit_project(name)
+            else:
+                return self.show_project(name)
+    #end GET
+
+    def POST(self, action=None, other=None):
+        if action == "new":
+            return self.make_new()
+        elif other == "edit":
+            return self.make_edit_project(action)
+        else:
+            raise web.seeother('/')
+
+    def new_project(self):
+        f = self.new_form()
+        return render.newproject(user=session.user,
+                                 title=title,
+                                 msg_count=model.num_unread_msgs(session.user),
+                                 htTitle="New project",
+                                 form=f)
+    #end new_project
+
+    def make_new(self):
+        f = self.new_form()
+        error = False
+        errors = []
+
+        if not f.validates():
+            error = True
+
+        i = web.input()
+        proj = model.Project()
+        proj.name = i.name
+        proj.owner = model.User(name=session.user)
+        proj.homepage = i.homepage
+        proj.description = i.description
+        try:
+            proj.save()
+        except:
+            error = True
+            errors.append("Projects already exists.")
+
+        if error:
+            return render.newproject(errors=errors,
+                                     user=session.user,
+                                     title=title,
+                                     msg_count=model.num_unread_msgs(session.user),
+                                     htTitle="New project",
+                                     form=f)
+        else:
+            raise web.seeother('/' + proj.name)
+    #end make_new
+
+    def show_project(self, name):
+        """Displays details about project <name>."""
+        try:
+            proj = model.Project(name=name)
+        except:
+            raise web.seeother('/')
+
+        return render.project(proj=proj,
+                              user=session.user,
+                              title=title,
+                              canedit=proj.isadmin(session.user),
+                              msg_count=model.num_unread_msgs(session.user),
+                              htTitle="Project")
+
+    def make_edit_form(self, proj):
+        edit_form = form.Form(
+            form.Textbox('name',
+                         form.notnull,
+                         form.regexp('^[a-z0-9._-]+$', "Name must only include low-case letters, digits, '.'. '_' and '-'"), value=proj.name),
+            form.Textbox('homepage', value=proj.homepage),
+            form.Textarea('description', value=proj.description),
+            form.Button('Save'))
+        return edit_form
+
+    def edit_project(self, name):
+        proj = model.Project(name)
+        if not proj.isadmin(session.user):
+            raise web.seeother('/' + name)
+
+        f = self.make_edit_form(proj)
+        return render.newproject(proj=proj,
+                                 user=session.user,
+                                 title=title,
+                                 msg_count=model.num_unread_msgs(session.user),
+                                 htTitle="New project",
+                                 form=f)
+    #end edit_project
+
+    def make_edit_project(self, name):
+        proj = None
+        try:
+            proj = model.Project(name)
+        except:
+            raise web.seeother('/')
+
+        if not proj.isadmin(session.user):
+            raise web.seeother('/+' + name)
+
+        i = web.input()
+        proj2 = proj
+        proj2.name = i.name
+        proj2.homepage = i.homepage
+        proj2.description = i.description
+        try:
+            proj2.save()
+            web.seeother('/' + proj2.name)
+        except:
+            return render.newproject(errors=["Name already in use."],
+                                     proj=proj,
+                                     user=session.user,
+                                     title=title,
+                                     msg_count=model.num_unread_msgs(session.user),
+                                     htTitle="New project",
+                                     form=f)
+    #end make_edit_project
+#end Project
+
 
 if __name__ == "__main__": app.run()

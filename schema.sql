@@ -205,13 +205,15 @@ DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) DEFAULT NULL,
-  `team` int(11) DEFAULT NULL,
+  `owned_by_team` tinyint(1) NOT NULL DEFAULT '0',
+  `owner` int(11) DEFAULT NULL,
+  `homepage` text,
   `description` text,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `name_ind` (`name`),
-  KEY `par_ind1` (`team`),
-  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`team`) REFERENCES `team` (`id`) ON DELETE CASCADE
+  KEY `par_ind1` (`owner`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

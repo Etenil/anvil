@@ -1,10 +1,30 @@
 <%inherit file="layout.html" />
 
 % if user == None:
-<p>
-  <a href="login">Login</a>
-  <a href="register">Register!</a>
-</p>
+  <div class="main-body">
+    <h1>Welcome to Anvil!</h1>
+    <p>
+      Anvil is a simple yet powerful software forge that relies on
+      bazaar. It has social features and many tools for your
+      convenience.
+    </p>
+    <p>
+      So <a href="/register">register</a> and join us!
+    </p>
+  </div>
+  <ul id="actions" class="buttons">
+    <li><a href="login">Login</a></li>
+    <li><a href="register">Register!</a></li>
+  </ul>
+% else:
+  <div class="main-body">
+    <h1>Welcome to Anvil!</h1>
+    <p>
+      Start up by creating a project or branching an existing one!
+    </p>
+  </div>
+  <ul id="actions" class="buttons">
+    <li><a href="project/new">Start a new project</a></li>
+  </ul>
 % endif
 
-${content}

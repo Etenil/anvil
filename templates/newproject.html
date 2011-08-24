@@ -1,0 +1,15 @@
+<%inherit file="layout.html" />
+
+<h2>${htTitle}</h2>
+
+% if errors and len(errors > 0):
+    <p class="error">${'<br />'.join(errors)}</p>
+% endif
+
+% if proj == None:
+<form action="/project/new" method="post">
+% else:
+<form action="/${proj.name}/edit" method="post">
+% endif
+  ${form.render()}
+</form>

@@ -16,7 +16,17 @@
         </div>
         % if user != None:
           <ul id="header-menu" class="buttons">
-            <li><a href="/messages">${msg_count} messages</a></li>
+            <li>
+              <a href="/message/list">
+                % if msg_count == 0:
+                  no messages
+                % elif msg_count == 1:
+                  1 message
+                % else:
+                  ${msg_count} messages
+                % endif
+              </a>
+            </li>
             <li><a href="/*${user}">${user}</a></li>
             <li class="warning"><a href="/logout">Logout</a></li>
           </ul>
@@ -24,6 +34,7 @@
         <div class="clear"></div>
       </div>
       ${self.body()}
+      <div class="clear"></div>
       <div id="footer">
         &copy;2011 Etenil
       </div>

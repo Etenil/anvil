@@ -27,6 +27,16 @@ a:hover {
     clear: both;
 }
 
+.textleft {
+    text-align: left;
+}
+.textright {
+    text-align: right;
+}
+.textcenter {
+    text-align: center;
+}
+
 #wrapper {
     width: 80%;
     margin: 1em auto;
@@ -52,13 +62,20 @@ a:hover {
     margin-right: 5px;
 }
 #header ul.buttons li, #header ul.buttons li a {
-    display: inline;
+    float: left;
+    margin: 0 0 0 0.2em;
 }
 #header-menu {
     margin-top: 0.5em;
     float: right;
 }
 #header-logo {
+    float: left;
+}
+
+/* Main contents */
+.main-body {
+    width: 80%;
     float: left;
 }
 
@@ -72,9 +89,10 @@ a:hover {
 
 #profile-details {
     float: left;
+    width: 80%;
 }
 
-#profile-actions {
+#actions {
     float: right;
 }
 
@@ -115,16 +133,65 @@ ul.buttons li.warning a:hover {
     border-collapse: collapse;
     width: 70%;
 }
-
+#msg-list th:first-child {
+    border-top-left-radius: 5px;
+}
+#msg-list th:last-child {
+    border-top-right-radius: 5px;
+}
 #msg-list th {
-    background-color: #ccc;
+    background-image: -webkit-gradient(
+        linear, left bottom, left top,
+        color-stop(0, #ccc),
+        color-stop(1, #eee)
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        #ccc 0%,
+        #eee 100%
+    );
     padding: 0.5em 0 0 1em;
     border-bottom: 1px solid #888;
     text-align: left;
 }
-
+#msg-list tr:nth-child(even) td {
+    background-color: #e4e4e4;
+}
 #msg-list td {
     padding: 0.2em 1em;
+}
+
+.msg-header {
+    background-image: -webkit-gradient(
+        linear, left bottom, left top,
+        color-stop(0, #ccc),
+        color-stop(1, #eee)
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        #ccc 0%,
+        #eee 100%
+    );
+    padding: 0.5em;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.msg-hdr-elts {
+    width: 100%;
+}
+.msg-hdr-elt {
+    float: left;
+    width: 33%;
+}
+.msg-header label {
+    color: #888;
+}
+.msg-hdr-subject {
+    clear: left;
+}
+.msg-body {
+    border: 2px #ccc solid;
+    padding: 0 0.5em 0;
 }
 
 /* Forms */
@@ -161,4 +228,14 @@ div.autocomplete ul li {
   margin:0;
   padding:2px;
   cursor:pointer;
+}
+
+/* Footer */
+#footer {
+    text-align: center;
+    color: #aaa;
+    margin-top: 2em;
+}
+#footer:hover {
+    color: #444;
 }
