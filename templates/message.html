@@ -1,0 +1,25 @@
+<%inherit file="layout.html" />
+
+<% import markdown %>
+
+<h2>${htTitle}</h2>
+
+<div class="message">
+  <div class="msg-header">
+    % if user == msg.sender.name:
+      <div class="msg-hdr-elt">From: Me</div>
+    % else:
+      <div class="msg-hdr-elt">From: <a href="/*${msg.sender.name}">${msg.sender.name}</a></div>
+    % endif
+    % if user == msg.dest.name:
+      <div class="msg-hdr-elt">To: Me</div>
+    % else:
+      <div class="msg-hdr-elt">To: <a href="/*${msg.dest.name}">${msg.dest.name}</a></div>
+    % endif
+    <div class="msg-hdr-elt">Date: ${msg.created}</div>
+    <div class="msg-hdt-subject">Subject: ${msg.subject}</div>
+  </div>
+  <div class="msg-body">
+    ${markdown.markdown(msg.content)}
+  </div>
+</div>

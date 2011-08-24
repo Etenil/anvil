@@ -1,12 +1,10 @@
 <%inherit file="layout.html" />
 
 % if user == None:
+<p>
   <a href="login">Login</a>
   <a href="register">Register!</a>
-% else:
-  <a href="logout">Logout</a>
+</p>
 % endif
-
-<p>${user}</p>
 
 ${content}

@@ -177,6 +177,7 @@ CREATE TABLE `messages` (
   `subject` text,
   `content` text,
   `is_read` tinyint(1) NOT NULL DEFAULT '0',
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `par_ind1` (`author`),
   KEY `par_ind2` (`destination`),
@@ -368,6 +369,7 @@ CREATE TABLE `user` (
   `email` varchar(128) DEFAULT NULL,
   `password` varchar(64) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `homepage` text,
   `description` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
