@@ -41,3 +41,20 @@ def gravatar(email):
     url += urlencode({'gravatar_id': md5(email.lower()).hexdigest(),
                       'size': str(80)})
     return url
+
+
+def avatar(url, email):
+    avatar = pavatar(url)
+
+    if not avatar:
+        avatar = gravatar(email)
+
+    return avatar
+
+def logo(url):
+    logo = pavatar(url, "logo.png")
+
+    if not logo:
+        logo = "/static/img/project.png"
+
+    return logo

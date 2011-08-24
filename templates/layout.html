@@ -1,3 +1,5 @@
+<% from common import title, session, msgs %>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -14,20 +16,20 @@
           <a href="/"><img src="/static/img/logo.png" alt="Logo"/></a>
           <a href="/"><h1>${title}</h1></a>
         </div>
-        % if user != None:
+        % if session.user != None:
           <ul id="header-menu" class="buttons">
             <li>
               <a href="/message/list">
-                % if msg_count == 0:
+                % if msgs == 0:
                   no messages
-                % elif msg_count == 1:
+                % elif msgs == 1:
                   1 message
                 % else:
-                  ${msg_count} messages
+                  ${msgs} messages
                 % endif
               </a>
             </li>
-            <li><a href="/*${user}">${user}</a></li>
+            <li><a href="/*${session.user}">${session.user}</a></li>
             <li class="warning"><a href="/logout">Logout</a></li>
           </ul>
         % endif
@@ -36,6 +38,12 @@
       ${self.body()}
       <div class="clear"></div>
       <div id="footer">
+        <div class="links">
+          <ul>
+            <li><a href="/project/list">Projects</a></li>
+            <li><a href="/users">Users</a></li>
+            <li><a href="/teams">Teams</a></li>
+        </div>
         &copy;2011 Etenil
       </div>
     </div>

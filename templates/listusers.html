@@ -1,0 +1,24 @@
+<%inherit file="layout.html" />
+
+<%
+import markdown
+from anvillib.avatar import avatar
+ %>
+
+<h2>${htTitle}</h2>
+
+% for u in users:
+  <div class="user">
+    <h3><a href="/*${u.name}">${u.name}</a></h3>
+    <img class="smallavatar" src="${avatar(u.homepage, u.email)}" alt="avatar" />
+    <div id="desc">
+      % if len(u.description) > 200:
+        ${markdown.markdown(u.description[0:200] + '...')}
+      % else:
+        ${markdown.markdown(u.description)}
+      % endif
+    </div>
+    <div class="clear"></div>
+  </div>
+% endfor
+

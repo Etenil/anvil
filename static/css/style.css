@@ -79,14 +79,22 @@ a:hover {
     float: left;
 }
 
-/* profile */
+/* Avatars and logos */
 .avatar {
     border-radius: 5px;
     width: 80px;
     float: left;
     margin-right: 10px;
 }
+.smallavatar {
+    width: 32px;
+    height: 32px;
+    float: left;
+    margin-right: 5px;
+    border-radius: 2px;
+}
 
+/* profile */
 #profile-details {
     float: left;
     width: 80%;
@@ -238,4 +246,21 @@ div.autocomplete ul li {
 }
 #footer:hover {
     color: #444;
+}
+#footer ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 0.5em;
+}
+#footer ul li {
+    display: inline;
+    margin-right: 1em;
+}
+
+/* Lists */
+div.project, div.user {
+    width: 90%;
+    margin: 0 auto;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1em;
 }
