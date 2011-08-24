@@ -12,11 +12,11 @@ urls = (
     '/logout', 'Logout',
     '/register', 'Register',
     '/\*([a-z0-9._-]+)$', 'User',
-    '/([a-z0-9._-]+)(?:/(.+))?$', 'Project',
     '/profile$', 'UserProfile',
     '/message(?:/(.+))?$', 'UserMessage',
     '/ajax/listusers', 'AjaxListUsers',
     '/project(?:/(.+))?$', 'Project',
+    '/([a-z0-9._-]+)(?:/(.+))?$', 'Project', #Leave me at the bottom!
     )
 
 app = web.application(urls, globals(), autoreload=False)

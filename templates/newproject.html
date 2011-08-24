@@ -6,7 +6,7 @@
     <p class="error">${'<br />'.join(errors)}</p>
 % endif
 
-% if proj == None:
+% if not proj:
 <form action="/project/new" method="post">
 % else:
 <form action="/${proj.name}/edit" method="post">
