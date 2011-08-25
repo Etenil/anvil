@@ -9,11 +9,14 @@
     <div class="msg-hdr-elts">
       <div class="msg-hdr-elt textleft">
         <label>From:</label>
-        % if False:
-          Me
-        % else:
+       %if bug.guest:
+          ${bug.author_extern}
+       %else:
           <a href="/*${bug.author_intern.name}">${bug.author_intern.name}</a>
-        % endif
+       %endif
+      </div>
+      <div class="msg-hdr-elt textcenter">
+        &nbsp;
       </div>
       <div class="msg-hdr-elt textright">
         <label>Version:</label>

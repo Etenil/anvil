@@ -2,30 +2,30 @@
 
 <h2>${htTitle}</h2>
 
-% if not msgs:
+%if not msgs:
   <table id="msg-list">
     <tr><td>No messages to display</td></tr>
   </table>
-% else:
+%else:
   <table id="msg-list">
     <tr><th>From</th><th>Subject</th><th>Date</th></tr>
-  % for msg in msgs:
+ %for msg in msgs:
     <tr>
       <td><a href="/*${msg.sender}">${msg.sender}</a></td>
       <td><a href="/message/${msg.id}">${msg.subject}</a></td>
       <td>${msg.created}</td>
     </tr>
-  % endfor
+ %endfor
   </table>
-% endif
+%endif
 
   <ul id="actions" class="buttons">
     <li><a href="/message/new">Write a new message</a></li>
-    % if show_all:
+   %if show_all:
       <li><a href="/message">Hide read messages</a></li>
-    % else:
+   %else:
       <li><a href="/message/all">Show read messages</a></li>
-    % endif
+   %endif
     <li><a href="/message/sent">Sent messages</a></li>
   </ul>
 

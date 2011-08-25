@@ -16,23 +16,26 @@
           <a href="/"><img src="/static/img/logo.png" alt="Logo"/></a>
           <a href="/"><h1>${title}</h1></a>
         </div>
-        % if session.user != None:
           <ul id="header-menu" class="buttons">
+            %if session.user != None:
             <li>
               <a href="/message/list">
-                % if msgs == 0:
+                %if msgs == 0:
                   no messages
-                % elif msgs == 1:
+                %elif msgs == 1:
                   1 message
-                % else:
+                %else:
                   ${msgs} messages
-                % endif
+                %endif
               </a>
             </li>
             <li><a href="/*${session.user}">${session.user}</a></li>
             <li class="warning"><a href="/logout">Logout</a></li>
+            %else:
+            <li><a href="login">Login</a></li>
+            <li><a href="register">Register!</a></li>
+            %endif
           </ul>
-        % endif
         <div class="clear"></div>
       </div>
       ${self.body()}

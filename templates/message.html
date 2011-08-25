@@ -9,19 +9,19 @@
     <div class="msg-hdr-elts">
       <div class="msg-hdr-elt textleft">
         <label>From:</label>
-        % if user == msg.sender.name:
+       %if user == msg.sender.name:
           Me
-        % else:
+       %else:
           <a href="/*${msg.sender.name}">${msg.sender.name}</a>
-        % endif
+       %endif
       </div>
       <div class="msg-hdr-elt textcenter">
         <label>To:</label>
-        % if user == msg.dest.name:
+       %if user == msg.dest.name:
           Me
-        % else:
+       %else:
           <a href="/*${msg.dest.name}">${msg.dest.name}</a>
-        % endif
+       %endif
       </div>
       <div class="msg-hdr-elt textright">
         <label>Date:</label>

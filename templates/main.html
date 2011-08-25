@@ -4,7 +4,7 @@
 
   <div class="main-body">
     <h1>Welcome to Anvil!</h1>
-% if user == None:
+%if user == None:
     <p>
       Anvil is a simple yet powerful software forge that relies on
       bazaar. It has social features and many tools for your
@@ -13,24 +13,19 @@
     <p>
       So <a href="/register">register</a> and join us!
     </p>
-% else:
+%else:
     <p>
       Start up by creating a project or branching an existing one!
     </p>
-% endif
+%endif
     <p>
       There are ${num_proj} projects on anvil!
       <a href="/project/list">Check them out</a>!
     </p>
   </div>
 
-% if common.session.user != None:
+%if common.session.user != None:
   <ul id="actions" class="buttons">
     <li><a href="/project/new">Start a new project</a></li>
   </ul>
-% else:
-  <ul id="actions" class="buttons">
-    <li><a href="login">Login</a></li>
-    <li><a href="register">Register!</a></li>
-  </ul>
-% endif
+%endif

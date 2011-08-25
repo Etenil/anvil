@@ -2,14 +2,14 @@
 
 <h2>${htTitle}</h2>
 
-% if errors and len(errors > 0):
+%if errors and len(errors > 0):
     <p class="error">${'<br />'.join(errors)}</p>
-% endif
+%endif
 
-% if not proj:
+%if not proj:
 <form action="/project/new" method="post">
-% else:
+%else:
 <form action="/${proj.name}/edit" method="post">
-% endif
+%endif
   ${form.render()}
 </form>
