@@ -20,7 +20,7 @@ urls = (
     '/ajax/(listusers)'               , 'User',
     '/project(?:/(.+))?$'             , 'Project',
     '/\*([a-z0-9._-]+)$'              , 'User',
-    '/([a-z0-9._-]+)/bugs(?:/(.+))?$' , 'Bug',
+    '/([a-z0-9._-]+)/bugs(?:/(.+?)(?:/(.+))?)?$' , 'Bug',
     '/([a-z0-9._-]+)(?:/(.+))?$'      , 'Project', #Leave me at the bottom!
     )
 

@@ -6,6 +6,7 @@ from anvillib.form import AjaxTextbox
 import model.bug
 import model.project
 import model.user
+import model.bugcomment
 import re
 
 class Bug:
@@ -23,7 +24,10 @@ class Bug:
                                            form.regexp('^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$', 'Invalid email address')),
                               form.Button('Send'))
 
-    def GET(self, project=None, action=None):
+    new_comm_form = form.Form(form.Textarea('comment', form.notnull),
+                              form.Button('Send'))
+
+    def GET(self, project=None, action=None, extra=None):
         if project == None:
             raise web.seeother('/')
         elif action == None:
@@ -35,11 +39,13 @@ class Bug:
         else:
             raise web.seeother('/')
 
-    def POST(self, project=None, action=None):
+    def POST(self, project=None, action=None, extra=None):
         if project == None:
             raise web.seeother('/')
         if action == "new":
             self.do_new_bug(project)
+        elif re.match("^\d+$", action) and extra == "newcomm":
+            return self.do_add_comment(project, action)
         else:
             raise web.seeother('/' + project + '/bugs')
 
@@ -93,5 +99,30 @@ class Bug:
         if bug.project.name != project:
             raise web.seeother('/' + project + '/bugs')
         else:
+            f = self.new_comm_form()
+            comms = model.bugcomment.get_bug_comments(num)
             return common.render.bug(bug=bug,
+                                     comm_form=f,
+                                     comms=comms,
                                      htTitle="Bug #" + str(bug.id))
+
+    def do_add_comment(self, project, bugnum):
+        i = web.input()
+        comm = model.bugcomment.BugComment()
+        comm.bug = bugnum
+        comm.message = i.comment
+
+        if common.session.user != None:
+            user = model.user.User(name=common.session.user)
+            comm.author = user.name
+            comm.author_email = user.email
+            comm.extern = False
+        else:
+            comm.author = i.name
+            comm.author_email = i.email
+            comm.extern = True
+
+        #try:
+        comm.save()
+        raise web.seeother('/' + project + '/bugs/' + bugnum)
+

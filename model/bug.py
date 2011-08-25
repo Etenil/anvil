@@ -42,6 +42,7 @@ class Bug:
     assigned_to = None
     status = 0
     version = ""
+    modified = ""
 
     def __init__(self, id=None):
         if id != None:
@@ -52,6 +53,7 @@ class Bug:
             self.id = bug.id
             self.subject = bug.subject
             self.description = bug.description
+            self.modified = bug.modified
             self.guest = (bug.guest != 0)
             self.author_extern = bug.author_extern
             self.author_extern_email = bug.author_extern_email
@@ -87,11 +89,14 @@ class Bug:
                              guest=guest, author_extern=self.author_extern,
                              author_extern_email=self.author_extern_email,
                              author_intern=auth_int, project=self.project.id,
-                             status=self.status, version=self.version)
+                             status=self.status, version=self.version,
+                             modified=web.db.sqlliteral('NOW()'))
         else:
             common.db.insert('bugs',
                              subject=self.subject, description=self.description,
                              guest=guest, author_extern=self.author_extern,
                              author_extern_email=self.author_extern_email,
                              author_intern=auth_int, project=self.project.id,
-                             status=self.status, version=self.version)
+                             status=self.status, version=self.version,
+                             modified=web.db.sqlliteral('NOW()'))
+

@@ -91,6 +91,7 @@ CREATE TABLE `bugs` (
   `status` int(11) NOT NULL DEFAULT '0',
   `assigned_to` int(11) DEFAULT NULL,
   `version` varchar(16) DEFAULT NULL,
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `author_ind` (`author_intern`),
   KEY `project_ind` (`project`),

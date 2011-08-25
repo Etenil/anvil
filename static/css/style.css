@@ -265,3 +265,16 @@ div.project, div.user {
     border-bottom: 1px solid #ccc;
     padding-bottom: 1em;
 }
+
+/* Comments on bugs */
+.comment-form h3 {
+    font-size: 110%;
+    margin-left: 20%;
+}
+.comment {
+    margin-top: 1em;
+}
+.comment-body {
+    border: 2px solid #ccc;
+    padding: 0 0.5em 0;
+}

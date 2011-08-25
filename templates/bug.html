@@ -1,6 +1,9 @@
 <%inherit file="layout.html" />
 
-<% import markdown %>
+<%
+import markdown
+import common
+%>
 
 <h2>${htTitle}</h2>
 
@@ -16,11 +19,21 @@
        %endif
       </div>
       <div class="msg-hdr-elt textcenter">
-        &nbsp;
+        <label>Status:</label>
+        ${bug.get_status()}
       </div>
       <div class="msg-hdr-elt textright">
         <label>Version:</label>
         ${bug.version}
+      </div>
+      <div class="clear"></div>
+      <div class="msg-hdr-elt textleft">
+        <label>Assigned to:</label>
+        %if bug.assigned_to == None:
+          No one
+        %else:
+          <a href="/*${bug.assigned_to.name}">${bug.assigned_to.name}</a>
+        %endif
       </div>
       <div class="clear"></div>
     </div>
@@ -31,5 +44,41 @@
   </div>
   <div class="msg-body">
     ${markdown.markdown(bug.description)}
+  </div>
+  %for comm in comms:
+  <div class="comment">
+    <div class="msg-header">
+      <div class="msg-hdr-elts">
+        <div class="msg-hdr-elt textleft">
+          %if comm.extern:
+            ${comm.author}
+          %else:
+            ${comm.author}
+          %endif
+        </div>
+        <div class="msg-hdr-elt textcenter">
+          &nbsp;
+        </div>
+        <div class="msg-hdr-elt textright">
+          ${comm.created}
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+    <div class="comment-body">
+      ${markdown.markdown(comm.message)}
+    </div>
+  </div>
+  %endfor
+  </div>
+  <div class="comment-form">
+    <h3>Add a comment</h3>
+    %if common.session.user == None:
+      <p>Please log in or register to post a comment.</p>
+    %else:
+      <form action="/${bug.project.name}/bugs/${bug.id}/newcomm" method="post">
+        ${comm_form.render()}
+      </form>
+    %endif
   </div>
 </div>
