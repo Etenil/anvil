@@ -1,0 +1,32 @@
+<%inherit file="layout.html" />
+
+<% import markdown %>
+
+<h2>${htTitle}</h2>
+
+<div class="message">
+  <div class="msg-header">
+    <div class="msg-hdr-elts">
+      <div class="msg-hdr-elt textleft">
+        <label>From:</label>
+        % if False:
+          Me
+        % else:
+          <a href="/*${bug.author_intern.name}">${bug.author_intern.name}</a>
+        % endif
+      </div>
+      <div class="msg-hdr-elt textright">
+        <label>Version:</label>
+        ${bug.version}
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="msg-hdt-subject">
+      <label>Summary:</label>
+      ${bug.subject}
+    </div>
+  </div>
+  <div class="msg-body">
+    ${markdown.markdown(bug.description)}
+  </div>
+</div>

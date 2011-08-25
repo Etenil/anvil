@@ -89,12 +89,14 @@ CREATE TABLE `bugs` (
   `author_intern` int(11) DEFAULT NULL,
   `project` int(11) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
+  `assigned_to` int(11) DEFAULT NULL,
   `version` varchar(16) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `author_ind` (`author_intern`),
   KEY `project_ind` (`project`),
   KEY `status_ind` (`status`),
   KEY `version_ind` (`version`),
+  KEY `assigned_ind` (`assigned_to`),
   CONSTRAINT `bugs_ibfk_1` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

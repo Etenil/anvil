@@ -59,7 +59,7 @@ class Project:
         i = web.input()
         proj = model.project.Project()
         proj.name = i.name
-        proj.owner = model.user.User(name=session.user)
+        proj.owner = model.user.User(name=common.session.user)
         proj.homepage = i.homepage
         proj.description = i.description
         try:
@@ -84,7 +84,7 @@ class Project:
             raise web.seeother('/')
 
         return common.render.project(proj=proj,
-                              canedit=proj.isadmin(session.user),
+                              canedit=proj.isadmin(common.session.user),
                               htTitle="Project")
 
     def make_edit_form(self, proj):
@@ -99,7 +99,7 @@ class Project:
 
     def edit_project(self, name):
         proj = model.project.Project(name)
-        if not proj.isadmin(session.user):
+        if not proj.isadmin(common.session.user):
             raise web.seeother('/' + name)
 
         f = self.make_edit_form(proj)
@@ -115,7 +115,7 @@ class Project:
         except:
             raise web.seeother('/')
 
-        if not proj.isadmin(session.user):
+        if not proj.isadmin(common.session.user):
             raise web.seeother('/+' + name)
 
         i = web.input()

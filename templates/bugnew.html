@@ -1,0 +1,11 @@
+<%inherit file="layout.html" />
+
+% if error:
+    <p class="error">${error}</p>
+% endif
+
+<h2>${htTitle}</h2>
+
+<form action="/${proj}/bugs/new" method="post">
+  ${f.render()}
+</form>

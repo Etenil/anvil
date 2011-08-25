@@ -2,6 +2,7 @@ import web
 from anvillib.avatar import avatar, logo
 import common
 from hashlib import sha256
+import user
 
 
 class ProjectError(Exception):
@@ -47,7 +48,7 @@ class Project:
                 self.description = proj.description
                 self.created = proj.created
                 if not self.owned_by_team:
-                    self.owner = User(id=proj.owner)
+                    self.owner = user.User(id=proj.owner)
     #end __init__
 
     def save(self):
@@ -72,10 +73,10 @@ class Project:
 
     def isadmin(self, username):
         try:
-            user = User(name=username)
+            usr = user.User(name=username)
         except:
             return False
 
-        return (user.id == self.owner.id)
+        return (usr.id == self.owner.id)
 
 #end Project

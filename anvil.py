@@ -4,22 +4,24 @@ import common
 from controller.user import User
 from controller.project import Project
 from controller.message import Message
+from controller.bug import Bug
 
 import model.project
 import model.message
 
 urls = (
-    '/'                          , 'Main',
-    '/(login)'                   , 'User',
-    '/(logout)'                  , 'User',
-    '/(register)'                , 'User',
-    '/(profile)'                 , 'User',
-    '/(users)'                   , 'User',
-    '/message(?:/(.+))?$'        , 'Message',
-    '/ajax/(listusers)'          , 'User',
-    '/project(?:/(.+))?$'        , 'Project',
-    '/\*([a-z0-9._-]+)$'         , 'User',
-    '/([a-z0-9._-]+)(?:/(.+))?$' , 'Project', #Leave me at the bottom!
+    '/'                               , 'Main',
+    '/(login)'                        , 'User',
+    '/(logout)'                       , 'User',
+    '/(register)'                     , 'User',
+    '/(profile)'                      , 'User',
+    '/(users)'                        , 'User',
+    '/message(?:/(.+))?$'             , 'Message',
+    '/ajax/(listusers)'               , 'User',
+    '/project(?:/(.+))?$'             , 'Project',
+    '/\*([a-z0-9._-]+)$'              , 'User',
+    '/([a-z0-9._-]+)/bugs(?:/(.+))?$' , 'Bug',
+    '/([a-z0-9._-]+)(?:/(.+))?$'      , 'Project', #Leave me at the bottom!
     )
 
 app = web.application(urls, globals(), autoreload=False)

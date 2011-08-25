@@ -208,6 +208,7 @@ table {
 }
 table th {
     text-align: right;
+    vertical-align: top;
 }
 textarea {
     width: 60%;

@@ -1,0 +1,32 @@
+<%inherit file="layout.html" />
+
+<h2>${htTitle}</h2>
+
+% if not bugs:
+  <table id="msg-list">
+    <tr><td>No bugs to display</td></tr>
+  </table>
+% else:
+  <table id="msg-list">
+    <tr><th>Author</th><th>Subject</th><th>Status</th></tr>
+  % for bug in bugs:
+    <tr>
+      <td><a href="/*${bug.author_intern.name}">${bug.author_intern.name}</a></td>
+      <td><a href="/${proj.name}/bugs/${bug.id}">${bug.subject}</a></td>
+      <td>${bug.get_status()}</td>
+    </tr>
+  % endfor
+  </table>
+% endif
+
+  <ul id="actions" class="buttons">
+    <li><a href="/${proj.name}/bugs/new">Report a bug</a></li>
+    % if show_all:
+      <li><a href="/message">Hide read messages</a></li>
+    % else:
+      <li><a href="/message/all">Show read messages</a></li>
+    % endif
+    <li><a href="/message/sent">Sent messages</a></li>
+  </ul>
+
+<div class="clear"></div>
