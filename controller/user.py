@@ -65,13 +65,13 @@ class User:
         else:
             return ""
 
-    def register():
+    def register(self):
         f = self.reg_form()
         return common.render.register(form=f,
                                htTitle="Register")
 
-    def do_register():
-        f = self.form()
+    def do_register(self):
+        f = self.reg_form()
         if not f.validates():
             return common.render.register(form=f,
                                    htTitle="Register")
@@ -92,11 +92,10 @@ class User:
     def login(self):
         f = self.login_form()
         return common.render.login(form=f,
-                            msg_count=model.user.num_unread_msgs(common.session.user),
-                            htTitle="Login")
+                                   htTitle="Login")
 
     def do_login(self):
-        f = self.form()
+        f = self.login_form()
         if not f.validates():
             return common.render.login(form=f,
                                 htTitle="Login")

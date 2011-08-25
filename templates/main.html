@@ -1,5 +1,7 @@
 <%inherit file="layout.html" />
 
+<% import common %>
+
   <div class="main-body">
     <h1>Welcome to Anvil!</h1>
 % if user == None:
@@ -22,13 +24,13 @@
     </p>
   </div>
 
-% if user == None:
+% if common.session.user != None:
   <ul id="actions" class="buttons">
-    <li><a href="login">Login</a></li>
-    <li><a href="register">Register!</a></li>
+    <li><a href="/project/new">Start a new project</a></li>
   </ul>
 % else:
   <ul id="actions" class="buttons">
-    <li><a href="/project/new">Start a new project</a></li>
+    <li><a href="login">Login</a></li>
+    <li><a href="register">Register!</a></li>
   </ul>
 % endif
