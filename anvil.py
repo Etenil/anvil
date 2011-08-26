@@ -5,23 +5,25 @@ from controller.user import User
 from controller.project import Project
 from controller.message import Message
 from controller.bug import Bug
+from controller.doc import Doc
 
 import model.project
 import model.message
 
 urls = (
-    '/'                               , 'Main',
-    '/(login)'                        , 'User',
-    '/(logout)'                       , 'User',
-    '/(register)'                     , 'User',
-    '/(profile)'                      , 'User',
-    '/(users)'                        , 'User',
-    '/message(?:/(.+))?$'             , 'Message',
-    '/ajax/(listusers)'               , 'User',
-    '/project(?:/(.+))?$'             , 'Project',
-    '/\*([a-z0-9._-]+)$'              , 'User',
+    '/'                                          , 'Main',
+    '/(login)'                                   , 'User',
+    '/(logout)'                                  , 'User',
+    '/(register)'                                , 'User',
+    '/(profile)'                                 , 'User',
+    '/(users)'                                   , 'User',
+    '/message(?:/(.+))?$'                        , 'Message',
+    '/ajax/(listusers)'                          , 'User',
+    '/project(?:/(.+))?$'                        , 'Project',
+    '/\*([a-z0-9._-]+)$'                         , 'User',
     '/([a-z0-9._-]+)/bugs(?:/(.+?)(?:/(.+))?)?$' , 'Bug',
-    '/([a-z0-9._-]+)(?:/(.+))?$'      , 'Project', #Leave me at the bottom!
+    '/([a-z0-9._-]+)/doc(?:/(.+?)(?:/(.+))?)?$'  , 'Doc',
+    '/([a-z0-9._-]+)(?:/(.+))?$'                 , 'Project', #Leave me at the bottom!
     )
 
 app = web.application(urls, globals(), autoreload=False)

@@ -286,3 +286,9 @@ div.project, div.user {
     color: #a90000;
     font-style: italic;
 }
+
+/* Docs */
+.largetextarea {
+    width: 90%;
+    height: 50em;
+}

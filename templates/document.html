@@ -1,0 +1,21 @@
+<%inherit file="layout.html" />
+
+<%
+import markdown
+%>
+
+<div class="main-body">
+  <h2>${proj}'s ${doc.title}</h2>
+  ${markdown.markdown(doc.content)}
+</div>
+
+<ul id="actions" class="buttons">
+<!--  <li><a href="/${proj}/doc/${doc.name}/history">Document history</a></li> -->
+%if canedit:
+  <li><a href="/${proj}/doc/${doc.name}/edit">Edit this document</a></li>
+%endif
+</ul>
+<div class="clear"></div>
+
+
+

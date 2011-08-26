@@ -1,0 +1,15 @@
+<%inherit file="layout.html" />
+
+%if error:
+    <p class="error">${error}</p>
+%endif
+
+<h2>${htTitle}</h2>
+
+%if edit:
+<form action="/${proj}/doc/${doc.name}/edit" method="post">
+%else:
+<form action="/${proj}/doc/new" method="post">
+%endif
+  ${form.render()}
+</form>

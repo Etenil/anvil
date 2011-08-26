@@ -148,12 +148,17 @@ DROP TABLE IF EXISTS `document`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `document` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `project` int(11) DEFAULT NULL,
-  `title` text,
+  `project` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `title` varchar(128) NOT NULL,
   `content` text,
   `deleted` tinyint(1) NOT NULL DEFAULT '0',
+  `author` int(11) NOT NULL,
+  `mtime` timestamp NOT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`),
   KEY `project_ind` (`project`),
+  KEY `author_ind` (`author`),
   CONSTRAINT `document_ibfk_1` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

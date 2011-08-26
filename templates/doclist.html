@@ -1,0 +1,26 @@
+<%inherit file="layout.html" />
+
+<h2>${htTitle}</h2>
+
+%if not docs:
+  <table id="msg-list">
+    <tr><td>This project has no document yet.</td></tr>
+  </table>
+%else:
+  <table id="msg-list">
+    <tr><th>Title</th><th>Author</th><th>Modified</th></tr>
+  %for doc in docs:
+    <tr>
+      <td><a href="/${proj.name}/doc/${doc.name}">${doc.title}</a></td>
+      <td><a href="/*${doc.author.name}">${doc.author.name}</a></td>
+      <td>${doc.mtime}</td>
+    </tr>
+  %endfor
+  </table>
+%endif
+
+  <ul id="actions" class="buttons">
+    <li><a href="/${proj.name}/doc/new">Create a new document</a></li>
+  </ul>
+
+<div class="clear"></div>
