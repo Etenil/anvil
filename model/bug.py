@@ -18,7 +18,7 @@ def get_bugs(project=None, user=None, open_only=True):
         if where != "":
             where += " AND "
         where += "status!='3' AND status!='4'"
-    rbugs = common.db.select('bugs', where=where)
+    rbugs = common.db.query('SELECT id FROM bugs WHERE ' + where + ' ORDER BY created DESC')
     bugs = []
     for bug in rbugs:
         bugs.append(Bug(bug.id))
@@ -42,6 +42,7 @@ class Bug:
     assigned_to = None
     status = 0
     version = ""
+    created = ""
     modified = ""
 
     def __init__(self, id=None):
@@ -53,6 +54,7 @@ class Bug:
             self.id = bug.id
             self.subject = bug.subject
             self.description = bug.description
+            self.created = bug.created
             self.modified = bug.modified
             self.guest = (bug.guest != 0)
             self.author_extern = bug.author_extern

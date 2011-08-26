@@ -79,4 +79,8 @@ class Project:
 
         return (usr.id == self.owner.id)
 
+    def members(self):
+        """Returns the list of members of the project."""
+        return [self.owner]
+
 #end Project

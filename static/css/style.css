@@ -266,7 +266,11 @@ div.project, div.user {
     padding-bottom: 1em;
 }
 
-/* Comments on bugs */
+/* bugs */
+.bug-admin {
+    width: 80%;
+    float: left;
+}
 .comment-form h3 {
     font-size: 110%;
     margin-left: 20%;
@@ -277,4 +281,8 @@ div.project, div.user {
 .comment-body {
     border: 2px solid #ccc;
     padding: 0 0.5em 0;
+}
+.system-msg {
+    color: #a90000;
+    font-style: italic;
 }

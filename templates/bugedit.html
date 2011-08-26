@@ -1,0 +1,12 @@
+<%inherit file="layout.html" />
+
+<%
+import markdown
+import common
+%>
+
+<h2>${htTitle}</h2>
+
+<form action="/${proj}/bugs/${bug.id}/edit" method="post">
+  ${form.render()}
+</form>

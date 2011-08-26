@@ -7,7 +7,11 @@ import common
 
 <h2>${htTitle}</h2>
 
-<div class="message">
+%if can_edit:
+<div class="bug-admin">
+%else:
+<div class="bug">
+%endif
   <div class="msg-header">
     <div class="msg-hdr-elts">
       <div class="msg-hdr-elt textleft">
@@ -34,6 +38,14 @@ import common
         %else:
           <a href="/*${bug.assigned_to.name}">${bug.assigned_to.name}</a>
         %endif
+      </div>
+      <div class="msg-hdr-elt textcenter">
+        <label>Created:</label>
+        ${bug.created}
+      </div>
+      <div class="msg-hdr-elt textright">
+        <label>Last modified:</label>
+        ${bug.modified}
       </div>
       <div class="clear"></div>
     </div>
@@ -70,7 +82,6 @@ import common
     </div>
   </div>
   %endfor
-  </div>
   <div class="comment-form">
     <h3>Add a comment</h3>
     %if common.session.user == None:
@@ -82,3 +93,9 @@ import common
     %endif
   </div>
 </div>
+
+%if can_edit:
+  <ul id="actions" class="buttons">
+    <li><a href="/${bug.project.name}/bugs/${bug.id}/edit">Edit bug</a></li>
+  </ul>
+%endif
