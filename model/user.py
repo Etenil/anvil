@@ -2,8 +2,11 @@ import web
 from anvillib.avatar import avatar, logo
 import common
 from hashlib import sha256
+import re
 
 def create_user(name, email, password, homepage, description):
+    if not re.match('^https?://', homepage):
+        homepage = 'http://' + homepage
     common.db.insert('user',
               name=name,
               email=email,
