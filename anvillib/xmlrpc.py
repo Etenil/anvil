@@ -19,3 +19,11 @@ def delete_user(username):
 def delete_branch(username, branch):
     return _check_ack(proxy.delete_branch(username, branch),
                       "Branch couldn't be deleted.")
+
+def add_ssh_key(key, username):
+    return _check_ack(proxy.add_ssh_key(key, username),
+                      "Key couldn't be added.")
+
+def remove_ssh_key(key, username):
+    return _check_ack(proxy.remove_ssh_key(key, username),
+                      "Key couldn't be deleted.")

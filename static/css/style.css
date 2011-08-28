@@ -265,6 +265,9 @@ div.project, div.user {
     border-bottom: 1px solid #ccc;
     padding-bottom: 1em;
 }
+.desc {
+    word-wrap: break-word;
+}
 
 /* bugs */
 .bug-admin {

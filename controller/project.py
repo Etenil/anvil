@@ -3,6 +3,7 @@ from web import form
 import common
 from web.contrib.template import render_mako
 from anvillib.form import AjaxTextbox
+import anvillib.xmlrpc
 import model.project
 import model.user
 import re
@@ -40,7 +41,7 @@ class Project:
     def new_project(self):
         f = self.new_form()
         return common.render.newproject(htTitle="New project",
-                                 form=f)
+                                        form=f)
     #end new_project
 
     def list_projects(self):
@@ -63,6 +64,7 @@ class Project:
         proj.homepage = i.homepage
         proj.description = i.description
         try:
+            anvillib.xmlrpc.create_user(proj.name)
             proj.save()
         except:
             error = True

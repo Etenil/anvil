@@ -5,6 +5,7 @@ from web.contrib.template import render_mako
 from anvillib.form import AjaxTextbox
 import anvillib.xmlrpc
 import model.user
+import model.sshkey
 import model.project
 import re
 
@@ -15,6 +16,11 @@ class User:
         form.Textbox('email'),
         form.Password('password'),
         form.Button('Login')
+        )
+
+    key_form = form.Form(
+        form.Textarea('key'),
+        form.Button('Add')
         )
 
     reg_form = form.Form(
@@ -32,7 +38,7 @@ class User:
         form.Button('Register')
         )
 
-    def GET(self, action=None, username=None):
+    def GET(self, action=None, item=None, extra=None, more=None):
         if action == "profile":
             return self.edit_profile()
         elif action == "login":
@@ -43,10 +49,14 @@ class User:
             return self.register()
         elif action == "users":
             return self.list_users()
+        elif item == "key":
+            if extra != None and re.match("^\d+$", extra) and more == "delete":
+                return self.do_del_key(action, extra)
+            return self.list_keys(action)
         else:
             return self.show_user(action)
 
-    def POST(self, action=None):
+    def POST(self, action=None, item=None, extra=None, more=None):
         if action == "listusers":
             return self.list_users_ajax()
         elif action == "profile":
@@ -55,6 +65,10 @@ class User:
             return self.do_login()
         elif action == "register":
             return self.do_register()
+        elif item == "key":
+            if extra == "new":
+                return self.do_new_key(action)
+            return self.list_keys(action)
         else:
             return self.show_user(action)
 
@@ -179,5 +193,41 @@ class User:
             raise web.seeother('/*' + self.user.name)
         except:
             return common.render.register(error="Username already exists!",
-                                   form=f,
-                                   htTitle="Register")
+                                          form=f,
+                                          htTitle="Register")
+
+    def list_keys(self, username):
+        user = model.user.User(name=username)
+        keys = model.sshkey.get_keys(user.id)
+        f = self.key_form()
+        return common.render.keylist(keys=keys,
+                                     form=f,
+                                     user=username,
+                                     htTitle="SSH Keys")
+
+    def do_new_key(self, username):
+        user = model.user.User(name=username)
+        key = model.sshkey.SSHKey()
+        i = web.input()
+        key.user = user.id
+        key.key = i.key
+
+        try:
+            anvillib.xmlrpc.add_ssh_key(key.key, username)
+            key.save()
+        except:
+            pass
+        raise web.seeother('/*' + username + '/key')
+
+    def do_del_key(self, username, key):
+        user = model.user.User(name=username)
+        key = model.sshkey.SSHKey(id=key)
+
+        if user.id == key.user:
+            try:
+                anvillib.xmlrpc.remove_ssh_key(key.key, username)
+                key.delete()
+            except:
+                pass
+        raise web.seeother('/*' + username + '/key')
+
