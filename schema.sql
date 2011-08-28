@@ -16,6 +16,25 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `actionqueue`
+--
+
+DROP TABLE IF EXISTS `actionqueue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `actionqueue` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `action` varchar(128) NOT NULL,
+  `item` varchar(128) DEFAULT NULL,
+  `args` text DEFAULT NULL,
+  `state` tinyint(4) NOT NULL DEFAULT 0,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `action_ind` (`action`),
+  KEY `item_ind` (`item`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
 -- Table structure for table `bug_comments`
 --
 
