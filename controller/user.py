@@ -3,6 +3,7 @@ from web import form
 import common
 from web.contrib.template import render_mako
 from anvillib.form import AjaxTextbox
+import anvillib.xmlrpc
 import model.user
 import model.project
 import re
@@ -77,6 +78,9 @@ class User:
                                    htTitle="Register")
         i = web.input()
         try:
+            # Creating the user on the system
+            anvillib.xmlrpc.create_user(i.name)
+            # Adding the user
             model.user.create_user(name=i.name,
                                    email=i.email,
                                    password=i.password,
