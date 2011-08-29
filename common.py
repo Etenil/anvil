@@ -4,6 +4,7 @@ from web.contrib.template import render_mako
 # Common variables.
 db = web.database(dbn='mysql', user='anvil', pw='anvil', db='anvil')
 title = "Anvil"
+host = "anvil"
 session = None
 env_info = None
 msgs = None

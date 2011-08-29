@@ -3,6 +3,7 @@ from web import form
 import common
 from web.contrib.template import render_mako
 from anvillib.form import AjaxTextbox
+import anvillib.bzr
 import anvillib.xmlrpc
 import model.user
 import model.sshkey
@@ -53,6 +54,8 @@ class User:
             if extra != None and re.match("^\d+$", extra) and more == "delete":
                 return self.do_del_key(action, extra)
             return self.list_keys(action)
+        elif item == "branch" and extra != None:
+            return self.show_branch(action, extra)
         else:
             return self.show_user(action)
 
@@ -134,10 +137,13 @@ class User:
         try:
             user = model.user.User(name=username)
             canedit = (common.session.user == user.name)
+            branches = anvillib.bzr.list_branches(user.name)
+
             return common.render.profile(canedit=canedit,
-                                  projs=model.user.get_user_proj(),
-                                  u=user,
-                                  htTitle="Profile")
+                                         projs=model.user.get_user_proj(),
+                                         u=user,
+                                         branches=branches,
+                                         htTitle="Profile")
         except model.user.UserError as error:
             #raise web.seeother('/')
             return common.render.main(content=str(error),
@@ -231,3 +237,13 @@ class User:
                 pass
         raise web.seeother('/*' + username + '/key')
 
+    def show_branch(self, username, branch):
+        user = model.user.User(name=username)
+        canedit = (common.session.user == user.name)
+        log = anvillib.bzr.get_branch_log(user.name, branch)
+        f = self.key_form()
+        return common.render.branch(branch=branch,
+                                    canedit=canedit,
+                                    log=log,
+                                    user=username,
+                                    htTitle="Branch " + branch)

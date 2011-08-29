@@ -1,14 +1,30 @@
-import os, sys
+import os
+import sys
 from bzrlib.branch import Branch
+from bzrlib.osutils import format_date
 from bzrlib import log
 
-def get_branch_log(path):
+HOME_DIR = "/var/anvil/"
+
+logvar = ""
+
+def list_branches(user):
+    homedir = HOME_DIR + user + "/bzr/"
+    branches = os.listdir(homedir)
+    branches.remove('.bzr')
+    return branches
+
+def get_branch_log(user, branch):
+    path = HOME_DIR + user + "/bzr/" + branch
     branch = Branch.open(path)
+    global logvar
+    logvar = ""
     lf = HtmlLogFormatter(to_file=sys.stdout)
-    log.show_log(branch, lf)
+    rqst = log.make_log_request_dict()
+    log.Logger(branch, rqst).show(lf)
+    return logvar
 
 class HtmlLogFormatter(log.LogFormatter):
-
     supports_merge_revisions = True
     preferred_levels = 1
     supports_delta = True
@@ -28,6 +44,7 @@ class HtmlLogFormatter(log.LogFormatter):
         # and we want subsequent mainline revisions to line up.
         depth = revision.merge_depth
         indent = '    ' * depth
+        global logvar
         revno_width = self.revno_width_by_depth.get(depth)
         if revno_width is None:
             if revision.revno is None or revision.revno.find('.') == -1:
@@ -43,23 +60,28 @@ class HtmlLogFormatter(log.LogFormatter):
         tags = ''
         if revision.tags:
             tags = ' {%s}' % (', '.join(revision.tags))
-        to_file.write(indent + "%*s %s\t%s%s%s\n" % (revno_width,
-                revision.revno or "", self.short_author(revision.rev),
-                format_date(revision.rev.timestamp,
-                            revision.rev.timezone or 0,
-                            self.show_timezone, date_fmt="%Y-%m-%d",
-                            show_offset=False),
-                tags, self.merge_marker(revision)))
+        logvar += '<div class="revision">'
+        logvar += '<div class="revdate">%s</div>' % format_date(revision.rev.timestamp,
+                                                                revision.rev.timezone or 0,
+                                                                self.show_timezone, date_fmt="%Y-%m-%d",
+                                                                show_offset=False)
+
+        logvar += '<div class="revbody">'
+        logvar += '<p class="revinfo">%s committed revision <span class="hl">%s</span> %s</p>' % (self.short_author(revision.rev),
+                                                 revision.revno or "",
+                                                 self.merge_marker(revision))
+        if tags != "":
+            logvar += '<p class="tags">%s</p>' % tags
+
         self.show_properties(revision.rev, indent+offset)
         if self.show_ids or revision.revno is None:
-            to_file.write(indent + offset + 'revision-id:%s\n'
-                          % (revision.rev.revision_id,))
+            logvar += '<p class="revmessage">revision-id:%s</p>' % revision.rev.revision_id
         if not revision.rev.message:
-            to_file.write(indent + offset + '(no message)\n')
+            logvar += '<p class="revmessage">(no message)</p>'
         else:
             message = revision.rev.message.rstrip('\r\n')
             for l in message.split('\n'):
-                to_file.write(indent + offset + '%s\n' % (l,))
+                logvar += '<p class="revmessage">%s</p>' % l
 
         if revision.delta is not None:
             # Use the standard status output to display changes
@@ -69,5 +91,5 @@ class HtmlLogFormatter(log.LogFormatter):
                          show_ids=self.show_ids, indent=indent + offset)
         if revision.diff is not None:
             self.show_diff(self.to_exact_file, revision.diff, '      ')
-        to_file.write('\n')
+        logvar += '</div><div class="clear"></div></div>'
 
