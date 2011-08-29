@@ -1,9 +1,6 @@
 import web
 from web import form
 import common
-from web.contrib.template import render_mako
-from anvillib.form import AjaxTextbox
-import anvillib.xmlrpc
 import model.project
 import model.user
 import re

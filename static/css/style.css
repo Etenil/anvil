@@ -19,6 +19,10 @@ a {
     text-decoration: none;
 }
 
+.hl {
+    color: #507ce6;
+}
+
 a:hover {
     text-decoration: underline;
 }
@@ -294,4 +298,53 @@ div.project, div.user {
 .largetextarea {
     width: 90%;
     height: 50em;
+}
+
+/* branches */
+#branch-details {
+    background-image: -webkit-gradient(
+        linear, left bottom, left top,
+        color-stop(0, #ccc),
+        color-stop(1, #eee)
+    );
+    background-image: -moz-linear-gradient(
+        center bottom,
+        #ccc 0%,
+        #eee 100%
+    );
+    padding: 1em;
+    text-align: left;
+    border-radius: 10px;
+}
+#branch-details label {
+    width: 5em;
+    display: block;
+    float: left;
+    margin-bottom: 0.5em;
+}
+#branch-details input {
+    width: 80%;
+    background-color: #fff;
+    border: 1px solid #888;
+    border-radius: 5px;
+    padding: 0.2em 0.5em;
+    margin-bottom: 0.5em;
+}
+.revision {
+    border-bottom: 1px solid #888;
+    padding: 0.5em 1em;
+}
+.revision .revdate {
+    display: block;
+    float: left;
+    margin-right: 0.2em;
+    width: 7em;
+    color: #507ce6;
+}
+.revision .revbody {
+    float: left;
+}
+.revision p.revinfo {
+    margin: 0 0 1em;
+    color: #444;
 }

@@ -23,3 +23,11 @@ import markdown
  %endif
   <div class="clear"></div>
 
+<div id="branches">
+  <h4>Branches</h4>
+  <ul>
+  %for b in branches:
+    <li><a href="/*${u.name}/branch/${b}">${b}</a></li>
+  %endfor
+  </ul>
+</div>

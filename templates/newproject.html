@@ -2,10 +2,6 @@
 
 <h2>${htTitle}</h2>
 
-%if errors and len(errors > 0):
-    <p class="error">${'<br />'.join(errors)}</p>
-%endif
-
 %if not proj:
 <form action="/project/new" method="post">
 %else:

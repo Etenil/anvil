@@ -1,0 +1,36 @@
+<%inherit file="layout.html" />
+
+<%
+import common
+import markdown
+%>
+
+<h2>${htTitle}</h2>
+
+<div class="main-body">
+  <div id="branch-details">
+    <label>bzr branch</label>
+    <input type="text"
+           value="http://${common.host}/~${item}/${branch}"
+           readonly="readonly" />
+    %if canedit:
+      <br/>
+      <label>bzr push</label>
+      <input type="text"
+             value="bzr+ssh://${item}@${common.host}/${branch}/"
+             readonly="readonly" />
+    %endif
+    <div class="clear"></div>
+  </div>
+    ${log}
+</div>
+ %if canedit:
+  <ul id="actions" class="buttons">
+    %if is_project != None:
+      <li><a href="/${item}/branch/${branch}/delete">Delete this branch</a></li>
+    %else:
+      <li><a href="/*${item}/branch/${branch}/delete">Delete this branch</a></li>
+    %endif
+  </ul>
+ %endif
+  <div class="clear"></div>
