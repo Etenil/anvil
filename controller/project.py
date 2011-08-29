@@ -4,6 +4,7 @@ import common
 from web.contrib.template import render_mako
 from anvillib.form import AjaxTextbox
 import anvillib.xmlrpc
+import anvillib.bzr
 import model.project
 import model.user
 import re
@@ -17,7 +18,7 @@ class Project:
         form.Textarea('description'),
         form.Button('Register'))
 
-    def GET(self, action=None, other=None):
+    def GET(self, action=None, other=None, arg1=None, arg2=None):
         if action == "new":
             return self.new_project()
         elif action == "list":
@@ -26,6 +27,10 @@ class Project:
             name = action
             if other == "edit":
                 return self.edit_project(name)
+            elif other == "branch" and arg1 != None and arg2 == "delete":
+                return self.del_branch(name, arg1)
+            elif other == "branch" and arg1 != None:
+                return self.show_branch(name, arg1)
             else:
                 return self.show_project(name)
     #end GET
@@ -48,7 +53,6 @@ class Project:
         return common.render.projectslist(projs=model.project.list_proj(),
                                    htTitle="Projects")
 
-
     def make_new(self):
         f = self.new_form()
         error = False
@@ -63,17 +67,22 @@ class Project:
         proj.owner = model.user.User(name=common.session.user)
         proj.homepage = i.homepage
         proj.description = i.description
+        sshkeys = model.sshkey.get_keys(proj.owner.id)
         try:
             anvillib.xmlrpc.create_user(proj.name)
+            # Importing SSH keys
+            for k in sshkeys:
+                k.id = None
+                anvillib.xmlrpc.add_ssh_key(k.key, proj.name)
+                k.save()
             proj.save()
         except:
             error = True
-            errors.append("Projects already exists.")
+            errors.append("Project already exists.")
 
         if error:
-            return common.render.newproject(errors=errors,
-                                     htTitle="New project",
-                                     form=f)
+            return common.render.newproject(htTitle="New project",
+                                            form=f)
         else:
             raise web.seeother('/' + proj.name)
     #end make_new
@@ -82,12 +91,14 @@ class Project:
         """Displays details about project <name>."""
         try:
             proj = model.project.Project(name=name)
+            branches = anvillib.bzr.list_branches(name)
         except:
             raise web.seeother('/')
 
         return common.render.project(proj=proj,
-                              canedit=proj.isadmin(common.session.user),
-                              htTitle="Project")
+                                     canedit=proj.isadmin(common.session.user),
+                                     branches=branches,
+                                     htTitle="Project")
 
     def make_edit_form(self, proj):
         edit_form = form.Form(
@@ -100,7 +111,7 @@ class Project:
         return edit_form
 
     def edit_project(self, name):
-        proj = model.project.Project(name)
+        proj = model.project.Project(name=name)
         if not proj.isadmin(common.session.user):
             raise web.seeother('/' + name)
 
@@ -113,7 +124,7 @@ class Project:
     def make_edit_project(self, name):
         proj = None
         try:
-            proj = model.project.Project(name)
+            proj = model.project.Project(name=name)
         except:
             raise web.seeother('/')
 
@@ -134,4 +145,24 @@ class Project:
                                      htTitle="New project",
                                      form=f)
     #end make_edit_project
+
+    def show_branch(self, project, branch):
+        p = model.project.Project(name=project)
+        canedit = p.isadmin(common.session.user)
+        log = anvillib.bzr.get_branch_log(p.name, branch)
+        return common.render.branch(branch=branch,
+                                    canedit=canedit,
+                                    log=log,
+                                    item=p.name,
+                                    is_project=True,
+                                    htTitle="Branch " + branch)
+
+    def del_branch(self, project, branch):
+        p = model.project.Project(name=project)
+        if p.isadmin(common.session.user):
+            try:
+                anvillib.xmlrpc.delete_branch(project, branch)
+            except:
+                pass
+        raise web.seeother('/' + project)
 #end Project

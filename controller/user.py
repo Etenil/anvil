@@ -55,6 +55,8 @@ class User:
                 return self.do_del_key(action, extra)
             return self.list_keys(action)
         elif item == "branch" and extra != None:
+            if more == "delete":
+                return self.del_branch(action, extra)
             return self.show_branch(action, extra)
         else:
             return self.show_user(action)
@@ -241,9 +243,18 @@ class User:
         user = model.user.User(name=username)
         canedit = (common.session.user == user.name)
         log = anvillib.bzr.get_branch_log(user.name, branch)
-        f = self.key_form()
         return common.render.branch(branch=branch,
                                     canedit=canedit,
                                     log=log,
-                                    user=username,
+                                    item=username,
                                     htTitle="Branch " + branch)
+
+    def del_branch(self, username, branch):
+        user = model.user.User(name=username)
+        if user.name == common.session.user:
+            try:
+                anvillib.xmlrpc.delete_branch(username, branch)
+            except:
+                pass
+        raise web.seeother('/*' + username)
+
