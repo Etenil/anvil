@@ -10,7 +10,8 @@ from SimpleXMLRPCServer import SimpleXMLRPCServer
 HOME_DIR = "/var/anvil/"
 
 def _format_ssh_key(user, key):
-    return 'command="bzr serve --inet --directory=%s/bzr --allow-writes",no-port-forwarding,no-pty,no-agent-forwarding,no-X11-forwarding %s' % (user.strip(), key.strip())
+    homedir = HOME_DIR + user
+    return 'command="bzr serve --inet --directory=%s/bzr --allow-writes",no-port-forwarding,no-pty,no-agent-forwarding,no-X11-forwarding %s' % (homedir.strip(), key.strip())
 
 def _read_keys(user):
     homedir = HOME_DIR + user
