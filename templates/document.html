@@ -2,6 +2,7 @@
 
 <%
 import markdown
+import common
 %>
 
 <div class="main-body">
@@ -10,9 +11,9 @@ import markdown
 </div>
 
 <ul id="actions" class="buttons">
-<!--  <li><a href="/${proj}/doc/${doc.name}/history">Document history</a></li> -->
+<!--  <li><a href="${common.prefix}/${proj}/doc/${doc.name}/history">Document history</a></li> -->
 %if canedit:
-  <li><a href="/${proj}/doc/${doc.name}/edit">Edit this document</a></li>
+  <li><a href="${common.prefix}/${proj}/doc/${doc.name}/edit">Edit this document</a></li>
 %endif
 </ul>
 <div class="clear"></div>

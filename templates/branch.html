@@ -27,9 +27,9 @@ import markdown
  %if canedit:
   <ul id="actions" class="buttons">
     %if is_project != None:
-      <li><a href="/${item}/branch/${branch}/delete">Delete this branch</a></li>
+      <li><a href="${common.prefix}/${item}/branch/${branch}/delete">Delete this branch</a></li>
     %else:
-      <li><a href="/*${item}/branch/${branch}/delete">Delete this branch</a></li>
+      <li><a href="${common.prefix}/*${item}/branch/${branch}/delete">Delete this branch</a></li>
     %endif
   </ul>
  %endif

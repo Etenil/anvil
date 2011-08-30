@@ -1,9 +1,11 @@
 <%inherit file="layout.html" />
 
+<% import common %>
+
 %if error:
     <p class="error">${error}</p>
 %endif
 
-<form action="login" method="post">
+<form action="${common.prefix}/login" method="post">
   ${form.render()}
 </form>

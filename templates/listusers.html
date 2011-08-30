@@ -2,14 +2,18 @@
 
 <%
 import markdown
+import common
 from anvillib.avatar import avatar
- %>
+%>
 
 <h2>${htTitle}</h2>
 
+%if not users:
+  <p>No user yet.</p>
+%else:
 %for u in users:
   <div class="user">
-    <h3><a href="/*${u.name}">${u.name}</a></h3>
+    <h3><a href="${common.prefix}/*${u.name}">${u.name}</a></h3>
     <img class="smallavatar" src="${avatar(u.homepage, u.email)}" alt="avatar" />
     <div id="desc">
      %if len(u.description) > 200:
@@ -21,4 +25,4 @@ from anvillib.avatar import avatar
     <div class="clear"></div>
   </div>
 %endfor
-
+%endif

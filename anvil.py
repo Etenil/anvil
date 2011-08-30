@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import web
 import common
 
@@ -40,7 +42,6 @@ def refresh_messages(handler):
 
 app.add_processor(refresh_messages)
 
-
 class Main:
     def GET(self):
         return common.render.main(content="Welcome to Anvil",
@@ -48,6 +49,8 @@ class Main:
                                   htTitle="Welcome to Anvil!")
     #end GET
 #end test
+
+web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
 
 if __name__ == "__main__": app.run()
 

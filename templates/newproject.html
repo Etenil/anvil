@@ -1,11 +1,13 @@
 <%inherit file="layout.html" />
 
+<% import common %>
+
 <h2>${htTitle}</h2>
 
 %if not proj:
-<form action="/project/new" method="post">
+<form action="${common.prefix}/project/new" method="post">
 %else:
-<form action="/${proj.name}/edit" method="post">
+<form action="${common.prefix}/${proj.name}/edit" method="post">
 %endif
   ${form.render()}
 </form>

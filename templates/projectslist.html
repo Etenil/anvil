@@ -2,6 +2,7 @@
 
 <%
 import markdown
+import common
 from anvillib.avatar import logo
 %>
 
@@ -9,7 +10,7 @@ from anvillib.avatar import logo
 
 %for p in projs:
   <div class="project">
-    <h3><a href="/${p.name}">${p.name}</a></h3>
+    <h3><a href="${common.prefix}/${p.name}">${p.name}</a></h3>
     <img class="smallavatar" src="${logo(p.homepage)}" alt="logo" />
     <div id="desc">
      %if len(p.description) > 200:

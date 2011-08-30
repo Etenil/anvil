@@ -27,7 +27,7 @@ class Message:
         if action == "new":
             self.make_new_message()
         else:
-            raise web.seeother('message/list')
+            raise web.seeother(common.prefix + '/message/list')
 
 
     def list_messages(self, extra):
@@ -77,4 +77,4 @@ class Message:
             return common.render.newmessage(error="<br />".join(errors),
                                      htTitle="New message",
                                      form=self.new_form)
-        raise web.seeother('/message/list')
+        raise web.seeother(common.prefix + '/message/list')

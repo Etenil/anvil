@@ -12,7 +12,7 @@ from anvillib.text import normalize_name
 class Doc:
     def GET(self, project=None, action=None, extra=None):
         if project == None:
-            raise web.seeother('/')
+            raise web.seeother(common.prefix + '/')
         elif action == None:
             return self.list_docs(project)
         elif action == "new":
@@ -22,11 +22,11 @@ class Doc:
         elif action != None:
             return self.show_doc(project, action)
         else:
-            raise web.seeother('/' + project + '/doc')
+            raise web.seeother(common.prefix + '/' + project + '/doc')
 
     def POST(self, project=None, action=None, extra=None):
         if project == None:
-            raise web.seeother('/')
+            raise web.seeother(common.prefix + '/')
         if action == "new":
             self.do_new_doc(project)
         elif action != None and extra == "delete":
@@ -34,12 +34,12 @@ class Doc:
         elif action != None and extra == "edit":
             return self.do_edit_doc(project, action)
         else:
-            raise web.seeother('/' + project + '/doc')
+            raise web.seeother(common.prefix + '/' + project + '/doc')
 
     def _admin_or_die(self, project):
         p = model.project.Project(name=project)
         if not p.isadmin(common.session.user):
-            raise web.seeother('/' + project + '/doc')
+            raise web.seeother(common.prefix + '/' + project + '/doc')
         return p
 
     def list_docs(self, project):
@@ -72,7 +72,7 @@ class Doc:
         doc.content = i.content
         doc.author = u.id
         doc.save()
-        raise web.seeother('/' + project + '/doc/' + doc.name)
+        raise web.seeother(common.prefix + '/' + project + '/doc/' + doc.name)
 
     def show_doc(self, project, docname):
         p = model.project.Project(name=project)
@@ -125,5 +125,5 @@ class Doc:
         d.title = i.title
         d.content = i.content
         d.save()
-        raise web.seeother('/' + project + '/doc/' + d.name)
+        raise web.seeother(common.prefix + '/' + project + '/doc/' + d.name)
 

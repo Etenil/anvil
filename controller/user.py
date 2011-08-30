@@ -106,7 +106,7 @@ class User:
                                    homepage=i.homepage,
                                    description=i.description)
             common.session.user = i.name
-            raise web.seeother('/')
+            raise web.seeother(common.prefix + '/')
         except model.user.UserError:
             return common.render.register(error="Username already exists!",
                                    form=f,
@@ -126,14 +126,14 @@ class User:
         user = model.user.user_login(email=i.email, password = i.password)
         if not user:
             return common.render.login(error="Incorrect username or password.",
-                                form=f,
-                                htTitle="Login")
+                                       form=f,
+                                       htTitle="Login")
         common.session.user = user.name
         raise web.seeother('/')
 
     def logout(self):
         common.session.user = None
-        raise web.seeother('/')
+        raise web.seeother(common.prefix + '/')
 
     def show_user(self, username):
         try:
@@ -147,7 +147,7 @@ class User:
                                          branches=branches,
                                          htTitle="Profile")
         except model.user.UserError as error:
-            #raise web.seeother('/')
+            #raise web.seeother(common.prefix + '/')
             return common.render.main(content=str(error),
                                num_proj=model.project.count_proj(),
                                htTitle="Welcome to Anvil!")
@@ -179,7 +179,7 @@ class User:
                                       form=f,
                                       htTitle="Edit Profile")
         except model.user.UserError as error:
-            #raise web.seeother('/')
+            #raise web.seeother(common.prefix + '/')
             return common.render.main(content=str(error),
                                num_proj=model.project.count_proj(),
                                htTitle="Welcome to Anvil!")
@@ -198,7 +198,7 @@ class User:
         self.user.description = i.description
         try:
             self.user.save()
-            raise web.seeother('/*' + self.user.name)
+            raise web.seeother(common.prefix + '/*' + self.user.name)
         except:
             return common.render.register(error="Username already exists!",
                                           form=f,
@@ -225,7 +225,7 @@ class User:
             key.save()
         except:
             pass
-        raise web.seeother('/*' + username + '/key')
+        raise web.seeother(common.prefix + '/*' + username + '/key')
 
     def do_del_key(self, username, key):
         user = model.user.User(name=username)
@@ -237,7 +237,7 @@ class User:
                 key.delete()
             except:
                 pass
-        raise web.seeother('/*' + username + '/key')
+        raise web.seeother(common.prefix + '/*' + username + '/key')
 
     def show_branch(self, username, branch):
         user = model.user.User(name=username)
@@ -256,5 +256,5 @@ class User:
                 anvillib.xmlrpc.delete_branch(username, branch)
             except:
                 pass
-        raise web.seeother('/*' + username)
+        raise web.seeother(common.prefix + '/*' + username)
 

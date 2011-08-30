@@ -2,10 +2,22 @@
 
 import os
 import xmlrpclib
+import daemon
+import lockfile
 import subprocess
 from subprocess import check_call
-
 from SimpleXMLRPCServer import SimpleXMLRPCServer
+
+log = open("/var/log/anvil-admin.log", "w+")
+
+context = daemon.DaemonContext(
+    working_directory = "/var/www/anvil/",
+    umask = 0o002,
+    pidfile = lockfile.FileLock('/var/run/anvil.pid'),
+    files_preserve = [log],
+    stdout = log,
+    stderr = log
+    )
 
 HOME_DIR = "/var/anvil/"
 
@@ -105,4 +117,6 @@ def test():
     add_ssh_key("prout", "etenil")
     remove_ssh_key("prout", "etenil")
 
-if __name__ == "__main__": main()
+if __name__ == "__main__":
+    with context:
+        main()

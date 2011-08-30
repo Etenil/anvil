@@ -2,6 +2,7 @@
 
 <%
 import markdown
+import common
 %>
 
 <div class="main-body">
@@ -15,11 +16,11 @@ import markdown
 </div>
   <ul id="actions" class="buttons">
  %if canedit:
-    <li><a href="/${proj.name}/edit">Edit project</a></li>
-    <li><a href="/team/new">Create a team</a></li>
+    <li><a href="${common.prefix}/${proj.name}/edit">Edit project</a></li>
+    <li><a href="${common.prefix}/team/new">Create a team</a></li>
  %endif
-    <li><a href="/${proj.name}/bugs">Bugs</a></li>
-    <li><a href="/${proj.name}/doc">Documentation</a></li>
+    <li><a href="${common.prefix}/${proj.name}/bugs">Bugs</a></li>
+    <li><a href="${common.prefix}/${proj.name}/doc">Documentation</a></li>
   </ul>
   <div class="clear"></div>
 
@@ -27,7 +28,7 @@ import markdown
   <h4>Branches</h4>
   <ul>
   %for b in branches:
-    <li><a href="/${proj.name}/branch/${b}">${b}</a></li>
+    <li><a href="${common.prefix}/${proj.name}/branch/${b}">${b}</a></li>
   %endfor
   </ul>
 </div>

@@ -19,7 +19,7 @@ import common
        %if bug.guest:
           ${bug.author_extern}
        %else:
-          <a href="/*${bug.author_intern.name}">${bug.author_intern.name}</a>
+          <a href="${common.prefix}/*${bug.author_intern.name}">${bug.author_intern.name}</a>
        %endif
       </div>
       <div class="msg-hdr-elt textcenter">
@@ -36,7 +36,7 @@ import common
         %if bug.assigned_to == None:
           No one
         %else:
-          <a href="/*${bug.assigned_to.name}">${bug.assigned_to.name}</a>
+          <a href="${common.prefix}/*${bug.assigned_to.name}">${bug.assigned_to.name}</a>
         %endif
       </div>
       <div class="msg-hdr-elt textcenter">
@@ -87,7 +87,7 @@ import common
     %if common.session.user == None:
       <p>Please log in or register to post a comment.</p>
     %else:
-      <form action="/${bug.project.name}/bugs/${bug.id}/newcomm" method="post">
+      <form action="${common.prefix}/${bug.project.name}/bugs/${bug.id}/newcomm" method="post">
         ${comm_form.render()}
       </form>
     %endif
@@ -96,6 +96,6 @@ import common
 
 %if can_edit:
   <ul id="actions" class="buttons">
-    <li><a href="/${bug.project.name}/bugs/${bug.id}/edit">Edit bug</a></li>
+    <li><a href="${common.prefix}/${bug.project.name}/bugs/${bug.id}/edit">Edit bug</a></li>
   </ul>
 %endif

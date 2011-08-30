@@ -1,6 +1,9 @@
 <%inherit file="layout.html" />
 
-<% import markdown %>
+<%
+import markdown
+import common
+%>
 
 <h2>${htTitle}</h2>
 
@@ -12,7 +15,7 @@
        %if user == msg.sender.name:
           Me
        %else:
-          <a href="/*${msg.sender.name}">${msg.sender.name}</a>
+          <a href="${common.prefix}/*${msg.sender.name}">${msg.sender.name}</a>
        %endif
       </div>
       <div class="msg-hdr-elt textcenter">
@@ -20,7 +23,7 @@
        %if user == msg.dest.name:
           Me
        %else:
-          <a href="/*${msg.dest.name}">${msg.dest.name}</a>
+          <a href="${common.prefix}/*${msg.dest.name}">${msg.dest.name}</a>
        %endif
       </div>
       <div class="msg-hdr-elt textright">

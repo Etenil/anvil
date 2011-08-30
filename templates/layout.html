@@ -1,25 +1,25 @@
-<% from common import title, session, msgs %>
+<% from common import title, session, msgs, prefix %>
 
 <!DOCTYPE html>
 <html>
   <head>
     <title>${title}</title>
-    <link rel="stylesheet" type="text/css" media="all" href="/static/css/style.css" />
-    <link rel="icon" href="/static/img/favicon.ico" />
-    <script type="text/javascript" src="/static/js/prototype.js"></script>
-    <script type="text/javascript" src="/static/js/scriptaculous/scriptaculous.js"></script>
+    <link rel="stylesheet" type="text/css" media="all" href="${prefix}/static/css/style.css" />
+    <link rel="icon" href="${prefix}/static/img/favicon.ico" />
+    <script type="text/javascript" src="${prefix}/static/js/prototype.js"></script>
+    <script type="text/javascript" src="${prefix}/static/js/scriptaculous/scriptaculous.js"></script>
   </head>
   <body>
     <div id="wrapper">
       <div id="header">
         <div id="header-logo">
-          <a href="/"><img src="/static/img/logo.png" alt="Logo"/></a>
-          <a href="/"><h1>${title}</h1></a>
+          <a href="${prefix}/"><img src="${prefix}/static/img/logo.png" alt="Logo"/></a>
+          <a href="${prefix}/"><h1>${title}</h1></a>
         </div>
           <ul id="header-menu" class="buttons">
-            %if session.user != None:
+            %if hasattr(session, "user") and session.user != None:
             <li>
-              <a href="/message/list">
+              <a href="${prefix}/message/list">
                 %if msgs == 0:
                   no messages
                 %elif msgs == 1:
@@ -29,11 +29,11 @@
                 %endif
               </a>
             </li>
-            <li><a href="/*${session.user}">${session.user}</a></li>
-            <li class="warning"><a href="/logout">Logout</a></li>
+            <li><a href="${prefix}/*${session.user}">${session.user}</a></li>
+            <li class="warning"><a href="${prefix}/logout">Logout</a></li>
             %else:
-            <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register!</a></li>
+            <li><a href="${prefix}/login">Login</a></li>
+            <li><a href="${prefix}/register">Register!</a></li>
             %endif
           </ul>
         <div class="clear"></div>
@@ -43,9 +43,9 @@
       <div id="footer">
         <div class="links">
           <ul>
-            <li><a href="/project/list">Projects</a></li>
-            <li><a href="/users">Users</a></li>
-            <li><a href="/teams">Teams</a></li>
+            <li><a href="${prefix}/project/list">Projects</a></li>
+            <li><a href="${prefix}/users">Users</a></li>
+            <li><a href="${prefix}/teams">Teams</a></li>
         </div>
         &copy;2011 Etenil
       </div>

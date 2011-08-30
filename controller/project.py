@@ -41,7 +41,7 @@ class Project:
         elif other == "edit":
             return self.make_edit_project(action)
         else:
-            raise web.seeother('/')
+            raise web.seeother(common.prefix + '/')
 
     def new_project(self):
         f = self.new_form()
@@ -84,7 +84,7 @@ class Project:
             return common.render.newproject(htTitle="New project",
                                             form=f)
         else:
-            raise web.seeother('/' + proj.name)
+            raise web.seeother(common.prefix + '/' + proj.name)
     #end make_new
 
     def show_project(self, name):
@@ -93,7 +93,7 @@ class Project:
             proj = model.project.Project(name=name)
             branches = anvillib.bzr.list_branches(name)
         except:
-            raise web.seeother('/')
+            raise web.seeother(common.prefix + '/')
 
         return common.render.project(proj=proj,
                                      canedit=proj.isadmin(common.session.user),
@@ -113,7 +113,7 @@ class Project:
     def edit_project(self, name):
         proj = model.project.Project(name=name)
         if not proj.isadmin(common.session.user):
-            raise web.seeother('/' + name)
+            raise web.seeother(common.prefix + '/' + name)
 
         f = self.make_edit_form(proj)
         return common.render.newproject(proj=proj,
@@ -126,10 +126,10 @@ class Project:
         try:
             proj = model.project.Project(name=name)
         except:
-            raise web.seeother('/')
+            raise web.seeother(common.prefix + '/')
 
         if not proj.isadmin(common.session.user):
-            raise web.seeother('/+' + name)
+            raise web.seeother(common.prefix + '/+' + name)
 
         i = web.input()
         proj2 = proj
@@ -138,7 +138,7 @@ class Project:
         proj2.description = i.description
         try:
             proj2.save()
-            web.seeother('/' + proj2.name)
+            web.seeother(common.prefix + '/' + proj2.name)
         except:
             return common.render.newproject(errors=["Name already in use."],
                                      proj=proj,
@@ -164,5 +164,5 @@ class Project:
                 anvillib.xmlrpc.delete_branch(project, branch)
             except:
                 pass
-        raise web.seeother('/' + project)
+        raise web.seeother(common.prefix + '/' + project)
 #end Project

@@ -11,7 +11,7 @@
       convenience.
     </p>
     <p>
-      So <a href="/register">register</a> and join us!
+      So <a href="${common.prefix}/register">register</a> and join us!
     </p>
 %else:
     <p>
@@ -20,12 +20,12 @@
 %endif
     <p>
       There are ${num_proj} projects on anvil!
-      <a href="/project/list">Check them out</a>!
+      <a href="${common.prefix}/project/list">Check them out</a>!
     </p>
   </div>
 
-%if common.session.user != None:
+%if hasattr(common.session, "user") and common.session.user != None:
   <ul id="actions" class="buttons">
-    <li><a href="/project/new">Start a new project</a></li>
+    <li><a href="${common.prefix}/project/new">Start a new project</a></li>
   </ul>
 %endif

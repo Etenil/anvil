@@ -1,5 +1,7 @@
 <%inherit file="layout.html" />
 
+<% import common %>
+
 <h2>${htTitle}</h2>
 
 %if not bugs:
@@ -14,9 +16,9 @@
       %if bug.guest:
       <td>${bug.author_extern}</td>
       %else:
-      <td><a href="/*${bug.author_intern.name}">${bug.author_intern.name}</a></td>
+      <td><a href="${common.prefix}/*${bug.author_intern.name}">${bug.author_intern.name}</a></td>
       %endif
-      <td><a href="/${proj.name}/bugs/${bug.id}">${bug.subject}</a></td>
+      <td><a href="${common.prefix}/${proj.name}/bugs/${bug.id}">${bug.subject}</a></td>
       <td>${bug.get_status()}</td>
       <td>${bug.created}</td>
       <td>${bug.modified}</td>
@@ -26,11 +28,11 @@
 %endif
 
   <ul id="actions" class="buttons">
-    <li><a href="/${proj.name}/bugs/new">Report a bug</a></li>
+    <li><a href="${common.prefix}/${proj.name}/bugs/new">Report a bug</a></li>
     %if show_all:
-      <li><a href="/${proj.name}/bugs">Hide closed bugs</a></li>
+      <li><a href="${common.prefix}/${proj.name}/bugs">Hide closed bugs</a></li>
     %else:
-      <li><a href="/${proj.name}/bugs/all">Show closed bugs</a></li>
+      <li><a href="${common.prefix}/${proj.name}/bugs/all">Show closed bugs</a></li>
     %endif
   </ul>
 

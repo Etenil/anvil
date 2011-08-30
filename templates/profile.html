@@ -2,6 +2,7 @@
 
 <%
 import markdown
+import common
 %>
 
 <div id="profile">
@@ -16,9 +17,9 @@ import markdown
 </div>
  %if canedit:
   <ul id="actions" class="buttons">
-    <li><a href="/message/list">Messages</a></li>
-    <li><a href="/profile">Edit profile</a></li>
-    <li><a href="/*${u.name}/key">SSH keys</a></li>
+    <li><a href="${common.prefix}/message/list">Messages</a></li>
+    <li><a href="${common.prefix}/profile">Edit profile</a></li>
+    <li><a href="${common.prefix}/*${u.name}/key">SSH keys</a></li>
   </ul>
  %endif
   <div class="clear"></div>
@@ -27,7 +28,7 @@ import markdown
   <h4>Branches</h4>
   <ul>
   %for b in branches:
-    <li><a href="/*${u.name}/branch/${b}">${b}</a></li>
+    <li><a href="${common.prefix}/*${u.name}/branch/${b}">${b}</a></li>
   %endfor
   </ul>
 </div>

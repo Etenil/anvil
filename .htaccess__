@@ -1,0 +1,13 @@
+<Files anvil.py>
+    SetHandler fcgid-script
+    Options +ExecCGI
+</Files>
+
+<IfModule mod_rewrite.c>      
+       RewriteEngine on
+       RewriteBase /anvil
+       RewriteCond %{REQUEST_URI} !^/anvil/static
+       RewriteCond %{REQUEST_URI} !^/anvil/favicon.ico$
+       RewriteCond %{REQUEST_URI} !^/anvil(/.*)+anvil.py/
+       RewriteRule ^(.*)$ anvil.py/$1 [PT]
+</IfModule>

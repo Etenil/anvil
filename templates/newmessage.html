@@ -1,11 +1,13 @@
 <%inherit file="layout.html" />
 
+<% import common %>
+
 %if error:
   <p class="error">${error}</p>
 %endif
 
 <h2>${htTitle}</h2>
 
-<form action="/message/new" method="post">
+<form action="${common.prefix}/message/new" method="post">
   ${form.render()}
 </form>

@@ -1,6 +1,8 @@
 <%inherit file="layout.html" />
 
-<form action="/profile" method="post">
+<% import common %>
+
+<form action="${common.prefix}/profile" method="post">
   ${form.render()}
 </form>
 
