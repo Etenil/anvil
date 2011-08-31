@@ -2,6 +2,12 @@
 
 <% import common %>
 
+<div id="breadcrumbs">
+  <a href="${common.prefix}/*${username}">${username}</a>
+  &gt;
+  edit profile
+</div>
+
 <form action="${common.prefix}/profile" method="post">
   ${form.render()}
 </form>

@@ -5,6 +5,14 @@ import markdown
 import common
 %>
 
+<div id="breadcrumbs">
+  <a href="${common.prefix}/*${common.session.user}">${common.session.user}</a>
+  &gt;
+  <a href="${common.prefix}/message/list">messages</a>
+  &gt;
+  message
+</div>
+
 <h2>${htTitle}</h2>
 
 <div class="message">

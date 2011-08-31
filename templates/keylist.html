@@ -2,6 +2,12 @@
 
 <% import common %>
 
+<div id="breadcrumbs">
+  <a href="${common.prefix}/*${user}">${user}</a>
+  &gt;
+  ssh keys
+</div>
+
 <h2>${htTitle}</h2>
 
 %if not keys:

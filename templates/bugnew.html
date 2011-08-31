@@ -2,6 +2,12 @@
 
 <% import common %>
 
+<div id="breadcrumbs">
+  <a href="${common.prefix}/${proj}">${proj}</a>
+  &gt;
+  <a href="${common.prefix}/${proj}/bugs">bugs</a>
+  &gt;
+  new bug
 %if error:
     <p class="error">${error}</p>
 %endif

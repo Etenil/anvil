@@ -206,6 +206,8 @@ class User:
 
     def list_keys(self, username):
         user = model.user.User(name=username)
+        if user.name != common.session.user:
+            raise web.seeother(common.prefix + '/*' + username)
         keys = model.sshkey.get_keys(user.id)
         f = self.key_form()
         return common.render.keylist(keys=keys,

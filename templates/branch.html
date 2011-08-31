@@ -5,6 +5,15 @@ import common
 import markdown
 %>
 
+<div id="breadcrumbs">
+%if is_project:
+  <a href="${common.prefix}/${item}">${item}</a>
+%else:
+  <a href="${common.prefix}/*${item}">${item}</a>
+%endif
+  &gt; branch ${branch}
+</div>
+
 <h2>${htTitle}</h2>
 
 <div class="main-body">

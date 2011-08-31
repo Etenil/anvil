@@ -45,7 +45,7 @@ class Message:
         msg.read = True
         msg.mark_read()
         return common.render.message(msg=msg,
-                              htTitle="Message")
+                                     htTitle="Message")
     def new_message(self):
         return common.render.newmessage(htTitle="New message",
                                  form=self.new_form)

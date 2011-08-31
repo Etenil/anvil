@@ -5,6 +5,14 @@ import markdown
 import common
 %>
 
+<div id="breadcrumbs">
+  <a href="${common.prefix}/${proj}">${proj}</a>
+  &gt;
+  <a href="${common.prefix}/${proj}/doc">documents</a>
+  &gt;
+  ${doc.name}
+</div>
+
 <div class="main-body">
   <h2>${proj}'s ${doc.title}</h2>
   ${markdown.markdown(doc.content)}

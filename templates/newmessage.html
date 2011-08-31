@@ -2,6 +2,14 @@
 
 <% import common %>
 
+<div id="breacrumbs">
+  <a href="${common.prefix}/*${common.session.user}">${common.session.user}</a>
+  &gt;
+  <a href="${common.prefix}/message/list">messages</a>
+  &gt;
+  new message
+</div>
+
 %if error:
   <p class="error">${error}</p>
 %endif
