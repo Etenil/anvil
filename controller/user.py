@@ -157,11 +157,7 @@ class User:
                                 htTitle="Users")
 
     def make_profile_form(self):
-        f = form.Form(form.Textbox('name',
-                                   form.notnull,
-                                   form.regexp('^[a-z0-9._-]+$', "Name must only include low-case letters, digits, '.'. '_' and '-'"),
-                                   value=self.user.name),
-                      form.Textbox('email',
+        f = form.Form(form.Textbox('email',
                                    form.notnull,
                                    form.regexp('^[\w-]+(\.[\w-]+)*@([a-z0-9-]+(\.[a-z0-9-]+)*?\.[a-z]{2,6}|(\d{1,3}\.){3}\d{1,3})(:\d{4})?$', 'Invalid email address'),
                                    value=self.user.email),
@@ -192,7 +188,6 @@ class User:
             return common.render.editprofile(form=f,
                                       htTitle="Edit Profile")
         i = web.input()
-        self.user.name = i.name
         self.user.email = i.email
         self.user.homepage = i.homepage
         self.user.description = i.description
