@@ -1,5 +1,6 @@
 from hashlib import md5
 from urllib import urlencode
+import common
 import httplib
 import re
 
@@ -55,6 +56,6 @@ def logo(url):
     logo = pavatar(url, "logo.png")
 
     if not logo:
-        logo = "/static/img/project.png"
+        logo = common.prefix + "/static/img/project.png"
 
     return logo

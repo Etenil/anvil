@@ -92,13 +92,12 @@ class Project:
         try:
             proj = model.project.Project(name=name)
             branches = anvillib.bzr.list_branches(name)
+            return common.render.project(proj=proj,
+                                         canedit=proj.isadmin(common.session.user),
+                                         branches=branches,
+                                         htTitle="Project")
         except:
             raise web.seeother(common.prefix + '/')
-
-        return common.render.project(proj=proj,
-                                     canedit=proj.isadmin(common.session.user),
-                                     branches=branches,
-                                     htTitle="Project")
 
     def make_edit_form(self, proj):
         edit_form = form.Form(

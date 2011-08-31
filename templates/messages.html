@@ -10,11 +10,11 @@
   </table>
 %else:
   <table id="msg-list">
-    <tr><th>From</th><th>Subject</th><th>Date</th></tr>
+    <tr><th>Subject</th><th>From</th><th>Date</th></tr>
  %for msg in msgs:
     <tr>
-      <td><a href="${common.prefix}/*${msg.sender}">${msg.sender}</a></td>
       <td><a href="${common.prefix}/message/${msg.id}">${msg.subject}</a></td>
+      <td><a href="${common.prefix}/*${msg.sender}">${msg.sender}</a></td>
       <td>${msg.created}</td>
     </tr>
  %endfor

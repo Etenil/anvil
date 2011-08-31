@@ -29,6 +29,7 @@ urls = (
     '/([a-z0-9._-]+)/doc(?:/(.+?)(?:/(.+))?)?$'        , 'Doc',
     '/([a-z0-9._-]+)/(branch)/(.+?)(?:/(.+))?$'        , 'Project',
     '/([a-z0-9._-]+)(?:/(.+))?$'                       , 'Project', #Leave me at the bottom!
+    '.*'                                               , 'Main',
     )
 
 app = web.application(urls, globals(), autoreload=False)

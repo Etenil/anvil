@@ -1,5 +1,6 @@
 import os
 import sys
+import web
 from bzrlib.branch import Branch
 from bzrlib.osutils import format_date
 from bzrlib import log
@@ -60,16 +61,14 @@ class HtmlLogFormatter(log.LogFormatter):
         tags = ''
         if revision.tags:
             tags = ' {%s}' % (', '.join(revision.tags))
-        logvar += '<div class="revision">'
+        logvar += '<div id="%s" class="revision">' % revision.revno
         logvar += '<div class="revdate">%s</div>' % format_date(revision.rev.timestamp,
                                                                 revision.rev.timezone or 0,
                                                                 self.show_timezone, date_fmt="%Y-%m-%d",
                                                                 show_offset=False)
 
         logvar += '<div class="revbody">'
-        logvar += '<p class="revinfo">%s committed revision <span class="hl">%s</span> %s</p>' % (self.short_author(revision.rev),
-                                                 revision.revno or "",
-                                                 self.merge_marker(revision))
+        logvar += '<p class="revinfo">%s committed revision <span class="hl">%s</span> %s</p>' % (self.short_author(revision.rev), revision.revno or "", self.merge_marker(revision))
         if tags != "":
             logvar += '<p class="tags">%s</p>' % tags
 
@@ -81,7 +80,7 @@ class HtmlLogFormatter(log.LogFormatter):
         else:
             message = revision.rev.message.rstrip('\r\n')
             for l in message.split('\n'):
-                logvar += '<p class="revmessage">%s</p>' % l
+                logvar += '<p class="revmessage">%s</p>' % web.net.websafe(l)
 
         if revision.delta is not None:
             # Use the standard status output to display changes

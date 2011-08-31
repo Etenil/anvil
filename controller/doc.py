@@ -16,7 +16,7 @@ class Doc:
         elif action == None:
             return self.list_docs(project)
         elif action == "new":
-            return self.new_doc(project, action)
+            return self.new_doc(project)
         elif action != None and extra == "edit":
             return self.edit_doc(project, action)
         elif action != None:
@@ -51,7 +51,7 @@ class Doc:
 
     def new_doc(self, project):
         p = self._admin_or_die(project)
-        f = self.new_form()
+        f = self._make_doc_form()
         return common.render.docedit(form=f,
                                      proj=project,
                                      htTitle="New document for " + p.name)
