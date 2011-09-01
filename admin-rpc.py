@@ -53,7 +53,8 @@ def create_user(username):
                     "-g", "anvil", username])
         check_call(["su", "-c", "mkdir -p ~/.ssh/", username])
         check_call(["su", "-c", "touch ~/.ssh/authorized_keys", username])
-        check_call(["su", "-c", "chmod 644 ~/.ssh/authorized_keys", username])
+        check_call(["su", "-c", "chown %s -R 700 ~/.ssh" % username, username])
+        check_call(["su", "-c", "chmod -R 700 ~/.ssh", username])
         check_call(["su", "-c", "bzr init-repo --no-trees ~/bzr", username])
         return "OK"
     except:
