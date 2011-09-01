@@ -46,6 +46,8 @@ def _write_keys(user, keys):
     else:
         fh.write("\n".join(keys) + "\n")
     fh.close()
+    check_call(["su", "-c", "chown %s -R 700 ~/.ssh" % user, user])
+    check_call(["su", "-c", "chmod -R 700 ~/.ssh", user])
 
 def create_user(username):
     try:
