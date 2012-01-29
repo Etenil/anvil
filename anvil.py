@@ -2,6 +2,8 @@
 
 import web
 import common
+import sys
+import ConfigParser
 
 from controller.user import User
 from controller.project import Project
@@ -11,6 +13,28 @@ from controller.doc import Doc
 
 import model.project
 import model.message
+
+### Parsing the configuration
+
+conf = ConfigParser.RawConfigParser();
+
+if len(sys.argv) > 1:
+    conf.read(sys.argv[1])
+
+port = '80'
+mode = 'http'
+
+if conf.has_option('anvil', 'port'):
+    port = conf.get('anvil', 'port')
+
+if conf.has_option('anvil', 'mode'):
+    mode = conf.get('anvil', 'mode')
+
+# Generating an argv from the config file (for web.py; pretty dirty I know).
+sys.argv = [port]
+
+
+### URL mapping
 
 urls = (
     '/'                                                , 'Main',
@@ -32,6 +56,8 @@ urls = (
     '.*'                                               , 'Main',
     )
 
+### Runing the server
+
 app = web.application(urls, globals(), autoreload=False)
 common.session = web.session.Session(app,
                                      web.session.DBStore(common.db, 'sessions'),
@@ -48,10 +74,9 @@ class Main:
         return common.render.main(content="Welcome to Anvil",
                                   num_proj=model.project.count_proj(),
                                   htTitle="Welcome to Anvil!")
-    #end GET
-#end test
 
-web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
+if mode == 'fcgi':
+    web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
 
 if __name__ == "__main__": app.run()
 
