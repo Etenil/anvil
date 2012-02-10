@@ -8,6 +8,7 @@ import model.project
 import model.user
 import model.bugcomment
 import re
+from anvillib import config
 
 class Bug:
     new_user_form = form.Form(form.Textbox('summary'),
@@ -29,7 +30,7 @@ class Bug:
 
     def GET(self, project=None, action=None, extra=None):
         if project == None:
-            raise web.seeother(common.prefix + '/')
+            raise web.seeother(config.prefix + '/')
         elif action == None:
             return self.list_bugs(project)
         elif action == "all":
@@ -41,11 +42,11 @@ class Bug:
         elif action == "new":
             return self.new_bug(project)
         else:
-            raise web.seeother(common.prefix + '/')
+            raise web.seeother(config.prefix + '/')
 
     def POST(self, project=None, action=None, extra=None):
         if project == None:
-            raise web.seeother(common.prefix + '/')
+            raise web.seeother(config.prefix + '/')
         if action == "new":
             self.do_new_bug(project)
         elif re.match("^\d+$", action) and extra == "newcomm":
@@ -53,7 +54,7 @@ class Bug:
         elif re.match("^\d+$", action) and extra == "edit":
             return self.do_edit_bug(project, action)
         else:
-            raise web.seeother(common.prefix + '/' + project + '/bugs')
+            raise web.seeother(config.prefix + '/' + project + '/bugs')
 
     def list_bugs(self, project, closed=False):
         proj = model.project.Project(name=project)
@@ -99,12 +100,12 @@ class Bug:
             bug.save()
         except:
             a = 1
-        raise web.seeother(common.prefix + '/' + project + '/bugs')
+        raise web.seeother(config.prefix + '/' + project + '/bugs')
 
     def show_bug(self, project, num):
         bug = model.bug.Bug(num)
         if bug.project.name != project:
-            raise web.seeother(common.prefix + '/' + project + '/bugs')
+            raise web.seeother(config.prefix + '/' + project + '/bugs')
         else:
             f = self.new_comm_form()
             p = model.project.Project(name=project)
@@ -135,7 +136,7 @@ class Bug:
             comm.save()
         except:
             a = 1
-        raise web.seeother(common.prefix + '/' + project + '/bugs/' + bugnum)
+        raise web.seeother(config.prefix + '/' + project + '/bugs/' + bugnum)
 
     def _make_edit_form(self, proj, bug):
         p = model.project.Project(name=proj)
@@ -160,7 +161,7 @@ class Bug:
     def edit_bug(self, project, bugnum):
         p = model.project.Project(name=project)
         if not p.isadmin(common.session.user):
-            raise web.seeother(common.prefix + '/' + project + '/bugs/' + bugnum)
+            raise web.seeother(config.prefix + '/' + project + '/bugs/' + bugnum)
         bug = model.bug.Bug(bugnum)
         return common.render.bugedit(proj=project,
                                      bug=bug,
@@ -170,7 +171,7 @@ class Bug:
     def do_edit_bug(self, project, bugnum):
         p = model.project.Project(name=project)
         if not p.isadmin(common.session.user):
-            raise web.seeother(common.prefix + '/' + project + '/bugs/' + bugnum)
+            raise web.seeother(config.prefix + '/' + project + '/bugs/' + bugnum)
 
         comm = model.bugcomment.BugComment()
 
@@ -205,4 +206,4 @@ class Bug:
         comm.save()
         #except:
         #    a = 1
-        raise web.seeother(common.prefix + '/' + project + '/bugs/' + bugnum)
+        raise web.seeother(config.prefix + '/' + project + '/bugs/' + bugnum)

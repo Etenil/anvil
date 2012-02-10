@@ -1,0 +1,81 @@
+* Filesystem structure
+All stuff in a single user. Organisation looks like:
+
+anvil/
+|-- projects
+|   |-- projectA
+|   |   |-- b1
+|   |   |-- b2
+|   |   `-- b3
+|   `-- projectB
+|       |-- b1
+|       |-- b2
+|       `-- b3
+`-- users
+    |-- userA
+    |   |-- b1
+    |   |-- b2
+    |   `-- b3
+    `-- userB
+        |-- b1
+        |-- b2
+        `-- b3
+
+
+* SSH Binding
+Have to create a script that will call upon the correct bzr
+parameters. Original command goes:
+
+    bzr serve --inet --directory=<directory> --allow-writes
+
+We want do change the directory and the "--allow-writes" bit
+dynamically.
+
+OK, that doesn't seem easy as bazaar talks with the server node in its
+own dialect. However, it is possible to write a plugin that will. In
+fact, Launchpad already has such a plugin, and it should be possible
+to take it.
+
+** Path rewrite
+We'd like to rewrite the access path for the users. Obviously doing:
+
+    bzr+ssh://bzr@<server>/<project>/<branch>/
+
+and
+
+    bzr+ssh://bzr@<server>/~<user>/<branch>/
+
+are a lot easier than the alternative, and it saves quite a bit of
+typing (users get lazy!).
+
+** How to know who the user is.
+Apparently SSH populates the environment variable
+$SSH_ORIGINAL_COMMAND, which seems to contain the username as $arg[0],
+but this needs to be tested for bzr (original comes from git).
+
+** How to enforce ACLs
+[2012-02-08 Wed 14:21]
+When logging in on SSH, the plugin anv-serve needs to be started. It
+needs to create a transport that will map the path and check the
+user's credentials. Launchpad does this in a deep and lengthy way
+(suitable for them since they keep a forking bazaar server sitting
+around). We need to find a simpler way to do this.
+
+[2012-02-08 Wed 15:20]
+Create a new transport that exends RemoteTransport or
+ConnectedTransport and add URL handling to it.
+
+* Web server
+Ideally, we want the visitors to be able to access the code too,
+through HTTP. We need to map the URLs as we do for SSH, to something
+like:
+
+    bzr pull http://<server>/<project>/<branch>/
+
+and
+
+    bzr pull http://<server>/~<user>/<branch>/
+
+This is pretty simple, they just need to be remapped as
+needed. Perhaps a subdomain could be used for code access, like
+bzr.<server>.

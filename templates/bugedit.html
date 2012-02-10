@@ -2,21 +2,22 @@
 
 <%
 import markdown
+from anvillib.config import prefix
 import common
 %>
 
 <div id="breadcrumbs">
-  <a href="${common.prefix}/${proj}">${proj}</a>
+  <a href="${prefix}/${proj}">${proj}</a>
   &gt;
-  <a href="${common.prefix}/${proj}/bugs">bugs</a>
+  <a href="${prefix}/${proj}/bugs">bugs</a>
   &gt;
-  <a href="${common.prefix}/${proj}/bugs/${bug.id}">bug #${bug.id}</a>
+  <a href="${prefix}/${proj}/bugs/${bug.id}">bug #${bug.id}</a>
   &gt;
   edit
 </div>
 
 <h2>${htTitle}</h2>
 
-<form action="${common.prefix}/${proj}/bugs/${bug.id}/edit" method="post">
+<form action="${prefix}/${proj}/bugs/${bug.id}/edit" method="post">
   ${form.render()}
 </form>

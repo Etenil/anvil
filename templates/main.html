@@ -1,6 +1,7 @@
 <%inherit file="layout.html" />
 
 <% import common %>
+<% from anvillib.config import prefix %>
 
   <div class="main-body">
     <h1>Welcome to Anvil!</h1>
@@ -11,7 +12,7 @@
       convenience.
     </p>
     <p>
-      So <a href="${common.prefix}/register">register</a> and join us!
+      So <a href="${prefix}/register">register</a> and join us!
     </p>
 %else:
     <p>
@@ -20,12 +21,12 @@
 %endif
     <p>
       There are ${num_proj} projects on anvil!
-      <a href="${common.prefix}/project/list">Check them out</a>!
+      <a href="${prefix}/project/list">Check them out</a>!
     </p>
   </div>
 
 %if hasattr(common.session, "user") and common.session.user != None:
   <ul id="actions" class="buttons">
-    <li><a href="${common.prefix}/project/new">Start a new project</a></li>
+    <li><a href="${prefix}/project/new">Start a new project</a></li>
   </ul>
 %endif

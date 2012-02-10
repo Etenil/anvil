@@ -1,9 +1,12 @@
 <%inherit file="layout.html" />
 
-<% import common %>
+<%
+import common
+from anvillib.config import prefix
+%>
 
 <div id="breadcrumbs">
-  <a href="${common.prefix}/*${user}">${user}</a>
+  <a href="${prefix}/*${user}">${user}</a>
   &gt;
   ssh keys
 </div>
@@ -18,13 +21,12 @@
       <div class="desc">
         ${key.key}
       </div>
-      <a href="${common.prefix}/*${user}/key/${key.id}/delete">Delete</a>
+      <a href="${prefix}/*${user}/key/${key.id}/delete">Delete</a>
       <div class="clear"></div>
     </div>
   %endfor
 %endif
 
-<form action="${common.prefix}/*${user}/key/new" method="post">
+<form action="${prefix}/*${user}/key/new" method="post">
   ${form.render()}
 </form>
-

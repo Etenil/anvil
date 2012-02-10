@@ -1,11 +1,14 @@
 <%inherit file="layout.html" />
 
-<% import common %>
+<%
+import common
+from anvillib.config import prefix
+%>
 
 <div id="breacrumbs">
-  <a href="${common.prefix}/*${common.session.user}">${common.session.user}</a>
+  <a href="${prefix}/*${common.session.user}">${common.session.user}</a>
   &gt;
-  <a href="${common.prefix}/message/list">messages</a>
+  <a href="${prefix}/message/list">messages</a>
   &gt;
   new message
 </div>
@@ -16,6 +19,6 @@
 
 <h2>${htTitle}</h2>
 
-<form action="${common.prefix}/message/new" method="post">
+<form action="${prefix}/message/new" method="post">
   ${form.render()}
 </form>

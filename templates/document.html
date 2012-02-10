@@ -3,12 +3,13 @@
 <%
 import markdown
 import common
+from anvillib.config import prefix
 %>
 
 <div id="breadcrumbs">
-  <a href="${common.prefix}/${proj}">${proj}</a>
+  <a href="${prefix}/${proj}">${proj}</a>
   &gt;
-  <a href="${common.prefix}/${proj}/doc">documents</a>
+  <a href="${prefix}/${proj}/doc">documents</a>
   &gt;
   ${doc.name}
 </div>
@@ -19,12 +20,9 @@ import common
 </div>
 
 <ul id="actions" class="buttons">
-<!--  <li><a href="${common.prefix}/${proj}/doc/${doc.name}/history">Document history</a></li> -->
+<!--  <li><a href="${prefix}/${proj}/doc/${doc.name}/history">Document history</a></li> -->
 %if canedit:
-  <li><a href="${common.prefix}/${proj}/doc/${doc.name}/edit">Edit this document</a></li>
+  <li><a href="${prefix}/${proj}/doc/${doc.name}/edit">Edit this document</a></li>
 %endif
 </ul>
 <div class="clear"></div>
-
-
-

@@ -1,6 +1,9 @@
 <%inherit file="layout.html" />
 
-<% import common %>
+<%
+import common
+from anvillib.config import prefix
+%>
 
 <div id="breadcrumbs">
   login
@@ -10,6 +13,6 @@
     <p class="error">${error}</p>
 %endif
 
-<form action="${common.prefix}/login" method="post">
+<form action="${prefix}/login" method="post">
   ${form.render()}
 </form>

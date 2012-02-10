@@ -3,6 +3,7 @@ from urllib import urlencode
 import common
 import httplib
 import re
+import anvillib.config
 
 def url_exists(site, path):
     try:
@@ -56,6 +57,6 @@ def logo(url):
     logo = pavatar(url, "logo.png")
 
     if not logo:
-        logo = common.prefix + "/static/img/project.png"
+        logo = config.prefix + "/static/img/project.png"
 
     return logo

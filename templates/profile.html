@@ -3,6 +3,7 @@
 <%
 import markdown
 import common
+from anvillib.config import prefix
 %>
 
 <div id="breacrumbs">
@@ -21,9 +22,9 @@ import common
 </div>
  %if canedit:
   <ul id="actions" class="buttons">
-    <li><a href="${common.prefix}/message/list">Messages</a></li>
-    <li><a href="${common.prefix}/profile">Edit profile</a></li>
-    <li><a href="${common.prefix}/*${u.name}/key">SSH keys</a></li>
+    <li><a href="${prefix}/message/list">Messages</a></li>
+    <li><a href="${prefix}/profile">Edit profile</a></li>
+    <li><a href="${prefix}/*${u.name}/key">SSH keys</a></li>
   </ul>
  %endif
   <div class="clear"></div>
@@ -32,7 +33,7 @@ import common
   <h4>Branches</h4>
   <ul>
   %for b in branches:
-    <li><a href="${common.prefix}/*${u.name}/branch/${b}">${b}</a></li>
+    <li><a href="${prefix}/*${u.name}/branch/${b}">${b}</a></li>
   %endfor
   </ul>
 </div>

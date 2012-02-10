@@ -1,14 +1,16 @@
 <%inherit file="layout.html" />
 
-<% import common %>
+<%
+import common
+from anvillib.config import prefix
+%>
 
 <div id="breadcrumbs">
-  <a href="${common.prefix}/*${username}">${username}</a>
+  <a href="${prefix}/*${username}">${username}</a>
   &gt;
   edit profile
 </div>
 
-<form action="${common.prefix}/profile" method="post">
+<form action="${prefix}/profile" method="post">
   ${form.render()}
 </form>
-

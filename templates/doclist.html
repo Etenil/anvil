@@ -1,9 +1,12 @@
 <%inherit file="layout.html" />
 
-<% import common %>
+<%
+import common
+from anvillib.config import prefix
+%>
 
 <div id="breadcrumbs">
-  <a href="${common.prefix}/${proj.name}">${proj.name}</a>
+  <a href="${prefix}/${proj.name}">${proj.name}</a>
   &gt;
   documents
 </div>
@@ -19,8 +22,8 @@
     <tr><th>Title</th><th>Author</th><th>Modified</th></tr>
   %for doc in docs:
     <tr>
-      <td><a href="${common.prefix}/${proj.name}/doc/${doc.name}">${doc.title}</a></td>
-      <td><a href="${common.prefix}/*${doc.author.name}">${doc.author.name}</a></td>
+      <td><a href="${prefix}/${proj.name}/doc/${doc.name}">${doc.title}</a></td>
+      <td><a href="${prefix}/*${doc.author.name}">${doc.author.name}</a></td>
       <td>${doc.mtime}</td>
     </tr>
   %endfor
@@ -28,7 +31,7 @@
 %endif
 
   <ul id="actions" class="buttons">
-    <li><a href="${common.prefix}/${proj.name}/doc/new">Create a new document</a></li>
+    <li><a href="${prefix}/${proj.name}/doc/new">Create a new document</a></li>
   </ul>
 
 <div class="clear"></div>

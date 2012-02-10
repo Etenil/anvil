@@ -3,7 +3,6 @@
 import web
 import common
 import sys
-import ConfigParser
 
 from controller.user import User
 from controller.project import Project
@@ -13,25 +12,13 @@ from controller.doc import Doc
 
 import model.project
 import model.message
+from anvillib import config
 
 ### Parsing the configuration
-
-conf = ConfigParser.RawConfigParser();
-
-if len(sys.argv) > 1:
-    conf.read(sys.argv[1])
-
-port = '80'
-mode = 'http'
-
-if conf.has_option('anvil', 'port'):
-    port = conf.get('anvil', 'port')
-
-if conf.has_option('anvil', 'mode'):
-    mode = conf.get('anvil', 'mode')
+config.load_conf()
 
 # Generating an argv from the config file (for web.py; pretty dirty I know).
-sys.argv = [port]
+sys.argv = [config.val('port')]
 
 
 ### URL mapping
@@ -75,7 +62,7 @@ class Main:
                                   num_proj=model.project.count_proj(),
                                   htTitle="Welcome to Anvil!")
 
-if mode == 'fcgi':
+if config.val('mode') == 'fcgi':
     web.wsgi.runwsgi = lambda func, addr=None: web.wsgi.runfcgi(func, addr)
 
 if __name__ == "__main__": app.run()

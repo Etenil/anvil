@@ -1,12 +1,15 @@
 <%inherit file="layout.html" />
 
-<% import common %>
+<%
+import common
+from anvillib.config import prefix
+%>
 
 <div id="breacrumbs">
 %if not proj:
   new project
 %else:
-  <a href="${common.prefix}/${proj.name}">${proj.name}</a>
+  <a href="${prefix}/${proj.name}">${proj.name}</a>
   &gt;
   edit
 %endif
@@ -15,9 +18,9 @@
 <h2>${htTitle}</h2>
 
 %if not proj:
-<form action="${common.prefix}/project/new" method="post">
+<form action="${prefix}/project/new" method="post">
 %else:
-<form action="${common.prefix}/${proj.name}/edit" method="post">
+<form action="${prefix}/${proj.name}/edit" method="post">
 %endif
   ${form.render()}
 </form>

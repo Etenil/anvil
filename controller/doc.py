@@ -8,11 +8,12 @@ import model.project
 import model.user
 import re
 from anvillib.text import normalize_name
+from anvillib import config
 
 class Doc:
     def GET(self, project=None, action=None, extra=None):
         if project == None:
-            raise web.seeother(common.prefix + '/')
+            raise web.seeother(config.prefix + '/')
         elif action == None:
             return self.list_docs(project)
         elif action == "new":
@@ -22,11 +23,11 @@ class Doc:
         elif action != None:
             return self.show_doc(project, action)
         else:
-            raise web.seeother(common.prefix + '/' + project + '/doc')
+            raise web.seeother(config.prefix + '/' + project + '/doc')
 
     def POST(self, project=None, action=None, extra=None):
         if project == None:
-            raise web.seeother(common.prefix + '/')
+            raise web.seeother(config.prefix + '/')
         if action == "new":
             self.do_new_doc(project)
         elif action != None and extra == "delete":
@@ -34,12 +35,12 @@ class Doc:
         elif action != None and extra == "edit":
             return self.do_edit_doc(project, action)
         else:
-            raise web.seeother(common.prefix + '/' + project + '/doc')
+            raise web.seeother(config.prefix + '/' + project + '/doc')
 
     def _admin_or_die(self, project):
         p = model.project.Project(name=project)
         if not p.isadmin(common.session.user):
-            raise web.seeother(common.prefix + '/' + project + '/doc')
+            raise web.seeother(config.prefix + '/' + project + '/doc')
         return p
 
     def list_docs(self, project):
@@ -72,7 +73,7 @@ class Doc:
         doc.content = i.content
         doc.author = u.id
         doc.save()
-        raise web.seeother(common.prefix + '/' + project + '/doc/' + doc.name)
+        raise web.seeother(config.prefix + '/' + project + '/doc/' + doc.name)
 
     def show_doc(self, project, docname):
         p = model.project.Project(name=project)
@@ -125,5 +126,4 @@ class Doc:
         d.title = i.title
         d.content = i.content
         d.save()
-        raise web.seeother(common.prefix + '/' + project + '/doc/' + d.name)
-
+        raise web.seeother(config.prefix + '/' + project + '/doc/' + d.name)

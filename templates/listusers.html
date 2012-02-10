@@ -3,13 +3,14 @@
 <%
 import markdown
 import common
+from anvillib.config import prefix
 from anvillib.avatar import avatar
 %>
 
 <div id="breadcrumbs">
   users
 </div>
-  
+
 
 <h2>${htTitle}</h2>
 
@@ -18,7 +19,7 @@ from anvillib.avatar import avatar
 %else:
 %for u in users:
   <div class="user">
-    <h3><a href="${common.prefix}/*${u.name}">${u.name}</a></h3>
+    <h3><a href="${prefix}/*${u.name}">${u.name}</a></h3>
     <img class="smallavatar" src="${avatar(u.homepage, u.email)}" alt="avatar" />
     <div id="desc">
      %if len(u.description) > 200:

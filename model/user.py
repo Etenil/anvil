@@ -8,11 +8,11 @@ def create_user(name, email, password, homepage, description):
     if not re.match('^https?://', homepage):
         homepage = 'http://' + homepage
     common.db.insert('user',
-              name=name,
-              email=email,
-              homepage=homepage,
-              password=sha256(password).hexdigest(),
-              description=description)
+                     name=name,
+                     email=email,
+                     homepage=homepage,
+                     password=sha256(password).hexdigest(),
+                     description=description)
 #end create_user
 
 def user_login(email, password):

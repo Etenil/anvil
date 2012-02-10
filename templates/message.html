@@ -3,12 +3,13 @@
 <%
 import markdown
 import common
+from anvillib.config import prefix
 %>
 
 <div id="breadcrumbs">
-  <a href="${common.prefix}/*${common.session.user}">${common.session.user}</a>
+  <a href="${prefix}/*${common.session.user}">${common.session.user}</a>
   &gt;
-  <a href="${common.prefix}/message/list">messages</a>
+  <a href="${prefix}/message/list">messages</a>
   &gt;
   message
 </div>
@@ -23,7 +24,7 @@ import common
        %if user == msg.sender.name:
           Me
        %else:
-          <a href="${common.prefix}/*${msg.sender.name}">${msg.sender.name}</a>
+          <a href="${prefix}/*${msg.sender.name}">${msg.sender.name}</a>
        %endif
       </div>
       <div class="msg-hdr-elt textcenter">
@@ -31,7 +32,7 @@ import common
        %if user == msg.dest.name:
           Me
        %else:
-          <a href="${common.prefix}/*${msg.dest.name}">${msg.dest.name}</a>
+          <a href="${prefix}/*${msg.dest.name}">${msg.dest.name}</a>
        %endif
       </div>
       <div class="msg-hdr-elt textright">

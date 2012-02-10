@@ -1,11 +1,14 @@
 <%inherit file="layout.html" />
 
-<% import common %>
+<%
+import common
+from anvillib.config import prefix
+%>
 
 %if error:
     <p class="error">${error}</p>
 %endif
 
-<form action="${common.prefix}/register" method="post">
+<form action="${prefix}/register" method="post">
   ${form.render()}
 </form>

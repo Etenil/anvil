@@ -2,13 +2,14 @@
 
 <%
 import markdown
+from anvillib.config import prefix
 import common
 %>
 
 <div id="breadcrumbs">
-  <a href="${common.prefix}/${bug.project.name}">${bug.project.name}</a>
+  <a href="${prefix}/${bug.project.name}">${bug.project.name}</a>
   &gt;
-  <a href="${common.prefix}/${bug.project.name}/bugs">bugs</a>
+  <a href="${prefix}/${bug.project.name}/bugs">bugs</a>
   &gt;
   bug #${bug.id}
 <h2>${htTitle}</h2>
@@ -25,7 +26,7 @@ import common
        %if bug.guest:
           ${bug.author_extern}
        %else:
-          <a href="${common.prefix}/*${bug.author_intern.name}">${bug.author_intern.name}</a>
+          <a href="${prefix}/*${bug.author_intern.name}">${bug.author_intern.name}</a>
        %endif
       </div>
       <div class="msg-hdr-elt textcenter">
@@ -42,7 +43,7 @@ import common
         %if bug.assigned_to == None:
           No one
         %else:
-          <a href="${common.prefix}/*${bug.assigned_to.name}">${bug.assigned_to.name}</a>
+          <a href="${prefix}/*${bug.assigned_to.name}">${bug.assigned_to.name}</a>
         %endif
       </div>
       <div class="msg-hdr-elt textcenter">
@@ -93,7 +94,7 @@ import common
     %if common.session.user == None:
       <p>Please log in or register to post a comment.</p>
     %else:
-      <form action="${common.prefix}/${bug.project.name}/bugs/${bug.id}/newcomm" method="post">
+      <form action="${prefix}/${bug.project.name}/bugs/${bug.id}/newcomm" method="post">
         ${comm_form.render()}
       </form>
     %endif
@@ -102,6 +103,6 @@ import common
 
 %if can_edit:
   <ul id="actions" class="buttons">
-    <li><a href="${common.prefix}/${bug.project.name}/bugs/${bug.id}/edit">Edit bug</a></li>
+    <li><a href="${prefix}/${bug.project.name}/bugs/${bug.id}/edit">Edit bug</a></li>
   </ul>
 %endif

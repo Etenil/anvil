@@ -6,6 +6,7 @@ from anvillib.form import AjaxTextbox
 import model.message
 import model.user
 import re
+from anvillib import config
 
 class Message:
     new_form = form.Form(AjaxTextbox('to', '/ajax/listusers'),
@@ -27,7 +28,7 @@ class Message:
         if action == "new":
             self.make_new_message()
         else:
-            raise web.seeother(common.prefix + '/message/list')
+            raise web.seeother(config.prefix + '/message/list')
 
 
     def list_messages(self, extra):
@@ -77,4 +78,4 @@ class Message:
             return common.render.newmessage(error="<br />".join(errors),
                                      htTitle="New message",
                                      form=self.new_form)
-        raise web.seeother(common.prefix + '/message/list')
+        raise web.seeother(config.prefix + '/message/list')

@@ -4,11 +4,12 @@ import common
 from web.contrib.template import render_mako
 from anvillib.form import AjaxTextbox
 import anvillib.bzr
-import anvillib.xmlrpc
+import anvillib.fs
 import model.user
 import model.sshkey
 import model.project
 import re
+from anvillib import config
 
 class User:
     user = None
@@ -94,11 +95,11 @@ class User:
         f = self.reg_form()
         if not f.validates():
             return common.render.register(form=f,
-                                   htTitle="Register")
+                                          htTitle="Register")
         i = web.input()
         try:
             # Creating the user on the system
-            anvillib.xmlrpc.create_user(i.name)
+            anvillib.fs.create_user(config.val('home_dir'), i.name)
             # Adding the user
             model.user.create_user(name=i.name,
                                    email=i.email,
@@ -106,7 +107,7 @@ class User:
                                    homepage=i.homepage,
                                    description=i.description)
             common.session.user = i.name
-            raise web.seeother(common.prefix + '/')
+            raise web.seeother(config.prefix + '/')
         except model.user.UserError:
             return common.render.register(error="Username already exists!",
                                    form=f,
@@ -133,7 +134,7 @@ class User:
 
     def logout(self):
         common.session.user = None
-        raise web.seeother(common.prefix + '/')
+        raise web.seeother(config.prefix + '/')
 
     def show_user(self, username):
         try:
@@ -147,7 +148,7 @@ class User:
                                          branches=branches,
                                          htTitle="Profile")
         except model.user.UserError as error:
-            #raise web.seeother(common.prefix + '/')
+            #raise web.seeother(config.prefix + '/')
             return common.render.main(content=str(error),
                                num_proj=model.project.count_proj(),
                                htTitle="Welcome to Anvil!")
@@ -175,7 +176,7 @@ class User:
                                       form=f,
                                       htTitle="Edit Profile")
         except model.user.UserError as error:
-            #raise web.seeother(common.prefix + '/')
+            #raise web.seeother(config.prefix + '/')
             return common.render.main(content=str(error),
                                num_proj=model.project.count_proj(),
                                htTitle="Welcome to Anvil!")
@@ -193,7 +194,7 @@ class User:
         self.user.description = i.description
         try:
             self.user.save()
-            raise web.seeother(common.prefix + '/*' + self.user.name)
+            raise web.seeother(config.prefix + '/*' + self.user.name)
         except:
             return common.render.register(error="Username already exists!",
                                           form=f,
@@ -202,7 +203,7 @@ class User:
     def list_keys(self, username):
         user = model.user.User(name=username)
         if user.name != common.session.user:
-            raise web.seeother(common.prefix + '/*' + username)
+            raise web.seeother(config.prefix + '/*' + username)
         keys = model.sshkey.get_keys(user.id)
         f = self.key_form()
         return common.render.keylist(keys=keys,
@@ -222,7 +223,7 @@ class User:
             key.save()
         except:
             pass
-        raise web.seeother(common.prefix + '/*' + username + '/key')
+        raise web.seeother(config.prefix + '/*' + username + '/key')
 
     def do_del_key(self, username, key):
         user = model.user.User(name=username)
@@ -234,7 +235,7 @@ class User:
                 key.delete()
             except:
                 pass
-        raise web.seeother(common.prefix + '/*' + username + '/key')
+        raise web.seeother(config.prefix + '/*' + username + '/key')
 
     def show_branch(self, username, branch):
         user = model.user.User(name=username)
@@ -250,8 +251,8 @@ class User:
         user = model.user.User(name=username)
         if user.name == common.session.user:
             try:
-                anvillib.xmlrpc.delete_branch(username, branch)
+                anvillib.fs.delete_user_branch(config.val('home_dir'),
+                                               username, branch)
             except:
                 pass
-        raise web.seeother(common.prefix + '/*' + username)
-
+        raise web.seeother(config.prefix + '/*' + username)

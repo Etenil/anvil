@@ -3,11 +3,12 @@ from web import form
 import common
 from web.contrib.template import render_mako
 from anvillib.form import AjaxTextbox
-import anvillib.xmlrpc
+import anvillib.fs
 import anvillib.bzr
 import model.project
 import model.user
 import re
+from anvillib import config
 
 class Project:
     new_form = form.Form(
@@ -41,7 +42,7 @@ class Project:
         elif other == "edit":
             return self.make_edit_project(action)
         else:
-            raise web.seeother(common.prefix + '/')
+            raise web.seeother(config.prefix + '/')
 
     def new_project(self):
         f = self.new_form()
@@ -69,13 +70,13 @@ class Project:
         proj.description = i.description
         sshkeys = model.sshkey.get_keys(proj.owner.id)
         try:
-            anvillib.xmlrpc.create_user(proj.name)
+            anvillib.fs.create_project(proj.name)
             # Importing SSH keys
-            for k in sshkeys:
-                k.id = None
-                anvillib.xmlrpc.add_ssh_key(k.key, proj.name)
-                k.save()
-            proj.save()
+            # for k in sshkeys:
+            #     k.id = None
+            #     anvillib.xmlrpc.add_ssh_key(k.key, proj.name)
+            #     k.save()
+            # proj.save()
         except:
             error = True
             errors.append("Project already exists.")
@@ -84,7 +85,7 @@ class Project:
             return common.render.newproject(htTitle="New project",
                                             form=f)
         else:
-            raise web.seeother(common.prefix + '/' + proj.name)
+            raise web.seeother(config.prefix + '/' + proj.name)
     #end make_new
 
     def show_project(self, name):
@@ -97,7 +98,7 @@ class Project:
                                          branches=branches,
                                          htTitle="Project")
         except:
-            raise web.seeother(common.prefix + '/')
+            raise web.seeother(config.prefix + '/')
 
     def make_edit_form(self, proj):
         edit_form = form.Form(
@@ -112,7 +113,7 @@ class Project:
     def edit_project(self, name):
         proj = model.project.Project(name=name)
         if not proj.isadmin(common.session.user):
-            raise web.seeother(common.prefix + '/' + name)
+            raise web.seeother(config.prefix + '/' + name)
 
         f = self.make_edit_form(proj)
         return common.render.newproject(proj=proj,
@@ -125,10 +126,10 @@ class Project:
         try:
             proj = model.project.Project(name=name)
         except:
-            raise web.seeother(common.prefix + '/')
+            raise web.seeother(config.prefix + '/')
 
         if not proj.isadmin(common.session.user):
-            raise web.seeother(common.prefix + '/+' + name)
+            raise web.seeother(config.prefix + '/+' + name)
 
         i = web.input()
         proj2 = proj
@@ -137,7 +138,7 @@ class Project:
         proj2.description = i.description
         try:
             proj2.save()
-            web.seeother(common.prefix + '/' + proj2.name)
+            web.seeother(config.prefix + '/' + proj2.name)
         except:
             return common.render.newproject(errors=["Name already in use."],
                                      proj=proj,
@@ -160,8 +161,8 @@ class Project:
         p = model.project.Project(name=project)
         if p.isadmin(common.session.user):
             try:
-                anvillib.xmlrpc.delete_branch(project, branch)
+                anvillib.fs.delete_project_branch(project, branch)
             except:
                 pass
-        raise web.seeother(common.prefix + '/' + project)
+        raise web.seeother(config.prefix + '/' + project)
 #end Project
