@@ -27,6 +27,9 @@ from bzrlib.symbol_versioning import (
     deprecated_method,
     )
 
+_append_flags = os.O_CREAT | os.O_APPEND | os.O_WRONLY | osutils.O_BINARY | osutils.O_NOINHERIT
+_put_non_atomic_flags = os.O_CREAT | os.O_TRUNC | os.O_WRONLY | osutils.O_BINARY | osutils.O_NOINHERIT
+
 class AnvLocalTransport(transport.Transport):
     """This is the transport agent for local filesystem access."""
 

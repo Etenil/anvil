@@ -28,7 +28,7 @@ def initrepo(path):
     to_transport.ensure_base()
     newdir = format.initialize_on_transport(to_transport)
     repo = newdir.create_repository(shared=True)
-    repo.set_make_working_trees(True) # We want trees.
+    repo.set_make_working_trees(False) # We don't want trees.
     #Done.
 
 def initbranch(path):
