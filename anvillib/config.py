@@ -1,5 +1,12 @@
 import ConfigParser
 
+class ConfNotFoundError(Exception):
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return repr(self.value)
+
+
 # This is a bullshit module used to contain configuration.
 _values = {'port': '80',
            'mode': 'http',
@@ -18,7 +25,7 @@ def val(key):
     if key in _values:
         return _values[key]
     else:
-        return None
+        raise ConfNotFoundError("Configuration setting " + key + " is unknown")
 
 def load_conf():
     conf = ConfigParser.RawConfigParser()

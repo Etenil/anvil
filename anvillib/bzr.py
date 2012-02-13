@@ -4,19 +4,19 @@ import web
 from bzrlib.branch import Branch
 from bzrlib.osutils import format_date
 from bzrlib import log
-
-HOME_DIR = "/var/anvil/"
+import config
+import fs
 
 logvar = ""
 
 def list_branches(user):
-    homedir = HOME_DIR + user + "/bzr/"
+    homedir = fs.user_branch_dir(user)
     branches = os.listdir(homedir)
     branches.remove('.bzr')
     return branches
 
 def get_branch_log(user, branch):
-    path = HOME_DIR + user + "/bzr/" + branch
+    path = fs.user_branch_dir(user, branch)
     branch = Branch.open(path)
     global logvar
     logvar = ""
@@ -91,4 +91,3 @@ class HtmlLogFormatter(log.LogFormatter):
         if revision.diff is not None:
             self.show_diff(self.to_exact_file, revision.diff, '      ')
         logvar += '</div><div class="clear"></div></div>'
-

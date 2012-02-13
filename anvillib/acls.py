@@ -1,6 +1,7 @@
 from anvillib import config
 import MySQLdb
 import os
+import fs
 
 config.load_conf()
 
@@ -22,7 +23,7 @@ class UserFS(Repo):
         self.username = row[1]
 
     def branch_loc(self, branch_name):
-        return os.path.join(config.val('home_dir'), "users", self.username, branch_name)
+        return fs.user_branch_dir(self.username, branch_name)
 
     def can_access_project(self, project):
         # Dunno yet
@@ -43,10 +44,10 @@ class ProjectFS(Repo):
         self.projectname = row[1]
 
     def branch_loc(self, branch_name):
-        return os.path.join(config.val('home_dir'), "projects", self.projectname, branch_name)
+        return fs.project_branch_dir(self.projectname, branch_name)
 
 def user_branch_path(username, branch):
-    return os.path.join(config.val('home_dir'), "users", username, branch)
+    return fs.user_branch_dir(username, branch_name)
 
 def project_branch_path(project, branch):
-    return os.path.join(config.val('home_dir'), "projects", project, branch)
+    return fs.project_branch_dir(projectname, branch_name)
