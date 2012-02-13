@@ -3,7 +3,7 @@ from urllib import urlencode
 import common
 import httplib
 import re
-import anvillib.config
+import config
 
 def url_exists(site, path):
     try:
