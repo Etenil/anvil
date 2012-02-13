@@ -71,12 +71,7 @@ class Project:
         sshkeys = model.sshkey.get_keys(proj.owner.id)
         try:
             anvillib.fs.create_project(proj.name)
-            # Importing SSH keys
-            # for k in sshkeys:
-            #     k.id = None
-            #     anvillib.xmlrpc.add_ssh_key(k.key, proj.name)
-            #     k.save()
-            # proj.save()
+            proj.save()
         except:
             error = True
             errors.append("Project already exists.")

@@ -28,15 +28,14 @@ class UserFS(Repo):
         return fs.user_branch_dir(self.username, branch_name)
 
     def can_access_project(self, project):
-        # c = self.db.cursor()
-        # c.execute("SELECT COUNT(id) FROM project WHERE owner=%s AND name=%s",
-        #           (self.user_id, project))
-        # num = c.fetchone()
-        # if num[0] > 0:
-        #     return True
-        # else:
-        #     return False
-        return True
+        c = self.db.cursor()
+        c.execute("SELECT COUNT(id) FROM project WHERE owner=%s AND name=%s",
+                  (self.user_id, project))
+        num = c.fetchone()
+        if num[0] > 0:
+            return True
+        else:
+            return False
 
 
 class ProjectFS(Repo):
@@ -54,9 +53,3 @@ class ProjectFS(Repo):
 
     def branch_loc(self, branch_name):
         return fs.project_branch_dir(self.projectname, branch_name)
-
-def user_branch_path(username, branch):
-    return fs.user_branch_dir(username, branch)
-
-def project_branch_path(project, branch):
-    return fs.project_branch_dir(projectname, branch)

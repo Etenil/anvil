@@ -6,6 +6,7 @@ import sys
 import errno
 import shutil
 import anvillib.acls
+import anvillib.fs
 
 from cStringIO import StringIO
 
@@ -79,13 +80,13 @@ class AnvLocalTransport(transport.Transport):
             branch = path[(path.find("/") + 1):]
             if self.user.username != user:
                 return "/dev/null"
-            path = anvillib.acls.user_branch_path(user, branch)
+            path = anvillib.fs.user_branch_dir(user, branch)
         else:
             project = path[0:path.find("/")]
             branch = path[(path.find("/") + 1):]
             if not self.user.can_access_project(project):
                 return "/dev/null"
-            path = anvillib.acls.project_branch_path(user, branch)
+            path = anvillib.fs.project_branch_dir(project, branch)
 
         return path
 
