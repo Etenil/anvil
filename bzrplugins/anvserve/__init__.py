@@ -27,8 +27,7 @@ import tempfile
 import threading
 import time
 import pprint
-import anvillib.acls
-import anvillib.config
+import traceback
 
 from bzrlib import (
     commands,
@@ -142,7 +141,7 @@ class cmd_anvil_server(Command):
         url = urlutils.local_path_to_url(directory)
         if not allow_writes:
             url = 'readonly+' + url
-        t = AnvLocalTransport(url)
+        t = AnvLocalTransport(url, user_id)
         protocol(t, host, port, inet)
 
         # from lp.codehosting.bzrutils import install_oops_handler

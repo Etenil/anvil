@@ -24,6 +24,10 @@ class UserFS(Repo):
     def branch_loc(self, branch_name):
         return os.path.join(config.val('home_dir'), "users", self.username, branch_name)
 
+    def can_access_project(self, project):
+        # Dunno yet
+        return True
+
 
 class ProjectFS(Repo):
     projectname = ""
@@ -40,3 +44,9 @@ class ProjectFS(Repo):
 
     def branch_loc(self, branch_name):
         return os.path.join(config.val('home_dir'), "projects", self.projectname, branch_name)
+
+def user_branch_path(username, branch):
+    return os.path.join(config.val('home_dir'), "users", username, branch)
+
+def project_branch_path(project, branch):
+    return os.path.join(config.val('home_dir'), "projects", project, branch)

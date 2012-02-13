@@ -1,11 +1,11 @@
-__all__ = ['AnvRemoteSSHTransport']
+__all__ = ['AnvLocalTransport']
 
 import os
 from stat import ST_MODE, S_ISDIR, ST_SIZE, S_IMODE
 import sys
 import errno
 import shutil
-import traceback
+import anvillib.acls
 
 from cStringIO import StringIO
 
@@ -29,11 +29,12 @@ from bzrlib.symbol_versioning import (
 class AnvLocalTransport(transport.Transport):
     """This is the transport agent for local filesystem access."""
 
-    def __init__(self, base):
+    def __init__(self, base, userID):
         """Set the base path where files will be stored."""
+        self.user = anvillib.acls.UserFS(userID)
         if not base.startswith('file://'):
             symbol_versioning.warn(
-                "Instantiating LocalTransport with a filesystem path"
+                "Instantiating AnvLocalTransport with a filesystem path"
                 " is deprecated as of bzr 0.8."
                 " Please use bzrlib.transport.get_transport()"
                 " or pass in a file:// url.",
@@ -56,12 +57,12 @@ class AnvLocalTransport(transport.Transport):
         self._local_base = urlutils.local_path_from_url(base)
 
     def clone(self, offset=None):
-        """Return a new LocalTransport with root at self.base + offset
+        """Return a new AnvLocalTransport with root at self.base + offset
         Because the local filesystem does not require a connection,
         we can just return a new object.
         """
         if offset is None:
-            return LocalTransport(self.base)
+            return AnvLocalTransport(self.base)
         else:
             abspath = self.abspath(offset)
             if abspath == 'file://':
@@ -69,7 +70,24 @@ class AnvLocalTransport(transport.Transport):
                 # when clone from //HOST/path updir recursively
                 # we should stop at least at //HOST part
                 abspath = self.base
-            return LocalTransport(abspath)
+            return AnvLocalTransport(abspath)
+
+    def _anvilise_path(self, somepath):
+        path = somepath
+        if path.startswith("%2A"):
+            user = path[3:path.find("/")]
+            branch = path[(path.find("/") + 1):]
+            if self.user.username != user:
+                return "/dev/null"
+            path = anvillib.acls.user_branch_path(user, branch)
+        else:
+            project = path[0:path.find("/")]
+            branch = path[(path.find("/") + 1):]
+            if not self.user.can_access_project(project):
+                return "/dev/null"
+            path = anvillib.acls.project_branch_path(user, branch)
+
+        return path
 
     def _abspath(self, relative_reference):
         """Return a path for use in os calls.
@@ -78,20 +96,21 @@ class AnvLocalTransport(transport.Transport):
          - relative_reference does not contain '..'
          - relative_reference is url escaped.
         """
-        path = ""
+        relative_reference = self._anvilise_path(relative_reference)
         if relative_reference in ('.', ''):
-            path = self._local_base
-        else:
-            path = self._local_base + urlutils.unescape(relative_reference)
-        traceback.print_stack(None, 3)
-
-        return path
+            # _local_base normally has a trailing slash; strip it so that stat
+            # on a transport pointing to a symlink reads the link not the
+            # referent but be careful of / and c:\
+            return osutils.split(self._local_base)[0]
+        #return self._local_base + urlutils.unescape(relative_reference)
+        return urlutils.unescape(relative_reference)
 
     def abspath(self, relpath):
         """Return the full url to the given relative URL."""
         # TODO: url escape the result. RBC 20060523.
         # jam 20060426 Using normpath on the real path, because that ensures
         #       proper handling of stuff like
+        relpath = self._anvilise_path(relpath)
         path = osutils.normpath(osutils.pathjoin(
                     self._local_base, urlutils.unescape(relpath)))
         # on windows, our _local_base may or may not have a drive specified
@@ -109,7 +128,7 @@ class AnvLocalTransport(transport.Transport):
     def local_abspath(self, relpath):
         """Transform the given relative path URL into the actual path on disk
 
-        This function only exists for the LocalTransport, since it is
+        This function only exists for the AnvLocalTransport, since it is
         the only one that has direct local access.
         This is mostly for stuff like WorkingTree which needs to know
         the local working directory.  The returned path will always contain
@@ -140,16 +159,23 @@ class AnvLocalTransport(transport.Transport):
 
         :param relpath: The relative path to the file
         """
+        logf = open("/tmp/anvserve", "a")
         canonical_url = self.abspath(relpath)
         if canonical_url in transport._file_streams:
             transport._file_streams[canonical_url].flush()
+        filectt = None
         try:
             path = self._abspath(relpath)
-            return osutils.open_file(path, 'rb')
+            logf.write("Get " + relpath + " => " + path + "... ")
+            filectt = osutils.open_file(path, 'rb')
+            logf.write("file succesffuly opened")
         except (IOError, OSError),e:
             if e.errno == errno.EISDIR:
-                return LateReadError(relpath)
+                filectt = LateReadError(relpath)
             self._translate_error(e, path)
+        logf.write("\n")
+        logf.close()
+        return filectt
 
     def put_file(self, relpath, f, mode=None):
         """Copy the file-like object into the location.
@@ -384,10 +410,12 @@ class AnvLocalTransport(transport.Transport):
 
     def rename(self, rel_from, rel_to):
         path_from = self._abspath(rel_from)
+        path_to = self._abspath(rel_to)
         try:
             # *don't* call bzrlib.osutils.rename, because we want to
-            # detect errors on rename
-            os.rename(path_from, self._abspath(rel_to))
+            # detect conflicting names on rename, and osutils.rename tries to
+            # mask cross-platform differences there
+            os.rename(path_from, path_to)
         except (IOError, OSError),e:
             # TODO: What about path_to?
             self._translate_error(e, path_from)
@@ -423,7 +451,7 @@ class AnvLocalTransport(transport.Transport):
 
         :param relpaths: A list/generator of entries to be copied.
         """
-        if isinstance(other, LocalTransport):
+        if isinstance(other, AnvLocalTransport):
             # Both from & to are on the local filesystem
             # Unfortunately, I can't think of anything faster than just
             # copying them across, one by one :(
@@ -442,7 +470,7 @@ class AnvLocalTransport(transport.Transport):
                 count += 1
             return count
         else:
-            return super(LocalTransport, self).copy_to(relpaths, other, mode=mode, pb=pb)
+            return super(AnvLocalTransport, self).copy_to(relpaths, other, mode=mode, pb=pb)
 
     def listable(self):
         """See Transport.listable."""
@@ -466,7 +494,7 @@ class AnvLocalTransport(transport.Transport):
         path = relpath
         try:
             path = self._abspath(relpath)
-            return os.stat(path)
+            return os.lstat(path)
         except (IOError, OSError),e:
             self._translate_error(e, path)
 
@@ -499,6 +527,33 @@ class AnvLocalTransport(transport.Transport):
             os.rmdir(path)
         except (IOError, OSError),e:
             self._translate_error(e, path)
+
+    if osutils.host_os_dereferences_symlinks():
+        def readlink(self, relpath):
+            """See Transport.readlink."""
+            return osutils.readlink(self._abspath(relpath))
+
+    if osutils.hardlinks_good():
+        def hardlink(self, source, link_name):
+            """See Transport.link."""
+            try:
+                os.link(self._abspath(source), self._abspath(link_name))
+            except (IOError, OSError), e:
+                self._translate_error(e, source)
+
+    if osutils.has_symlinks():
+        def symlink(self, source, link_name):
+            """See Transport.symlink."""
+            abs_link_dirpath = urlutils.dirname(self.abspath(link_name))
+            source_rel = urlutils.file_relpath(
+                urlutils.strip_trailing_slash(abs_link_dirpath),
+                urlutils.strip_trailing_slash(self.abspath(source))
+            )
+
+            try:
+                os.symlink(source_rel, self._abspath(link_name))
+            except (IOError, OSError), e:
+                self._translate_error(e, source_rel)
 
     def _can_roundtrip_unix_modebits(self):
         if sys.platform == 'win32':
