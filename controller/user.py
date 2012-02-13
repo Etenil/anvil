@@ -99,7 +99,7 @@ class User:
         i = web.input()
         try:
             # Creating the user on the system
-            anvillib.fs.create_user(config.val('home_dir'), i.name)
+            anvillib.fs.create_user(i.name)
             # Adding the user
             model.user.create_user(name=i.name,
                                    email=i.email,
@@ -251,8 +251,7 @@ class User:
         user = model.user.User(name=username)
         if user.name == common.session.user:
             try:
-                anvillib.fs.delete_user_branch(config.val('home_dir'),
-                                               username, branch)
+                anvillib.fs.delete_user_branch(username, branch)
             except:
                 pass
         raise web.seeother(config.prefix + '/*' + username)

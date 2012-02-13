@@ -4,6 +4,8 @@ import web
 from bzrlib.branch import Branch
 from bzrlib.osutils import format_date
 from bzrlib import log
+from bzrlib import transport
+from bzrlib import bzrdir
 import config
 import fs
 
@@ -14,6 +16,28 @@ def list_branches(user):
     branches = os.listdir(homedir)
     branches.remove('.bzr')
     return branches
+
+def initrepo(path):
+    format = bzrdir.format_registry.make_bzrdir('default')
+    to_transport = transport.get_transport(path)
+    to_transport.ensure_base()
+    newdir = format.initialize_on_transport(to_transport)
+    repo = newdir.create_repository(shared=True)
+    repo.set_make_working_trees(True) # We want trees.
+    #Done.
+
+def initbranch(path):
+    format = bzrdir.format_registry.make_bzrdir('default')
+    to_transport = transport.get_transport(path)
+    to_transport.ensure_base()
+
+    a_bzrdir = bzrdir.BzrDir.open_from_transport(to_transport)
+    from bzrlib.transport.local import LocalTransport
+    if a_bzrdir.has_branch():
+        return # The branch already exists
+    branch = a_bzrdir.create_branch()
+    a_bzrdir.create_workingtree()
+    #Done.
 
 def get_branch_log(user, branch):
     path = fs.user_branch_dir(user, branch)
