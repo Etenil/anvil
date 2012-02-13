@@ -140,7 +140,7 @@ class User:
         try:
             user = model.user.User(name=username)
             canedit = (common.session.user == user.name)
-            branches = anvillib.bzr.list_branches(user.name)
+            branches = anvillib.bzr.list_user_branches(user.name)
 
             return common.render.profile(canedit=canedit,
                                          projs=model.user.get_user_proj(),
@@ -240,7 +240,7 @@ class User:
     def show_branch(self, username, branch):
         user = model.user.User(name=username)
         canedit = (common.session.user == user.name)
-        log = anvillib.bzr.get_branch_log(user.name, branch)
+        log = anvillib.bzr.get_user_branch_log(user.name, branch)
         return common.render.branch(branch=branch,
                                     canedit=canedit,
                                     log=log,

@@ -90,15 +90,15 @@ class Project:
 
     def show_project(self, name):
         """Displays details about project <name>."""
-        try:
-            proj = model.project.Project(name=name)
-            branches = anvillib.bzr.list_branches(name)
-            return common.render.project(proj=proj,
-                                         canedit=proj.isadmin(common.session.user),
-                                         branches=branches,
-                                         htTitle="Project")
-        except:
-            raise web.seeother(config.prefix + '/')
+        #try:
+        proj = model.project.Project(name=name)
+        branches = anvillib.bzr.list_project_branches(name)
+        return common.render.project(proj=proj,
+                                     canedit=proj.isadmin(common.session.user),
+                                     branches=branches,
+                                     htTitle="Project")
+        #except:
+            #raise web.seeother(config.prefix + '/')
 
     def make_edit_form(self, proj):
         edit_form = form.Form(
@@ -149,7 +149,7 @@ class Project:
     def show_branch(self, project, branch):
         p = model.project.Project(name=project)
         canedit = p.isadmin(common.session.user)
-        log = anvillib.bzr.get_branch_log(p.name, branch)
+        log = anvillib.bzr.get_project_branch_log(p.name, branch)
         return common.render.branch(branch=branch,
                                     canedit=canedit,
                                     log=log,

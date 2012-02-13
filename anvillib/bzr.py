@@ -11,11 +11,16 @@ import fs
 
 logvar = ""
 
-def list_branches(user):
-    homedir = fs.user_branch_dir(user)
-    branches = os.listdir(homedir)
+def _list_branches(path):
+    branches = os.listdir(path)
     branches.remove('.bzr')
     return branches
+
+def list_user_branches(user):
+    return _list_branches(fs.user_branch_dir(user))
+
+def list_project_branches(project):
+    return _list_branches(fs.project_branch_dir(project))
 
 def initrepo(path):
     format = bzrdir.format_registry.make_bzrdir('default')
@@ -39,8 +44,7 @@ def initbranch(path):
     a_bzrdir.create_workingtree()
     #Done.
 
-def get_branch_log(user, branch):
-    path = fs.user_branch_dir(user, branch)
+def _get_branch_log(path):
     branch = Branch.open(path)
     global logvar
     logvar = ""
@@ -48,6 +52,12 @@ def get_branch_log(user, branch):
     rqst = log.make_log_request_dict()
     log.Logger(branch, rqst).show(lf)
     return logvar
+
+def get_user_branch_log(user, branch):
+    return _get_branch_log(fs.user_branch_dir(user, branch))
+
+def get_project_branch_log(user, branch):
+    return _get_branch_log(fs.project_branch_dir(user, branch))
 
 class HtmlLogFormatter(log.LogFormatter):
     supports_merge_revisions = True

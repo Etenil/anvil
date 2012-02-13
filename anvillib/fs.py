@@ -36,7 +36,7 @@ def user_branch_dir(username, branch=None):
 # PROJECT
 def create_project(projectname):
     check_defaults()
-    os.makedirs(os.path.join(config.val('home_dir'), "projects", projectname))
+    bzr.initrepo(project_branch_dir(projectname))
 
 def check_projects():
     projspath = os.path.join(config.val('home_dir'), "projects")
@@ -56,9 +56,9 @@ def project_branch_dir(project, branch=None):
     """Returns the path to the branch of project. If branch is None,
     then returns the path to the project's branch repository."""
     if branch == None:
-        return os.path.join(config.val('home_dir'), "users", project)
+        return os.path.join(config.val('home_dir'), "projects", project)
     else:
-        return os.path.join(config.val('home_dir'), "users", project, branch)
+        return os.path.join(config.val('home_dir'), "projects", project, branch)
 
 
 def check_defaults():
