@@ -16,7 +16,8 @@ _values = {'port': '80',
            'db.pwd': 'anvil',
            'db.host': 'localhost',
            'prefix': '',
-           'title': 'Anvil'}
+           'title': 'Anvil',
+           'host': 'localhost:8080'}
 
 prefix = ""
 

@@ -3,6 +3,7 @@
 <%
 import common
 from anvillib.config import prefix
+from anvillib import config
 import markdown
 %>
 
@@ -21,13 +22,13 @@ import markdown
   <div id="branch-details">
     <label>bzr branch</label>
     <input type="text"
-           value="http://${common.host}/~${item}/${branch}"
+           value="http://${config.val('host')}/~${item}/${branch}"
            readonly="readonly" />
     %if canedit:
       <br/>
       <label>bzr push</label>
       <input type="text"
-             value="bzr+ssh://${item}@${common.host}/${branch}/"
+             value="bzr+ssh://bzr@${config.val('host')}/*${item}/${branch}/"
              readonly="readonly" />
     %endif
     <div class="clear"></div>
