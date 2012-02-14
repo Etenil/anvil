@@ -1,0 +1,12 @@
+[anvil]
+port=8080
+mode=http
+home_dir=/var/anvil/
+title=Anvil
+prefix=
+
+[db]
+name=anvil
+user=anvil
+pwd=anvil
+host=localhost
