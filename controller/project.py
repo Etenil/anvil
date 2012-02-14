@@ -32,6 +32,11 @@ class Project:
                 return self.del_branch(name, arg1)
             elif other == "branch" and arg1 != None:
                 return self.show_branch(name, arg1)
+            elif other == "commiters":
+                if arg1 == "add":
+                    return self.add_commiter(name, arg2)
+                else:
+                    return self.rem_commiter(name, arg2)
             else:
                 return self.show_project(name)
     #end GET
@@ -91,6 +96,7 @@ class Project:
         return common.render.project(proj=proj,
                                      canedit=proj.isadmin(common.session.user),
                                      branches=branches,
+                                     commiters=proj.get_commiters(),
                                      htTitle="Project")
         #except:
             #raise web.seeother(config.prefix + '/')
@@ -160,4 +166,33 @@ class Project:
             except:
                 pass
         raise web.seeother(config.prefix + '/' + project)
+
+    def add_commiter(self, proj_name, commiter_name):
+        proj = model.project.Project(name=proj_name)
+        if proj.isadmin(common.session.user):
+            try:
+                commiter = model.user.User(name=commiter_name)
+            except:
+                return web.notfound()
+            # Checking if the commiter is already linked.
+            commiters = proj.get_commiters()
+            for c in commiters:
+                if c.id == commiter.id:
+                    return web.forbidden()
+            # OK, we add.
+            proj.add_commiter(commiter.id)
+            return ""
+        else:
+            return web.forbidden()
+
+    def rem_commiter(self, proj_name, commiter_name):
+        proj = model.project.Project(name=proj_name)
+        if proj.isadmin(common.session.user):
+            try:
+                commiter = model.user.User(name=commiter_name)
+            except:
+                a = 2
+            else:
+                proj.rem_commiter(commiter.id)
+        raise web.seeother(config.prefix + '/' + proj_name)
 #end Project

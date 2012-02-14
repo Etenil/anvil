@@ -36,3 +36,47 @@ from anvillib.config import prefix
   %endfor
   </ul>
 </div>
+
+<div id="commiters">
+  <h4>Commiters</h4>
+  <ul id="commiterslist">
+  %for c in commiters:
+    <li>
+      <a href="${prefix}/*${c.name}">${c.name}</a>
+      %if proj.owner.id != c.id:
+      <a href="${prefix}/${proj.name}/commiters/del/${c.name}">x</a>
+      %endif
+    </li>
+  %endfor
+  </ul>
+  <input type="text" name="newcommiter" id="newcommiter"/>
+  <div id="autocomplete_choices_newcommiter" class="autocomplete"></div>
+  <script type="text/javascript">
+    new Ajax.Autocompleter("newcommiter", "autocomplete_choices_newcommiter", "/ajax/listusers",
+                           {paramName: "value", minChars: 2, tokens: ","});
+    function send_commiter() {
+        new Ajax.Request('${proj.name}/commiters/add/' + $('newcommiter').value,
+                         {
+                             method:'get',
+                             onSuccess: function(transport){
+                                 atag = document.createElement('a');
+                                 /*atag.setAttribute('href', '${prefix}/*' + $('newcommiter').value);
+                                 atag.innerHTML = $('newcommiter').value;*/
+                                 li = document.createElement('li');
+                                 li.innerHTML = '<a href="${prefix}/*' + $('newcommiter').value + '">'
+                                     + $('newcommiter').value + '</a>&nbsp;'
+                                     + '<a href="${prefix}/${proj.name}/commiters/del/'+ $('newcommiter').value +'">x</a>';
+                                 //li.appendChild(atag);
+                                 $('commiterslist').appendChild(li);
+                                 $('newcommiter').value = "";
+                             },
+                             onFailure: function(transport){
+                                 alert('Failed to add ' +
+                                       $('newcommiter').value +
+                                       ' to the commiters.');
+                             }
+                         });
+    }
+  </script>
+  <input type="button" value="Add" onclick="send_commiter()" /></a>
+</div>

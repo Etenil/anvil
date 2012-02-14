@@ -21,7 +21,6 @@ def list_proj():
 class Project:
     id = None
     name = ""
-    owned_by_team = None
     owner = ""
     homepage = ""
     description = ""
@@ -43,26 +42,19 @@ class Project:
                 proj = projects[0]
                 self.id = proj.id
                 self.name = proj.name
-                self.owned_by_team = (proj.owned_by_team != 0)
                 self.homepage = proj.homepage
                 self.description = proj.description
                 self.created = proj.created
-                if not self.owned_by_team:
-                    self.owner = user.User(id=proj.owner)
+                self.owner = user.User(id=proj.owner)
     #end __init__
 
     def save(self):
-        owned_by_team = '0'
-        if self.owned_by_team == True:
-            owned_by_team = '1'
-
         if self.id != None:
             common.db.update('project', where="id=" + web.db.sqlquote(self.id),
-                      name=self.name, owned_by_team=owned_by_team,
-                      description=self.description, owner=self.owner.id,
+                      name=self.name, description=self.description, owner=self.owner.id,
                       homepage=self.homepage)
         else:
-            common.db.insert('project', name=self.name, owned_by_team=owned_by_team,
+            common.db.insert('project', name=self.name,
                       description=self.description, owner=self.owner.id,
                       homepage=self.homepage)
     #end save
@@ -72,15 +64,25 @@ class Project:
     #end logo
 
     def isadmin(self, username):
-        try:
-            usr = user.User(name=username)
-        except:
-            return False
+        commiters = self.get_commiters()
+        for c in commiters:
+            if c.name == username:
+                return True
+        return False
 
-        return (usr.id == self.owner.id)
-
-    def members(self):
+    def get_commiters(self):
         """Returns the list of members of the project."""
-        return [self.owner]
+        commiters_a = common.db.select('commiters', where=("project=%d" % self.id))
+        commiters = []
+        for c in commiters_a:
+            commiters.append(user.User(id=c.user))
+        return commiters
 
+    def add_commiter(self, user_id):
+        """Adds a commiter to the project."""
+        common.db.insert('commiters', project=self.id, user=user_id)
+
+    def rem_commiter(self, user_id):
+        """Removes a commiter from the project."""
+        common.db.delete('commiters', where=("project=%d AND user=%d" % (self.id, user_id)))
 #end Project

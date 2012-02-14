@@ -233,7 +233,6 @@ DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) DEFAULT NULL,
-  `owned_by_team` tinyint(1) NOT NULL DEFAULT '0',
   `owner` int(11) DEFAULT NULL,
   `homepage` text,
   `description` text,
@@ -252,6 +251,32 @@ CREATE TABLE `project` (
 LOCK TABLES `project` WRITE;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `commiters`
+--
+
+DROP TABLE IF EXISTS `commiters`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `commiters` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `project` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE
+  CONSTRAINT `user_ibfk_2` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `project`
+--
+
+LOCK TABLES `commiters` WRITE;
+/*!40000 ALTER TABLE `commiters` DISABLE KEYS */;
+/*!40000 ALTER TABLE `commiters` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

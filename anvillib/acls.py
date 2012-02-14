@@ -29,12 +29,13 @@ class UserFS(Repo):
 
     def can_access_project(self, project):
         c = self.db.cursor()
-        c.execute("SELECT COUNT(id) FROM project WHERE owner=%s AND name=%s",
+        c.execute("SELECT COUNT(commiters.id) FROM project, commiters WHERE commiters.user=%s AND project.name=%s AND commiters.project=project.id",
                   (self.user_id, project))
         num = c.fetchone()
         if num[0] > 0:
             return True
         else:
+            print "Unauthorized!"
             return False
 
 
