@@ -73,7 +73,6 @@ class Project:
         proj.owner = model.user.User(name=common.session.user)
         proj.homepage = i.homepage
         proj.description = i.description
-        sshkeys = model.sshkey.get_keys(proj.owner.id)
         try:
             anvillib.fs.create_project(proj.name)
             proj.save()

@@ -12,6 +12,13 @@ def get_keys(user):
         keys.append(SSHKey(row=r))
     return keys
 
+def has_key(somekey):
+    rkeys = common.db.select('ssh_keys', where=("pubkey='%s'" % somekey))
+    if len(rkeys) > 0:
+        return True
+    else:
+        return False
+
 class SSHKey:
     id = None
     user = None

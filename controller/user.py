@@ -5,6 +5,7 @@ from web.contrib.template import render_mako
 from anvillib.form import AjaxTextbox
 import anvillib.bzr
 import anvillib.fs
+import anvillib.ssh
 import model.user
 import model.sshkey
 import model.project
@@ -213,26 +214,30 @@ class User:
 
     def do_new_key(self, username):
         user = model.user.User(name=username)
-        key = model.sshkey.SSHKey()
-        i = web.input()
-        key.user = user.id
-        key.key = i.key
+        if user.name != common.session.user:
+            raise web.seeother(config.prefix + '/*' + username)
 
-        try:
-            anvillib.xmlrpc.add_ssh_key(key.key, username)
+        # Does the key already exist?
+        i = web.input()
+        if not model.sshkey.has_key(i.key):
+            key = model.sshkey.SSHKey()
+            key.user = user.id
+            key.key = i.key
             key.save()
-        except:
-            pass
+            anvillib.ssh.regenerate_keys()
         raise web.seeother(config.prefix + '/*' + username + '/key')
 
     def do_del_key(self, username, key):
         user = model.user.User(name=username)
+        if user.name != common.session.user:
+            raise web.seeother(config.prefix + '/*' + username)
+
         key = model.sshkey.SSHKey(id=key)
 
         if user.id == key.user:
             try:
-                anvillib.xmlrpc.remove_ssh_key(key.key, username)
                 key.delete()
+                anvillib.ssh.regenerate_keys()
             except:
                 pass
         raise web.seeother(config.prefix + '/*' + username + '/key')
