@@ -5,6 +5,15 @@ import common
 from anvillib.config import prefix
 %>
 
+  <ul id="actions" class="buttons">
+    <li><a href="${prefix}/${proj.name}/bugs/new">Report a bug</a></li>
+    %if show_all:
+      <li><a href="${prefix}/${proj.name}/bugs">Hide closed bugs</a></li>
+    %else:
+      <li><a href="${prefix}/${proj.name}/bugs/all">Show closed bugs</a></li>
+    %endif
+  </ul>
+
 <div id="breadcrumbs">
   <a href="${prefix}/${proj.name}">${proj.name}</a>
   &gt;
@@ -35,14 +44,5 @@ from anvillib.config import prefix
   %endfor
   </table>
 %endif
-
-  <ul id="actions" class="buttons">
-    <li><a href="${prefix}/${proj.name}/bugs/new">Report a bug</a></li>
-    %if show_all:
-      <li><a href="${prefix}/${proj.name}/bugs">Hide closed bugs</a></li>
-    %else:
-      <li><a href="${prefix}/${proj.name}/bugs/all">Show closed bugs</a></li>
-    %endif
-  </ul>
 
 <div class="clear"></div>

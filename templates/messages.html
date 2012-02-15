@@ -5,6 +5,16 @@ import common
 from anvillib.config import prefix
 %>
 
+  <ul id="actions" class="buttons">
+    <li><a href="${prefix}/message/new">Write a new message</a></li>
+   %if show_all:
+      <li><a href="${prefix}/message">Hide read messages</a></li>
+   %else:
+      <li><a href="${prefix}/message/all">Show read messages</a></li>
+   %endif
+    <li><a href="${prefix}/message/sent">Sent messages</a></li>
+  </ul>
+
 <div id="breadcrumbs">
   <a href="${prefix}/*${common.session.user}">${common.session.user}</a>
   &gt;
@@ -29,15 +39,5 @@ from anvillib.config import prefix
  %endfor
   </table>
 %endif
-
-  <ul id="actions" class="buttons">
-    <li><a href="${prefix}/message/new">Write a new message</a></li>
-   %if show_all:
-      <li><a href="${prefix}/message">Hide read messages</a></li>
-   %else:
-      <li><a href="${prefix}/message/all">Show read messages</a></li>
-   %endif
-    <li><a href="${prefix}/message/sent">Sent messages</a></li>
-  </ul>
 
 <div class="clear"></div>

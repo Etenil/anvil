@@ -6,6 +6,12 @@ from anvillib.config import prefix
 import common
 %>
 
+%if can_edit:
+  <ul id="actions" class="buttons">
+    <li><a href="${prefix}/${bug.project.name}/bugs/${bug.id}/edit">Edit bug</a></li>
+  </ul>
+%endif
+
 <div id="breadcrumbs">
   <a href="${prefix}/${bug.project.name}">${bug.project.name}</a>
   &gt;
@@ -100,9 +106,3 @@ import common
     %endif
   </div>
 </div>
-
-%if can_edit:
-  <ul id="actions" class="buttons">
-    <li><a href="${prefix}/${bug.project.name}/bugs/${bug.id}/edit">Edit bug</a></li>
-  </ul>
-%endif

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<!-- Generator: Adobe Illustrator 10.0, SVG Export Plug-In . SVG Version: 3.0.0 Build 77)  -->
 
 <svg
+   xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/"
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -9,73 +10,184 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="128"
-   height="64"
+   enable-background="new 0 0 365.043 275.545"
+   height="275.54401"
+   i:pageBounds="0 792 612 0"
+   i:rulerOrigin="0 0"
+   i:viewOrigin="123 533"
+   overflow="visible"
+   space="preserve"
+   viewBox="0 0 885.67096 275.54399"
+   width="885.67096"
    id="svg2"
    version="1.1"
-   inkscape:version="0.48.1 r9760"
+   inkscape:version="0.47 r22583"
    sodipodi:docname="anvil.svg"
-   inkscape:export-filename="/srv/http/anvil/static/img/logo.png"
-   inkscape:export-xdpi="45"
-   inkscape:export-ydpi="45">
+   style="overflow:visible">
   <defs
-     id="defs4">
+     id="defs35">
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
-       inkscape:vp_x="0 : 526.18109 : 1"
+       inkscape:vp_x="0 : 137.77251 : 1"
        inkscape:vp_y="0 : 1000 : 0"
-       inkscape:vp_z="744.09448 : 526.18109 : 1"
-       inkscape:persp3d-origin="372.04724 : 350.78739 : 1"
-       id="perspective10" />
+       inkscape:vp_z="365.043 : 137.77251 : 1"
+       inkscape:persp3d-origin="182.5215 : 91.848338 : 1"
+       id="perspective37" />
   </defs>
   <sodipodi:namedview
-     id="base"
      pagecolor="#ffffff"
      bordercolor="#666666"
-     borderopacity="1.0"
-     inkscape:pageopacity="0.0"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="5.6"
-     inkscape:cx="61.97423"
-     inkscape:cy="34.356276"
-     inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:window-width="1440"
+     inkscape:window-height="833"
+     id="namedview33"
      showgrid="false"
-     showguides="true"
-     inkscape:guide-bbox="true"
-     inkscape:window-width="1280"
-     inkscape:window-height="746"
+     inkscape:zoom="0.60562591"
+     inkscape:cx="457.49494"
+     inkscape:cy="128.83163"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
   <metadata
-     id="metadata7">
+     id="metadata4">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
+        <dc:title>R15 General</dc:title>
+        <dc:description />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>tool</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://www.openclipart.org/">
+            <dc:title>Open Clip Art Library</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>Gerald G.</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>Gerald G.</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <dc:date />
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <cc:license
+           rdf:resource="http://web.resource.org/cc/PublicDomain" />
+        <dc:language>en</dc:language>
       </cc:Work>
+      <cc:License
+         rdf:about="http://web.resource.org/cc/PublicDomain">
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Reproduction" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/Distribution" />
+        <cc:permits
+           rdf:resource="http://web.resource.org/cc/DerivativeWorks" />
+      </cc:License>
     </rdf:RDF>
   </metadata>
   <g
-     inkscape:label="Layer 1"
-     inkscape:groupmode="layer"
-     id="layer1"
-     transform="translate(0,-988.3622)">
+     id="g2825"
+     transform="translate(0,-6.9902938e-6)">
     <path
-       inkscape:connector-curvature="0"
-       style="fill:none;stroke:#ffffff;stroke-width:13.88437842999999994;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="m 74.535401,995.84563 0,3.57358 9.168509,0 0,2.85859 29.88254,0 c -10.27153,16.3225 -47.382586,5.7808 -47.382586,29.9669 l 9.484557,8.7176 0,3.9165 -38.058286,0 0,-3.9165 9.484556,-8.7176 c 0,-13.6444 -28.57373,-29.816 -38.0582869,-29.8158 l 0,-6.56967 0,-2e-4 65.4789969,-0.0133 z"
-       id="path2816-3"
-       sodipodi:nodetypes="ccccccccccccccc" />
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd"
+       id="path9"
+       i:knockout="Off"
+       d="M 0,34.344 0.72,53.46 C 9.396,60.732 18,68.04 26.928,75.78 35.892,83.52 45.792,90 53.856,99.504 c 7.884,9.396 16.992,18 20.52,32.616 3.384,14.651 3.384,32.509 0,54.54 l -10.98,18.756 -0.36,21.961 20.556,8.855 c 5.796,-2.16 12.6,-3.205 20.556,-2.844 7.92,0.215 19.62,1.332 26.892,4.607 7.2,3.203 12.24,10.297 15.948,14.904 3.564,4.607 5.508,8.604 5.688,12.383 l 23.724,10.262 68.004,-68.689 -0.721,-23.4 v 0.002 c -3.312,-1.586 -6.336,-3.24 -9.216,-4.969 -2.952,-1.801 -5.616,-3.637 -8.136,-5.652 24.3,1.801 44.496,2.52 61.992,1.764 17.352,-0.9 29.592,-3.275 41.436,-6.012 11.7,-2.699 22.393,-7.309 28.332,-9.936 5.796,-2.701 7.813,-4.176 6.732,-6.373 -1.225,-2.412 -3.168,-3.059 -13.464,-7.775 -10.62,-4.896 -35.028,-15.3 -48.528,-20.916 -13.428,-5.616 -23.544,-9.612 -31.176,-12.384 v -9.576 L 249.01,92.808 V 78.624 L 46.404,0 C 30.96,11.448 15.48,22.896 0,34.344 z"
+       clip-rule="evenodd" />
     <path
-       inkscape:connector-curvature="0"
-       style="color:#000000;fill:none;stroke:#000000;stroke-width:6.33497858;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
-       d="m 74.535401,995.84563 0,3.57358 9.168509,0 0,2.85859 29.88254,0 c -10.27153,16.3225 -47.382586,5.7808 -47.382586,29.9669 l 9.484557,8.7176 0,3.9165 -38.058286,0 0,-3.9165 9.484556,-8.7176 c 0,-13.6444 -28.57373,-29.816 -38.0582869,-29.8158 l 0,-6.56967 0,-2e-4 65.4789969,-0.0133 z"
-       id="path2816"
-       sodipodi:nodetypes="ccccccccccccccc" />
+       style="fill:#a1a1a1;fill-rule:evenodd"
+       id="path11"
+       i:knockout="Off"
+       d="m 3.888,37.188 205.452,81.108 37.872,-37.548 c -7.668,7.128 -14.688,12.528 -21.6,16.632 -6.84,4.032 -9.721,7.632 -19.477,7.452 -9.936,-0.396 -16.164,-1.476 -39.672,-9.216 C 142.56,87.624 92.16,68.328 64.836,58.428 37.548,48.636 17.604,41.652 3.888,37.188 z"
+       clip-rule="evenodd" />
+    <path
+       style="fill:#a1a1a1;fill-rule:evenodd"
+       id="path13"
+       i:knockout="Off"
+       d="m 249.336,96.336 c -9.54,9.144 -16.164,15.876 -20.16,20.196 -3.96,4.284 -5.328,3.852 -3.563,5.652 1.62,1.692 9.216,4.392 13.464,4.608 4.176,0.072 7.812,-1.224 11.34,-3.888 l -6.732,8.496 -27.972,-8.136 27.612,-26.208 c 1.979,-0.216 3.995,-0.468 6.011,-0.72 z"
+       clip-rule="evenodd" />
+    <path
+       style="fill:#a1a1a1;fill-rule:evenodd"
+       id="path15"
+       i:knockout="Off"
+       d="m 261.396,127.512 c -6.12,-0.54 -9.648,0.54 -11.7,2.808 -2.196,2.304 -3.097,7.993 -1.044,10.657 2.016,2.52 4.248,2.555 13.104,4.572 8.856,1.979 22.933,5.508 39.313,7.092 16.344,1.439 50.184,2.627 57.384,1.764 6.804,-0.9 -3.888,-3.527 -15.948,-7.057 -12.24,-3.707 -42.228,-10.835 -55.944,-14.184 -13.609,-3.348 -19.081,-5.184 -25.165,-5.652 z"
+       clip-rule="evenodd" />
+    <path
+       style="fill:#414141;fill-opacity:1;fill-rule:evenodd"
+       id="path17"
+       i:knockout="Off"
+       d="m 63.036,46.044 16.308,-11.34 -16.308,-6.732 -15.912,11.7 15.912,6.372 z"
+       clip-rule="evenodd" />
+    <path
+       style="fill:#212121;fill-rule:evenodd"
+       id="path19"
+       i:knockout="Off"
+       d="m 249.012,79.668 -38.987,38.628 c -0.937,10.836 -1.297,20.052 -0.685,28.333 0.468,8.172 3.061,18.863 3.888,20.555 0.757,1.512 0.505,-3.816 1.045,-10.98 0.432,-7.234 1.079,-17.676 1.8,-31.895 l 31.859,-31.86 c 0.36,-4.249 0.72,-8.497 1.08,-12.781 z"
+       clip-rule="evenodd" />
+    <path
+       style="fill:#212121;fill-rule:evenodd"
+       id="path21"
+       i:knockout="Off"
+       d="m 249.696,124.308 -6.372,7.812 c -0.216,7.487 0.072,12.312 0.72,14.868 0.612,2.34 2.412,2.34 3.168,0 0.648,-2.412 -0.432,-10.44 1.08,-13.824 1.332,-3.456 7.2,-4.932 7.452,-6.372 0.216,-1.512 -1.8,-2.34 -6.048,-2.484 z"
+       clip-rule="evenodd" />
+    <path
+       style="fill:#212121;fill-rule:evenodd"
+       id="path23"
+       i:knockout="Off"
+       d="m 269.172,103.428 c -4.14,4.788 -6.264,7.812 -6.372,9.216 -0.107,1.296 4.104,-0.864 5.688,-1.08 1.476,-0.288 2.7,-0.36 3.527,-0.36 l -0.72,-9.216 c -0.683,0.468 -1.403,0.936 -2.123,1.44 z"
+       clip-rule="evenodd" />
+    <path
+       style="fill:#212121;fill-rule:evenodd"
+       id="path25"
+       i:knockout="Off"
+       d="m 170.352,214.633 c 0.216,-4.609 0.54,-8.605 2.484,-13.105 1.728,-4.535 3.564,-9.143 8.856,-13.824 5.4,-4.859 22.428,-13.211 23.041,-14.508 0.252,-1.26 -14.257,3.744 -20.196,7.092 -5.94,3.313 -11.592,7.236 -14.868,12.744 -3.276,5.4 -4.86,13.861 -4.608,19.836 0.324,5.869 4.968,15.229 6.012,15.59 0.755,0.179 -0.973,-9.29 -0.721,-13.825 z"
+       clip-rule="evenodd" />
+    <path
+       style="fill:#212121;fill-rule:evenodd"
+       id="path27"
+       i:knockout="Off"
+       d="m 225.972,174.24 16.633,9.936 -51.337,53.461 c -0.756,-7.885 0,-14.797 2.124,-20.881 2.124,-6.119 8.028,-11.268 10.62,-15.588 2.484,-4.428 1.404,-7.848 4.248,-10.26 2.772,-2.447 10.225,-2.52 12.061,-4.248 1.655,-1.873 -2.772,-4.32 -1.765,-6.373 0.9,-2.088 3.42,-4.103 7.416,-6.047 z"
+       clip-rule="evenodd" />
+    <path
+       style="fill:#3b3b3b;fill-opacity:1;fill-rule:evenodd"
+       id="path29"
+       i:knockout="Off"
+       d="m 44.28,14.148 c 0,2.556 3.42,4.608 7.632,4.608 4.176,0 7.596,-2.052 7.596,-4.608 0,-2.52 -3.42,-4.608 -7.596,-4.608 -4.212,0 -7.632,2.088 -7.632,4.608 z"
+       clip-rule="evenodd" />
+    <path
+       style="fill:#212121;fill-rule:evenodd"
+       id="path31"
+       i:knockout="Off"
+       d="m 65.232,207.035 c 5.328,-8.711 10.26,-14.471 15.084,-17.135 4.716,-2.701 7.56,0.539 13.392,0.828 5.76,0.18 20.844,-1.908 21.348,0.396 0.324,2.34 -14.436,9.07 -18.864,13.391 -4.5,4.213 -7.092,8.029 -7.92,11.736 -7.668,-3.06 -15.336,-6.118 -23.04,-9.216 z"
+       clip-rule="evenodd" />
   </g>
+  <text
+     xml:space="preserve"
+     style="font-size:161.9122467px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+     x="442.82761"
+     y="217.51079"
+     id="text2823"
+     transform="scale(0.85530885,1.1691683)"><tspan
+       sodipodi:role="line"
+       id="tspan2825"
+       x="442.82761"
+       y="217.51079"
+       style="font-size:291.44204712px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Cantarell;-inkscape-font-specification:Cantarell Bold"
+       dx="0 -18.163027 -19.814211 -1.6511843 -18.163027">anvil</tspan></text>
 </svg>

@@ -6,7 +6,16 @@ import common
 from anvillib.config import prefix
 %>
 
-<div id="breacrumbs">
+ %if canedit:
+  <ul id="actions" class="buttons">
+    <li><a href="${prefix}/message/list">Messages</a></li>
+    <li><a href="${prefix}/profile">Edit profile</a></li>
+    <li><a href="${prefix}/*${u.name}/key">SSH keys</a></li>
+    <li><a href="${prefix}/project/new">Start a new project</a></li>
+  </ul>
+ %endif
+
+<div id="breadcrumbs">
   ${u.name}
 </div>
 
@@ -20,20 +29,31 @@ from anvillib.config import prefix
     ${markdown.markdown(u.description)}
   </div>
 </div>
- %if canedit:
-  <ul id="actions" class="buttons">
-    <li><a href="${prefix}/message/list">Messages</a></li>
-    <li><a href="${prefix}/profile">Edit profile</a></li>
-    <li><a href="${prefix}/*${u.name}/key">SSH keys</a></li>
-  </ul>
- %endif
-  <div class="clear"></div>
 
-<div id="branches">
-  <h4>Branches</h4>
-  <ul>
-  %for b in branches:
-    <li><a href="${prefix}/*${u.name}/branch/${b}">${b}</a></li>
+<div id="activity" class="lefthalf">
+  <h4>Activity</h4>
+  %for a in activity:
+  <div class="event">
+    <div class="date">${a.stamp}</div>
+    <div class="eventbody">
+      <p class="revmessage">${a.get_msg()}</p>
+      <p class="eventinfo"><a href="${a.link}">Check it out</a></p>
+    </div>
+    <div class="clear"></div>
+  </div>
   %endfor
-  </ul>
 </div>
+
+<div id="branches" class="righthalf">
+  <h4>Branches</h4>
+  %for b in branches:
+  <div class="event">
+    <p>
+      <a href="${prefix}/*${u.name}/branch/${b}">${b}</a>
+    </p>
+  </div>
+  <div class="clear"></div>
+  %endfor
+</div>
+
+<div class="clear"></div>

@@ -7,6 +7,16 @@ from anvillib import config
 import markdown
 %>
 
+ %if canedit:
+  <ul id="actions" class="buttons">
+    %if is_project != None:
+      <li><a href="${prefix}/${item}/branch/${branch}/delete">Delete this branch</a></li>
+    %else:
+      <li><a href="${prefix}/*${item}/branch/${branch}/delete">Delete this branch</a></li>
+    %endif
+  </ul>
+ %endif
+
 <div id="breadcrumbs">
 %if is_project:
   <a href="${prefix}/${item}">${item}</a>
@@ -35,13 +45,4 @@ import markdown
   </div>
     ${log}
 </div>
- %if canedit:
-  <ul id="actions" class="buttons">
-    %if is_project != None:
-      <li><a href="${prefix}/${item}/branch/${branch}/delete">Delete this branch</a></li>
-    %else:
-      <li><a href="${prefix}/*${item}/branch/${branch}/delete">Delete this branch</a></li>
-    %endif
-  </ul>
- %endif
   <div class="clear"></div>

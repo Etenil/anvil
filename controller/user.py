@@ -149,10 +149,11 @@ class User:
             user = model.user.User(name=username)
             canedit = (common.session.user == user.name)
             branches = anvillib.bzr.list_user_branches(user.name)
-
+            activity = model.event.get_user_events(user.id, 0, 30)
             return common.render.profile(canedit=canedit,
                                          projs=model.user.get_user_proj(),
                                          u=user,
+                                         activity=activity,
                                          branches=branches,
                                          htTitle="Profile")
         except model.user.UserError as error:

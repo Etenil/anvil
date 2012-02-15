@@ -6,7 +6,15 @@ import common
 from anvillib.config import prefix
 %>
 
-<div id="breacrumbs">
+  <ul id="actions" class="buttons">
+ %if canedit:
+    <li><a href="${prefix}/${proj.name}/edit">Edit project</a></li>
+ %endif
+    <li><a href="${prefix}/${proj.name}/bugs">Bugs</a></li>
+    <li><a href="${prefix}/${proj.name}/doc">Documentation</a></li>
+  </ul>
+
+<div id="breadcrumbs">
   ${proj.name}
 </div>
 
@@ -19,14 +27,6 @@ from anvillib.config import prefix
     ${markdown.markdown(proj.description)}
   </div>
 </div>
-  <ul id="actions" class="buttons">
- %if canedit:
-    <li><a href="${prefix}/${proj.name}/edit">Edit project</a></li>
- %endif
-    <li><a href="${prefix}/${proj.name}/bugs">Bugs</a></li>
-    <li><a href="${prefix}/${proj.name}/doc">Documentation</a></li>
-  </ul>
-  <div class="clear"></div>
 
 <div id="branches">
   <h4>Branches</h4>

@@ -5,6 +5,10 @@ import common
 from anvillib.config import prefix
 %>
 
+  <ul id="actions" class="buttons">
+    <li><a href="${prefix}/${proj.name}/doc/new">Create a new document</a></li>
+  </ul>
+
 <div id="breadcrumbs">
   <a href="${prefix}/${proj.name}">${proj.name}</a>
   &gt;
@@ -29,9 +33,5 @@ from anvillib.config import prefix
   %endfor
   </table>
 %endif
-
-  <ul id="actions" class="buttons">
-    <li><a href="${prefix}/${proj.name}/doc/new">Create a new document</a></li>
-  </ul>
 
 <div class="clear"></div>

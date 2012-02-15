@@ -12,18 +12,16 @@
     <script type="text/javascript" src="${prefix}/static/js/scriptaculous/scriptaculous.js"></script>
   </head>
   <body>
-    <div id="wrapper">
-      <div id="header">
-        <div id="header-logo">
-          <a href="${prefix}/"><img src="${prefix}/static/img/logo.png" alt="Logo"/></a>
-          <a href="${prefix}/"><h1>${config.val('title')}</h1></a>
-        </div>
+    <div id="header">
+      <div id="headerwrapper">
           <ul id="header-menu" class="buttons">
+            <li><a href="${prefix}/project/list">Projects</a></li>
+            <li><a href="${prefix}/users">Users</a></li>
             %if hasattr(session, "user") and session.user != None:
             <li>
               <a href="${prefix}/message/list">
                 %if msgs == 0:
-                  no messages
+                  No messages
                 %elif msgs == 1:
                   1 message
                 %else:
@@ -38,17 +36,17 @@
             <li><a href="${prefix}/register">Register!</a></li>
             %endif
           </ul>
+        <div id="header-logo">
+          <a href="${prefix}/"><img src="${prefix}/static/img/logo.png" alt="Logo"/></a>
+        </div>
         <div class="clear"></div>
       </div>
+    </div>
+    <div id="wrapper">
       ${self.body()}
       <div class="clear"></div>
       <div id="footer">
-        <div class="links">
-          <ul>
-            <li><a href="${prefix}/project/list">Projects</a></li>
-            <li><a href="${prefix}/users">Users</a></li>
-        </div>
-        &copy;2011 Etenil
+        Copyright &copy; 2012 Etenil
       </div>
     </div>
   </body>
