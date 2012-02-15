@@ -1,5 +1,7 @@
 import web
 import common
+import user as moduser
+import project as modproject
 
 # Some constants
 EV_SYSTEM  = 0
@@ -38,7 +40,14 @@ def get_user_events(user, start=0, length=0):
         events.append(Event(row=row))
     return events
 
-def add(user=None, project=None, link=None, type=EV_SYSTEM, msg=""):
+def add(user=None, project=None, link=None, type=EV_SYSTEM, msg="",
+        username=None, projectname=None):
+    if user == None and username != None:
+        u = moduser.User(name=username)
+        user = u.id
+    if project == None and projectname != None:
+        u = modproject.Project(name=projectname)
+        project = u.id
     if user == None and project == None:
         raise EventError("Must specify a user or a project.")
     e = Event()

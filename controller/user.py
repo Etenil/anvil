@@ -10,6 +10,7 @@ import model.user
 import model.sshkey
 import model.project
 from model import event
+from anvillib import email
 import re
 from anvillib import config
 
@@ -109,9 +110,11 @@ class User:
                                    homepage=i.homepage,
                                    description=i.description)
             common.session.user = i.name
-            event.add(user=i.id, type=event.EV_USER,
+            event.add(username=i.name, type=event.EV_USER,
                       link=config.prefix + '/*' + i.name,
                       msg=("%s registered to %s" % (i.name, config.val('title'))))
+            email.send("noreply@anvil.com", i.email, "Welcome to Anvil",
+                       """Thank you for registering on Anvil.""")
             raise web.seeother(config.prefix + '/*' + i.name)
         except model.user.UserError:
             return common.render.register(error="Username already exists!",

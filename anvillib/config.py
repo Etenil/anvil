@@ -17,7 +17,8 @@ _values = {'port': '80',
            'db.host': 'localhost',
            'prefix': '',
            'title': 'Anvil',
-           'host': 'localhost:8080'}
+           'host': 'localhost:8080',
+           'smtp': 'localhost'}
 
 prefix = ""
 
@@ -56,6 +57,9 @@ def load_conf():
 
     if conf.has_option('anvil', 'title'):
         _values['title'] = conf.get('anvil', 'title')
+
+    if conf.has_option('anvil', 'smtp'):
+        _values['smtp'] = conf.get('anvil', 'smtp')
 
     if conf.has_option('anvil', 'prefix'):
         _values['prefix'] = conf.get('anvil', 'prefix')

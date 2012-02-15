@@ -265,7 +265,7 @@ CREATE TABLE `commiters` (
   `project` int(11) NOT NULL,
   `user` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE
+  CONSTRAINT `project_ibfk_1` FOREIGN KEY (`project`) REFERENCES `project` (`id`) ON DELETE CASCADE,
   CONSTRAINT `user_ibfk_2` FOREIGN KEY (`user`) REFERENCES `user` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
