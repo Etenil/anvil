@@ -61,7 +61,10 @@ class User:
         elif item == "branch" and extra != None:
             if more == "delete":
                 return self.del_branch(action, extra)
-            return self.show_branch(action, extra)
+            elif more == "source":
+                return self.show_tree(action, extra)
+            else:
+                return self.show_branch(action, extra)
         else:
             return self.show_user(action)
 
@@ -257,8 +260,21 @@ class User:
         return common.render.branch(branch=branch,
                                     canedit=canedit,
                                     log=log,
+                                    is_project=None,
                                     item=username,
                                     htTitle="Branch " + branch)
+
+    def show_tree(self, username, branch):
+        user = model.user.User(name=username)
+        canedit = (common.session.user == user.name)
+        tree = anvillib.bzr.get_user_branch_tree(username, branch)
+        tree.pop(0)
+        return common.render.branchtree(branch=branch,
+                                        canedit=canedit,
+                                        tree=tree,
+                                        item=username,
+                                        is_project=None,
+                                        htTitle="Branch " + branch)
 
     def del_branch(self, username, branch):
         user = model.user.User(name=username)

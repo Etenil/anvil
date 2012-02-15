@@ -25,10 +25,12 @@ import markdown
 <div id="breadcrumbs">
 %if is_project:
   <a href="${prefix}/${item}">${item}</a>
+  &gt; <a href="${prefix}/${item}/branch/${branch}">branch ${branch}</a>
 %else:
   <a href="${prefix}/*${item}">${item}</a>
+  &gt; <a href="${prefix}/*${item}/branch/${branch}">branch ${branch}</a>
 %endif
-  &gt; branch ${branch}
+  &gt; source tree
 </div>
 
 <h2>${htTitle}</h2>
@@ -48,6 +50,24 @@ import markdown
     %endif
     <div class="clear"></div>
   </div>
-    ${log}
+
+  <h4>Source tree</h4>
+  <table>
+    %for file in tree:
+      <tr>
+        %if file[2] == "dir":
+          <td class="dir">${file[1]}</td>
+        %else:
+          <td class="file">
+            %if is_project:
+            <a href="${prefix}/${item}/${branch}/file/${file[0]}">${file[1]}</a>
+            %else:
+            <a href="${prefix}/*${item}/${branch}/file/${file[0]}">${file[1]}</a>
+            %endif
+          </td>
+        %endif
+      </tr>
+    %endfor
+  </table>
 </div>
   <div class="clear"></div>

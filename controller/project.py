@@ -31,6 +31,8 @@ class Project:
                 return self.edit_project(name)
             elif other == "branch" and arg1 != None and arg2 == "delete":
                 return self.del_branch(name, arg1)
+            elif other == "branch" and arg1 != None and arg2 == "source":
+                return self.show_tree(name, arg1)
             elif other == "branch" and arg1 != None:
                 return self.show_branch(name, arg1)
             elif other == "commiters":
@@ -170,6 +172,18 @@ class Project:
                                     item=p.name,
                                     is_project=True,
                                     htTitle="Branch " + branch)
+
+    def show_tree(self, project, branch):
+        p = model.project.Project(name=project)
+        canedit = p.isadmin(common.session.user)
+        tree = anvillib.bzr.get_project_branch_tree(project, branch)
+        tree.pop(0)
+        return common.render.branchtree(branch=branch,
+                                        canedit=canedit,
+                                        tree=tree,
+                                        item=p.name,
+                                        is_project=True,
+                                        htTitle="Branch " + branch)
 
     def del_branch(self, project, branch):
         p = model.project.Project(name=project)

@@ -402,3 +402,16 @@ ul#commiterslist, #branches ul {
 ul#commiterslist li, #branches ul li {
     list-style-type: none;
 }
+
+/* Files list. */
+td.dir {
+    background-image: url("../img/dir.png");
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}
+
+td.file a {
+    background-image: url("../img/file.png");
+    background-repeat: no-repeat;
+    padding-left: 25px;
+}

@@ -44,6 +44,27 @@ def initbranch(path):
     a_bzrdir.create_workingtree()
     #Done.
 
+def _get_branch_tree(path):
+    b = Branch.open(path)
+    t = b.basis_tree()
+    b.lock_read()
+    files = t.iter_entries_by_dir()
+    buffer = []
+    from bzrlib.inventory import InventoryFile
+    for f in files:
+        type = 'dir'
+        if f[1].__class__ == InventoryFile:
+            type = 'file'
+        buffer.append((f[1].file_id, f[0], type))
+    b.unlock()
+    return buffer
+
+def get_project_branch_tree(project, branch):
+    return _get_branch_tree(fs.project_branch_dir(project, branch))
+
+def get_user_branch_tree(user, branch):
+    return _get_branch_tree(fs.user_branch_dir(user, branch))
+
 def _get_branch_log(path):
     branch = Branch.open(path)
     global logvar
