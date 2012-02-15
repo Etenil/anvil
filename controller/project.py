@@ -33,6 +33,8 @@ class Project:
                 return self.del_branch(name, arg1)
             elif other == "branch" and arg1 != None and arg2 == "source":
                 return self.show_tree(name, arg1)
+            elif other == "branch" and arg1 != None and arg2 == "feed":
+                return self.branch_rss(name, arg1)
             elif other == "branch" and arg1 != None:
                 return self.show_branch(name, arg1)
             elif other == "commiters":
@@ -172,6 +174,18 @@ class Project:
                                     item=p.name,
                                     is_project=True,
                                     htTitle="Branch " + branch)
+
+    def branch_rss(self, project, branch):
+        feed = anvillib.bzr.get_project_branch_rss(project, branch)
+        link = "http://%s/%s/%s/branch/%s" % (config.val('host'),
+                                              config.val('prefix'),
+                                              project, branch)
+        link = link.replace("//", "/")
+        feed = feed.replace("$l", link)
+        web.header('Content-Type', 'text/xml')
+        return common.render.rss(link=link,
+                                 feed=feed,
+                                 htTitle="Branch " + branch)
 
     def show_tree(self, project, branch):
         p = model.project.Project(name=project)

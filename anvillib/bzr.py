@@ -80,6 +80,21 @@ def get_user_branch_log(user, branch):
 def get_project_branch_log(user, branch):
     return _get_branch_log(fs.project_branch_dir(user, branch))
 
+def _get_branch_rss_log(path):
+    branch = Branch.open(path)
+    global logvar
+    logvar = ""
+    lf = RssLogFormatter(to_file=sys.stdout)
+    rqst = log.make_log_request_dict()
+    log.Logger(branch, rqst).show(lf)
+    return logvar
+
+def get_project_branch_rss(project, branch):
+    return _get_branch_rss_log(fs.project_branch_dir(project, branch))
+
+def get_user_branch_rss(user, branch):
+    return _get_branch_rss_log(fs.user_branch_dir(user, branch))
+
 class HtmlLogFormatter(log.LogFormatter):
     supports_merge_revisions = True
     preferred_levels = 1
@@ -146,3 +161,57 @@ class HtmlLogFormatter(log.LogFormatter):
         if revision.diff is not None:
             self.show_diff(self.to_exact_file, revision.diff, '      ')
         logvar += '</div><div class="clear"></div></div>'
+
+class RssLogFormatter(log.LogFormatter):
+    supports_merge_revisions = True
+    preferred_levels = 1
+    supports_delta = True
+    supports_tags = True
+    supports_diff = True
+
+    def __init__(self, *args, **kwargs):
+        super(RssLogFormatter, self).__init__(*args, **kwargs)
+        self.revno_width_by_depth = {}
+
+    def log_revision(self, revision):
+        # We need two indents: one per depth and one for the information
+        # relative to that indent. Most mainline revnos are 5 chars or
+        # less while dotted revnos are typically 11 chars or less. Once
+        # calculated, we need to remember the offset for a given depth
+        # as we might be starting from a dotted revno in the first column
+        # and we want subsequent mainline revisions to line up.
+        depth = revision.merge_depth
+        indent = '    ' * depth
+        global logvar
+        revno_width = self.revno_width_by_depth.get(depth)
+        if revno_width is None:
+            if revision.revno is None or revision.revno.find('.') == -1:
+                # mainline revno, e.g. 12345
+                revno_width = 5
+            else:
+                # dotted revno, e.g. 12345.10.55
+                revno_width = 11
+            self.revno_width_by_depth[depth] = revno_width
+        offset = ' ' * (revno_width + 1)
+
+        to_file = self.to_file
+        tags = ''
+        if revision.tags:
+            tags = ' {%s}' % (', '.join(revision.tags))
+        logvar += "<item>\n<title>%s committed revision %s %s</title>\n" % (self.short_author(revision.rev), revision.revno or "", self.merge_marker(revision))
+        logvar += "<pubDate>%s</pubDate>\n" % format_date(revision.rev.timestamp,
+                                                        revision.rev.timezone or 0,
+                                                        self.show_timezone, date_fmt="%a, %d %b %Y %H:%M:%S %z",
+                                                        show_offset=False)
+
+        logvar += "<description>\n"
+        self.show_properties(revision.rev, indent+offset)
+        if revision.rev.message:
+            message = revision.rev.message.rstrip('\r\n')
+            for l in message.split('\n'):
+                logvar += web.net.websafe(l)
+        logvar += "</description>\n"
+
+        logvar += '<guid>%s</guid>\n' % revision.rev.revision_id
+        logvar += '<link>$l#%s</link>\n' % revision.revno
+        logvar += '</item>\n'

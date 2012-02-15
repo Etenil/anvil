@@ -63,6 +63,8 @@ class User:
                 return self.del_branch(action, extra)
             elif more == "source":
                 return self.show_tree(action, extra)
+            elif more == "feed":
+                return self.branch_rss(action, extra)
             else:
                 return self.show_branch(action, extra)
         else:
@@ -276,6 +278,21 @@ class User:
                                         is_project=None,
                                         htTitle="Branch " + branch)
 
+    def branch_rss(self, username, branch):
+        user = model.user.User(name=username)
+        canedit = (common.session.user == user.name)
+        feed = anvillib.bzr.get_user_branch_rss(user.name, branch)
+        link = "http://%s/%s/*%s/branch/%s" % (config.val('host'),
+                                       config.val('prefix'),
+                                       username, branch)
+        link = link.replace("//", "/")
+        feed = feed.replace("$l", link)
+        web.header('Content-Type', 'text/xml')
+        return common.render.rss(link=link,
+                                 feed=feed,
+                                 htTitle="Branch " + branch)
+        
+        
     def del_branch(self, username, branch):
         user = model.user.User(name=username)
         if user.name == common.session.user:

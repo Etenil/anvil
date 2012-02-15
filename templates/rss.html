@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<% from datetime import date %>
+<rss version="2.0">
+  <channel>
+    <title>${htTitle}</title>
+    <link>${link}</link>
+    <language>en</language>
+    <pubDate>${date.today().strftime("%a, %d %b %Y %H:%M:%S %z")}</pubDate>
+    ${feed}
+  </channel>
+</rss>

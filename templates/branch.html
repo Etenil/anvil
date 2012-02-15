@@ -8,13 +8,13 @@ import markdown
 %>
 
 <ul id="actions" class="buttons">
-%if is_project != None:
+%if is_project:
   <li><a href="${prefix}/${item}/branch/${branch}/source">Source tree</a></li>
 %else:
   <li><a href="${prefix}/*${item}/branch/${branch}/source">Source tree</a></li>
 %endif
 %if canedit:
-  %if is_project != None:
+  %if is_project:
   <li><a href="${prefix}/${item}/branch/${branch}/delete">Delete this branch</a></li>
   %else:
   <li><a href="${prefix}/*${item}/branch/${branch}/delete">Delete this branch</a></li>
@@ -48,6 +48,12 @@ import markdown
     %endif
     <div class="clear"></div>
   </div>
-    ${log}
+
+  %if is_project:
+  <h4>Commits log <a href="${prefix}/${item}/branch/${branch}/feed"><img src="${prefix}/static/img/feed.png" alt="RSS feed" /></a></h4>
+  %else:
+  <h4>Commits log <a href="${prefix}/*${item}/branch/${branch}/feed"><img src="${prefix}/static/img/feed.png" alt="RSS feed" /></a></h4>
+  %endif
+  ${log}
 </div>
   <div class="clear"></div>
