@@ -101,7 +101,7 @@ class Bug:
             bug.save()
             event.add(username=common.session.user, projectname=project,
                       type=event.EV_BUG,
-                      link=(config.prefix + '/' + project + '/bugs/' + bug.id),
+                      link=("%s/%s/bugs/%d" % (config.prefix, project, bug.id)),
                       msg=("Bug %d added" % bug.id))
         except:
             pass
@@ -141,7 +141,7 @@ class Bug:
             comm.save()
             event.add(username=common.session.user,
                       projectname=project, type=event.EV_BUG,
-                      link=config.prefix + '/' + project + '/bugs/' + bugnum,
+                      link=("%s/%s/bugs/%s" % (config.prefix, project, bugnum)),
                       msg=("Comment added to bug %d" % bugnum))
         except:
             a = 1
@@ -149,7 +149,7 @@ class Bug:
 
     def _make_edit_form(self, proj, bug):
         p = model.project.Project(name=proj)
-        devs = p.members()
+        devs = p.get_commiters()
         dev_options = [('*none', 'No one')]
         for dev in devs:
             dev_options.append((dev.name, dev.name))
@@ -162,7 +162,7 @@ class Bug:
                                      (3, 'closed'),
                                      (4, 'rejected')],
                                     value=bug.status),
-                      form.Textarea('comment'),
+                      form.Textarea('comment', value=bug.description),
                       form.Button('Save'))
         return f()
 
@@ -203,9 +203,9 @@ class Bug:
             bug.version = i.version
             comm.message += '<p class="system-msg">Version changed to ' + bug.version + '</p>'
         event.add(username=common.session.user,
-                  projectname=project, type=EV_BUG,
-                  link=config.prefix + '/' + project + '/bugs/' + bugnum,
-                  msg=("Bug %d edited: %s" % (bug.id, i.comment)))
+                  projectname=project, type=event.EV_BUG,
+                  link=("%s/%s/bugs/%s" % (config.prefix, project, bugnum)),
+                  msg=("Bug #%d edited: %s" % (bug.id, i.comment)))
         bug.save()
 
         # Adding comment

@@ -17,7 +17,25 @@ a {
     text-decoration: none;
 }
 
-.hl {
+.motto {
+    font-size: 250%;
+}
+
+.praisebig {
+    font-size: 200%;
+}
+
+.praise {
+    font-size: 150%;
+}
+
+.smallprint {
+    font-size: 80%;
+    font-style: italic;
+}
+
+.hl, em {
+    color: #336688;
 }
 
 a:hover {
@@ -110,6 +128,8 @@ h1 {
 .smallavatar {
     width: 32px;
     height: 32px;
+    float: left;
+    margin-right: 5px;
 }
 
 /* Buttons in li */
@@ -175,20 +195,19 @@ ul.buttons li.warning a:hover {
 #msg-list th {
     background-image: -webkit-gradient(
         linear, left bottom, left top,
-        color-stop(0, #ccc),
+        color-stop(0, #ddd),
         color-stop(1, #eee)
     );
     background-image: -moz-linear-gradient(
         center bottom,
-        #ccc 0%,
+        #ddd 0%,
         #eee 100%
     );
     padding: 0.5em 0 0 1em;
-    border-bottom: 1px solid #888;
     text-align: left;
 }
 #msg-list tr:nth-child(even) td {
-    background-color: #e4e4e4;
+    background-color: #eee;
 }
 #msg-list td {
     padding: 0.2em 1em;
@@ -197,17 +216,17 @@ ul.buttons li.warning a:hover {
 .msg-header {
     background-image: -webkit-gradient(
         linear, left bottom, left top,
-        color-stop(0, #ccc),
+        color-stop(0, #ddd),
         color-stop(1, #eee)
     );
     background-image: -moz-linear-gradient(
         center bottom,
-        #ccc 0%,
+        #ddd 0%,
         #eee 100%
     );
     padding: 0.5em;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 .msg-hdr-elts {
     width: 100%;
@@ -217,13 +236,13 @@ ul.buttons li.warning a:hover {
     width: 33%;
 }
 .msg-header label {
-    color: #888;
+    color: #444;
 }
 .msg-hdr-subject {
     clear: left;
 }
 .msg-body {
-    border: 2px #ccc solid;
+    border: 2px #ddd solid;
     padding: 0 0.5em 0;
 }
 
@@ -335,7 +354,7 @@ div.project, div.user {
     );
     padding: 1em;
     text-align: left;
-    border-radius: 10px;
+    border-radius: 5px;
 }
 #branch-details label {
     width: 5em;
@@ -354,7 +373,7 @@ div.project, div.user {
 
 /* Revisions and activity feeds */
 .revision, .event {
-    border-bottom: 1px solid #888;
+    border-bottom: 1px solid #ccc;
     padding: 0.5em 1em;
 }
 .revision .revdate, .event .date {
@@ -375,4 +394,11 @@ div.project, div.user {
 .revmessage {
     margin-top: 0;
     padding-top: 0;
+}
+
+ul#commiterslist, #branches ul {
+    padding: 0;
+}
+ul#commiterslist li, #branches ul li {
+    list-style-type: none;
 }

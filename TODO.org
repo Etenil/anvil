@@ -87,3 +87,5 @@ the event and the event type amongst the following:
   - bug
   - doc
   - system
+* Add Atom feeds
+* Add source code browser

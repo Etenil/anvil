@@ -10,17 +10,34 @@
 %endif
 
   <div class="main-body">
-    <h1>Welcome to Anvil!</h1>
-%if user == None:
-    <p>
-      Anvil is a simple yet powerful software forge that relies on
-      bazaar. It has social features and many tools for your
-      convenience.
+%if common.session.user == None:
+    <p style="float:right">
+      <img src="${prefix}/static/img/forge.jpg" alt="Forge freely!" />
     </p>
-    <p>
-      So <a href="${prefix}/register">register</a> and join us!
+    <p class="motto">
+      Forge Freely!
     </p>
+    <p class="praisebig">
+      Anvil makes forging your own software easy.
+    </p>
+    <p class="praise">
+      Manage your <em>branches</em>, <em>projects</em> and <em>team</em>
+      in all simplicity.
+    </p>
+    <br />
+    <p style="text-align: center">
+      <a href="${prefix}/register">
+        <img src="${prefix}/static/img/register.png" alt="Register" />
+      </a>
+    </p>
+    <br />
+    <br />
+    <p class="smallprint">
+      Photo by <a href="http://www.flickr.com/photos/zigazou76/">zigazou76</a>, CC-by
+    </p>
+    <div class="clear"></div>
 %else:
+    <h1>Welcome to Anvil!</h1>
     <p>
       Start up by creating a project or branching an existing one!
     </p>
@@ -31,6 +48,7 @@
     </p>
 
     <div id="activity">
+      <h4>Recent Activity</h4>
       %for a in activity:
       <div class="event">
         <div class="date">${a.stamp}</div>

@@ -103,6 +103,7 @@ class Project:
             return common.render.project(proj=proj,
                                          canedit=proj.isadmin(common.session.user),
                                          branches=branches,
+                                         activity=model.event.get_project_events(proj.id),
                                          commiters=proj.get_commiters(),
                                          htTitle="Project")
         except:

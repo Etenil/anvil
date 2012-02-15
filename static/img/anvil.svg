@@ -23,7 +23,10 @@
    version="1.1"
    inkscape:version="0.47 r22583"
    sodipodi:docname="anvil.svg"
-   style="overflow:visible">
+   style="overflow:visible"
+   inkscape:export-filename="/media/GUI_STICK/anvil-forge/static/img/anvil.png"
+   inkscape:export-xdpi="15.78"
+   inkscape:export-ydpi="15.78">
   <defs
      id="defs35">
     <inkscape:perspective
@@ -48,8 +51,8 @@
      id="namedview33"
      showgrid="false"
      inkscape:zoom="0.60562591"
-     inkscape:cx="457.49494"
-     inkscape:cy="128.83163"
+     inkscape:cx="164.40973"
+     inkscape:cy="125.52926"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -179,7 +182,7 @@
   </g>
   <text
      xml:space="preserve"
-     style="font-size:161.9122467px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+     style="font-size:161.91224669999999719px;font-style:normal;font-weight:normal;fill:#336688;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
      x="442.82761"
      y="217.51079"
      id="text2823"
@@ -188,6 +191,6 @@
        id="tspan2825"
        x="442.82761"
        y="217.51079"
-       style="font-size:291.44204712px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Cantarell;-inkscape-font-specification:Cantarell Bold"
+       style="font-size:291.44204711999998381px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Cantarell;-inkscape-font-specification:Cantarell Bold;fill:#336688;fill-opacity:1"
        dx="0 -18.163027 -19.814211 -1.6511843 -18.163027">anvil</tspan></text>
 </svg>
