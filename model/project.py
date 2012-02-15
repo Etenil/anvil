@@ -54,9 +54,9 @@ class Project:
                       name=self.name, description=self.description, owner=self.owner.id,
                       homepage=self.homepage)
         else:
-            common.db.insert('project', name=self.name,
-                      description=self.description, owner=self.owner.id,
-                      homepage=self.homepage)
+            self.id = common.db.insert('project', name=self.name, seqname="id",
+                                       description=self.description, owner=self.owner.id,
+                                       homepage=self.homepage)
     #end save
 
     def logo(self):
