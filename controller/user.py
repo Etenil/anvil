@@ -9,6 +9,7 @@ import anvillib.ssh
 import model.user
 import model.sshkey
 import model.project
+from model import event
 import re
 from anvillib import config
 
@@ -108,7 +109,10 @@ class User:
                                    homepage=i.homepage,
                                    description=i.description)
             common.session.user = i.name
-            raise web.seeother(config.prefix + '/')
+            event.add(user=i.id, type=event.EV_USER,
+                      link=config.prefix + '/*' + i.name,
+                      msg=("%s registered to %s" % (i.name, config.val('title'))))
+            raise web.seeother(config.prefix + '/*' + i.name)
         except model.user.UserError:
             return common.render.register(error="Username already exists!",
                                    form=f,
@@ -259,4 +263,8 @@ class User:
                 anvillib.fs.delete_user_branch(username, branch)
             except:
                 pass
+            else:
+                event.add(user=user.id, type=event.EV_USER,
+                          link=config.prefix + '/*' + username,
+                          msg=("%s deleted branch %s" % (username, banch)))
         raise web.seeother(config.prefix + '/*' + username)

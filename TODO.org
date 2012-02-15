@@ -21,7 +21,6 @@ anvil/
         |-- b2
         `-- b3
 
-
 * SSH Binding
 Have to create a script that will call upon the correct bzr
 parameters. Original command goes:
@@ -79,3 +78,12 @@ and
 This is pretty simple, they just need to be remapped as
 needed. Perhaps a subdomain could be used for code access, like
 bzr.<server>.
+* Events
+Add events table that regroups the involved project/user, a link to
+the event and the event type amongst the following:
+
+  - user
+  - project
+  - bug
+  - doc
+  - system

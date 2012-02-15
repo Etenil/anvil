@@ -12,6 +12,7 @@ from controller.doc import Doc
 
 import model.project
 import model.message
+import model.event
 from anvillib import config
 
 ### Parsing the configuration
@@ -62,8 +63,10 @@ app.add_processor(refresh_messages)
 # Default page in case we don't know what to do (shouldn't happen).
 class Main:
     def GET(self):
+        activity = model.event.get_events(0, 30)
         return common.render.main(content="Welcome to " + config.val('title'),
                                   num_proj=model.project.count_proj(),
+                                  activity=activity,
                                   htTitle="Welcome to " + config.val('title') + "!")
 
 # Defining the mode

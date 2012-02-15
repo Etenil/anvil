@@ -6,6 +6,7 @@ from anvillib.form import AjaxTextbox
 import model.doc
 import model.project
 import model.user
+from model import event
 import re
 from anvillib.text import normalize_name
 from anvillib import config
@@ -72,6 +73,9 @@ class Doc:
         doc.title = i.title
         doc.content = i.content
         doc.author = u.id
+        event.add(user=u.id, project=project, type=event.EV_DOC,
+                  link=config.prefix + '/' + project + '/doc/' + doc.name,
+                  msg=("Document %s added" % doc.title))
         doc.save()
         raise web.seeother(config.prefix + '/' + project + '/doc/' + doc.name)
 
@@ -125,5 +129,9 @@ class Doc:
         d.name = normalize_name(i.title)
         d.title = i.title
         d.content = i.content
+        event.add(user=common.session.user, project=project,
+                  type=event.EV_DOC,
+                  link=config.prefix + '/' + project + '/doc/' + doc.name,
+                  msg=("Document %s edited" % d.title))
         d.save()
         raise web.seeother(config.prefix + '/' + project + '/doc/' + d.name)

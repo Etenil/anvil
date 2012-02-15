@@ -7,6 +7,7 @@ import anvillib.fs
 import anvillib.bzr
 import model.project
 import model.user
+from model import event
 import re
 from anvillib import config
 
@@ -79,8 +80,15 @@ class Project:
         except:
             error = True
             errors.append("Project already exists.")
+        else:
+            proj.add_commiter(proj.owner.id)
+            event.add(user=proj.owner.id, type=event.EV_PROJECT,
+                      project=proj.id,
+                      link=config.prefix + '/' + proj.name,
+                      msg=("Created project %s" % proj.name))
 
         if error:
+            raise Exception(error)
             return common.render.newproject(htTitle="New project",
                                             form=f)
         else:
@@ -89,16 +97,16 @@ class Project:
 
     def show_project(self, name):
         """Displays details about project <name>."""
-        #try:
-        proj = model.project.Project(name=name)
-        branches = anvillib.bzr.list_project_branches(name)
-        return common.render.project(proj=proj,
-                                     canedit=proj.isadmin(common.session.user),
-                                     branches=branches,
-                                     commiters=proj.get_commiters(),
-                                     htTitle="Project")
-        #except:
-            #raise web.seeother(config.prefix + '/')
+        try:
+            proj = model.project.Project(name=name)
+            branches = anvillib.bzr.list_project_branches(name)
+            return common.render.project(proj=proj,
+                                         canedit=proj.isadmin(common.session.user),
+                                         branches=branches,
+                                         commiters=proj.get_commiters(),
+                                         htTitle="Project")
+        except:
+            raise web.notfound()
 
     def make_edit_form(self, proj):
         edit_form = form.Form(
@@ -141,9 +149,14 @@ class Project:
             web.seeother(config.prefix + '/' + proj2.name)
         except:
             return common.render.newproject(errors=["Name already in use."],
-                                     proj=proj,
-                                     htTitle="New project",
-                                     form=f)
+                                            proj=proj,
+                                            htTitle="New project",
+                                            form=f)
+        else:
+            event.add(user=proj2.owner.id, type=event.EV_PROJECT,
+                      project=project,
+                      link=config.prefix + '/' + proj.name,
+                      msg=("Edited project %s" % proj2.name))
     #end make_edit_project
 
     def show_branch(self, project, branch):
@@ -164,6 +177,11 @@ class Project:
                 anvillib.fs.delete_project_branch(project, branch)
             except:
                 pass
+            else:
+                event.add(user=common.session.user, type=event.EV_PROJECT,
+                          project=project,
+                          link=config.prefix + '/' + proj.name,
+                          msg=("Deleted branch %s of project %s" % (branch, p.name)))
         raise web.seeother(config.prefix + '/' + project)
 
     def add_commiter(self, proj_name, commiter_name):
@@ -180,6 +198,10 @@ class Project:
                     return web.forbidden()
             # OK, we add.
             proj.add_commiter(commiter.id)
+            event.add(user=common.session.user, type=event.EV_PROJECT,
+                      project=project,
+                      link=config.prefix + '/' + proj.name,
+                      msg=("Added user %s to project %s as commiter" % (commiter_name, proj_name)))
             return ""
         else:
             return web.forbidden()
@@ -193,5 +215,9 @@ class Project:
                 a = 2
             else:
                 proj.rem_commiter(commiter.id)
+                event.add(user=common.session.user, type=event.EV_PROJECT,
+                          project=project,
+                          link=config.prefix + '/' + proj.name,
+                          msg=("Removed user %s from project %s" % (commiter_name, proj_name)))
         raise web.seeother(config.prefix + '/' + proj_name)
 #end Project
