@@ -99,7 +99,7 @@ class Bug:
                                         htTitle="Report a bug")
         try:
             bug.save()
-            event.add(user=common.session.user, project=project,
+            event.add(username=common.session.user, projectname=project,
                       type=event.EV_BUG,
                       link=(config.prefix + '/' + project + '/bugs/' + bug.id),
                       msg=("Bug %d added" % bug.id))
@@ -139,8 +139,8 @@ class Bug:
 
         try:
             comm.save()
-            event.add(user=common.session.user,
-                      project=project, type=event.EV_BUG,
+            event.add(username=common.session.user,
+                      projectname=project, type=event.EV_BUG,
                       link=config.prefix + '/' + project + '/bugs/' + bugnum,
                       msg=("Comment added to bug %d" % bugnum))
         except:
@@ -202,8 +202,8 @@ class Bug:
         if bug.version != i.version:
             bug.version = i.version
             comm.message += '<p class="system-msg">Version changed to ' + bug.version + '</p>'
-        event.add(user=common.session.user,
-                  project=project, type=EV_BUG,
+        event.add(username=common.session.user,
+                  projectname=project, type=EV_BUG,
                   link=config.prefix + '/' + project + '/bugs/' + bugnum,
                   msg=("Bug %d edited: %s" % (bug.id, i.comment)))
         bug.save()

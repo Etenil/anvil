@@ -154,7 +154,7 @@ class Project:
                                             form=f)
         else:
             event.add(user=proj2.owner.id, type=event.EV_PROJECT,
-                      project=project,
+                      project=proj2.id,
                       link=config.prefix + '/' + proj.name,
                       msg=("Edited project %s" % proj2.name))
     #end make_edit_project
@@ -178,8 +178,8 @@ class Project:
             except:
                 pass
             else:
-                event.add(user=common.session.user, type=event.EV_PROJECT,
-                          project=project,
+                event.add(username=common.session.user, type=event.EV_PROJECT,
+                          project=p.id,
                           link=config.prefix + '/' + proj.name,
                           msg=("Deleted branch %s of project %s" % (branch, p.name)))
         raise web.seeother(config.prefix + '/' + project)
@@ -198,8 +198,8 @@ class Project:
                     return web.forbidden()
             # OK, we add.
             proj.add_commiter(commiter.id)
-            event.add(user=common.session.user, type=event.EV_PROJECT,
-                      project=project,
+            event.add(username=common.session.user, type=event.EV_PROJECT,
+                      project=proj.id,
                       link=config.prefix + '/' + proj.name,
                       msg=("Added user %s to project %s as commiter" % (commiter_name, proj_name)))
             return ""
@@ -215,8 +215,8 @@ class Project:
                 a = 2
             else:
                 proj.rem_commiter(commiter.id)
-                event.add(user=common.session.user, type=event.EV_PROJECT,
-                          project=project,
+                event.add(username=common.session.user, type=event.EV_PROJECT,
+                          project=proj.id,
                           link=config.prefix + '/' + proj.name,
                           msg=("Removed user %s from project %s" % (commiter_name, proj_name)))
         raise web.seeother(config.prefix + '/' + proj_name)

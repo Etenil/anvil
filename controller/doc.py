@@ -73,7 +73,7 @@ class Doc:
         doc.title = i.title
         doc.content = i.content
         doc.author = u.id
-        event.add(user=u.id, project=project, type=event.EV_DOC,
+        event.add(user=u.id, project=p.id, type=event.EV_DOC,
                   link=config.prefix + '/' + project + '/doc/' + doc.name,
                   msg=("Document %s added" % doc.title))
         doc.save()
@@ -129,7 +129,7 @@ class Doc:
         d.name = normalize_name(i.title)
         d.title = i.title
         d.content = i.content
-        event.add(user=common.session.user, project=project,
+        event.add(username=common.session.user, projectname=project,
                   type=event.EV_DOC,
                   link=config.prefix + '/' + project + '/doc/' + doc.name,
                   msg=("Document %s edited" % d.title))
