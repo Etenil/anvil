@@ -65,6 +65,22 @@ def get_project_branch_tree(project, branch):
 def get_user_branch_tree(user, branch):
     return _get_branch_tree(fs.user_branch_dir(user, branch))
 
+def _get_branch_file(path, fileid):
+    b = Branch.open(path)
+    t = b.basis_tree()
+    b.lock_read()
+    f = (t.id2path(fileid), t.get_file_text(fileid))
+    b.unlock()
+    import pprint
+    pprint.pprint(f)
+    return f
+
+def get_user_branch_file(user, branch, fileid):
+    return _get_branch_file(fs.user_branch_dir(user, branch), fileid)
+
+def get_project_branch_file(project, branch, fileid):
+    return _get_branch_file(fs.project_branch_dir(project, branch), fileid)
+
 def _get_branch_log(path):
     branch = Branch.open(path)
     global logvar

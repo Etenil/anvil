@@ -415,3 +415,8 @@ td.file a {
     background-repeat: no-repeat;
     padding-left: 25px;
 }
+
+.syntaxhighlighter {
+    border: 3px solid #ccc;
+    border-radius: 5px;
+}

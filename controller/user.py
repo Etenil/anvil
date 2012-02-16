@@ -6,6 +6,7 @@ from anvillib.form import AjaxTextbox
 import anvillib.bzr
 import anvillib.fs
 import anvillib.ssh
+import anvillib.sh
 import model.user
 import model.sshkey
 import model.project
@@ -43,7 +44,7 @@ class User:
         form.Button('Register')
         )
 
-    def GET(self, action=None, item=None, extra=None, more=None):
+    def GET(self, action=None, item=None, extra=None, more=None, moremore=None):
         if action == "profile":
             return self.edit_profile()
         elif action == "login":
@@ -65,6 +66,8 @@ class User:
                 return self.show_tree(action, extra)
             elif more == "feed":
                 return self.branch_rss(action, extra)
+            elif more == "file" and moremore != None:
+                return self.get_branch_file(action, extra, moremore)
             else:
                 return self.show_branch(action, extra)
         else:
@@ -262,7 +265,7 @@ class User:
         return common.render.branch(branch=branch,
                                     canedit=canedit,
                                     log=log,
-                                    is_project=None,
+                                    is_project=False,
                                     item=username,
                                     htTitle="Branch " + branch)
 
@@ -275,7 +278,7 @@ class User:
                                         canedit=canedit,
                                         tree=tree,
                                         item=username,
-                                        is_project=None,
+                                        is_project=False,
                                         htTitle="Branch " + branch)
 
     def branch_rss(self, username, branch):
@@ -291,8 +294,20 @@ class User:
         return common.render.rss(link=link,
                                  feed=feed,
                                  htTitle="Branch " + branch)
-        
-        
+
+    def get_branch_file(self, username, branch, fileid):
+        user = model.user.User(name=username)
+        canedit = (common.session.user == user.name)
+        f = anvillib.bzr.get_user_branch_file(username, branch, fileid)
+        return common.render.branchfile(branch=branch,
+                                        canedit=canedit,
+                                        file_title=f[0],
+                                        file_contents=f[1],
+                                        item=username,
+                                        is_project=False,
+                                        brush=anvillib.sh.brush(f[1]),
+                                        htTitle="Branch " + branch)
+
     def del_branch(self, username, branch):
         user = model.user.User(name=username)
         if user.name == common.session.user:

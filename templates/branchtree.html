@@ -8,13 +8,13 @@ import markdown
 %>
 
 <ul id="actions" class="buttons">
-%if is_project != None:
+%if is_project:
   <li><a href="${prefix}/${item}/branch/${branch}/source">Source tree</a></li>
 %else:
   <li><a href="${prefix}/*${item}/branch/${branch}/source">Source tree</a></li>
 %endif
 %if canedit:
-  %if is_project != None:
+  %if is_project:
   <li><a href="${prefix}/${item}/branch/${branch}/delete">Delete this branch</a></li>
   %else:
   <li><a href="${prefix}/*${item}/branch/${branch}/delete">Delete this branch</a></li>
@@ -60,9 +60,9 @@ import markdown
         %else:
           <td class="file">
             %if is_project:
-            <a href="${prefix}/${item}/${branch}/file/${file[0]}">${file[1]}</a>
+            <a href="${prefix}/${item}/branch/${branch}/file/${file[0]}">${file[1]}</a>
             %else:
-            <a href="${prefix}/*${item}/${branch}/file/${file[0]}">${file[1]}</a>
+            <a href="${prefix}/*${item}/branch/${branch}/file/${file[0]}">${file[1]}</a>
             %endif
           </td>
         %endif

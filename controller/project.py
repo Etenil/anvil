@@ -5,6 +5,7 @@ from web.contrib.template import render_mako
 from anvillib.form import AjaxTextbox
 import anvillib.fs
 import anvillib.bzr
+import anvillib.sh
 import model.project
 import model.user
 from model import event
@@ -20,7 +21,7 @@ class Project:
         form.Textarea('description'),
         form.Button('Register'))
 
-    def GET(self, action=None, other=None, arg1=None, arg2=None):
+    def GET(self, action=None, other=None, arg1=None, arg2=None, arg3=None):
         if action == "new":
             return self.new_project()
         elif action == "list":
@@ -33,6 +34,8 @@ class Project:
                 return self.del_branch(name, arg1)
             elif other == "branch" and arg1 != None and arg2 == "source":
                 return self.show_tree(name, arg1)
+            elif other == "branch" and arg1 != None and arg2 == "file" and arg3 != None:
+                return self.get_branch_file(name, arg1, arg3)
             elif other == "branch" and arg1 != None and arg2 == "feed":
                 return self.branch_rss(name, arg1)
             elif other == "branch" and arg1 != None:
@@ -196,6 +199,19 @@ class Project:
                                         canedit=canedit,
                                         tree=tree,
                                         item=p.name,
+                                        is_project=True,
+                                        htTitle="Branch " + branch)
+
+    def get_branch_file(self, project, branch, fileid):
+        p = model.project.Project(name=project)
+        canedit = p.isadmin(common.session.user)
+        f = anvillib.bzr.get_project_branch_file(project, branch, fileid)
+        return common.render.branchfile(branch=branch,
+                                        canedit=canedit,
+                                        file_title=f[0],
+                                        file_contents=f[1],
+                                        brush=anvillib.sh.brush(f[0]),
+                                        item=project,
                                         is_project=True,
                                         htTitle="Branch " + branch)
 

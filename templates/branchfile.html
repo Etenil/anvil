@@ -1,0 +1,72 @@
+<%inherit file="layout.html" />
+
+<%
+import common
+from anvillib.config import prefix
+from anvillib import config
+import web.net
+%>
+
+<ul id="actions" class="buttons">
+%if is_project != None:
+  <li><a href="${prefix}/${item}/branch/${branch}/source">Source tree</a></li>
+%else:
+  <li><a href="${prefix}/*${item}/branch/${branch}/source">Source tree</a></li>
+%endif
+%if canedit:
+  %if is_project != None:
+  <li><a href="${prefix}/${item}/branch/${branch}/delete">Delete this branch</a></li>
+  %else:
+  <li><a href="${prefix}/*${item}/branch/${branch}/delete">Delete this branch</a></li>
+  %endif
+%endif
+</ul>
+
+<div id="breadcrumbs">
+%if is_project:
+  <a href="${prefix}/${item}">${item}</a>
+  &gt; <a href="${prefix}/${item}/branch/${branch}">branch ${branch}</a>
+  &gt; <a href="${prefix}/${item}/branch/${branch}/source">source tree</a>
+%else:
+  <a href="${prefix}/*${item}">${item}</a>
+  &gt; <a href="${prefix}/*${item}/branch/${branch}">branch ${branch}</a>
+  &gt; <a href="${prefix}/*${item}/branch/${branch}/source">source tree</a>
+%endif
+  &gt; file ${file_title}
+</div>
+
+<h2>${htTitle}</h2>
+
+<div class="main-body">
+  <h4>File ${file_title}</h4>
+  <pre class="brush: ${brush}">${web.net.htmlquote(file_contents)}</pre>
+</div>
+  <div class="clear"></div>
+
+<script type="text/javascript">
+      SyntaxHighlighter.autoloader(
+          'actionscript3 as3      ${prefix}/static/js/syntaxhighlighter/shBrushAS3.js',
+          'bash shell             ${prefix}/static/js/syntaxhighlighter/shBrushBash.js',
+          'coldfusion cf          ${prefix}/static/js/syntaxhighlighter/shBrushColdFusion.js',
+          'cpp c                  ${prefix}/static/js/syntaxhighlighter/shBrushCpp.js',
+          'c# c-sharp csharp      ${prefix}/static/js/syntaxhighlighter/shBrushCSharp.js',
+          'css                    ${prefix}/static/js/syntaxhighlighter/shBrushCss.js',
+          'delphi pascal          ${prefix}/static/js/syntaxhighlighter/shBrushDelphi.js',
+          'diff patch pas         ${prefix}/static/js/syntaxhighlighter/shBrushDiff.js',
+          'erl erlang             ${prefix}/static/js/syntaxhighlighter/shBrushErlang.js',
+          'groovy                 ${prefix}/static/js/syntaxhighlighter/shBrushGroovy.js',
+          'java                   ${prefix}/static/js/syntaxhighlighter/shBrushJava.js',
+          'jfx javafx             ${prefix}/static/js/syntaxhighlighter/shBrushJavaFX.js',
+          'js jscript javascript  ${prefix}/static/js/syntaxhighlighter/shBrushJScript.js',
+          'perl pl                ${prefix}/static/js/syntaxhighlighter/shBrushPerl.js',
+          'php                    ${prefix}/static/js/syntaxhighlighter/shBrushPhp.js',
+          'text plain             ${prefix}/static/js/syntaxhighlighter/shBrushPlain.js',
+          'py python              ${prefix}/static/js/syntaxhighlighter/shBrushPython.js',
+          'ruby rails ror rb      ${prefix}/static/js/syntaxhighlighter/shBrushRuby.js',
+          'scala                  ${prefix}/static/js/syntaxhighlighter/shBrushScala.js',
+          'sql                    ${prefix}/static/js/syntaxhighlighter/shBrushSql.js',
+          'vb vbnet               ${prefix}/static/js/syntaxhighlighter/shBrushVb.js',
+          'xml xhtml xslt html    ${prefix}/static/js/syntaxhighlighter/shBrushXml.js'
+      );
+  SyntaxHighlighter.all();
+</script>

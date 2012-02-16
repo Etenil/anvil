@@ -25,24 +25,24 @@ sys.argv = ['anvil.py', config.val('port')]
 ### URL mapping
 
 urls = (
-    '/'                                                , 'Main',
-    '/(login)'                                         , 'User',
-    '/(logout)'                                        , 'User',
-    '/(register)'                                      , 'User',
-    '/(profile)'                                       , 'User',
-    '/(users)'                                         , 'User',
-    '/message(?:/(.+))?$'                              , 'Message',
-    '/ajax/(listusers)'                                , 'User',
-    '/project(?:/(.+))?$'                              , 'Project',
-    '/\*([a-z0-9._-]+)$'                               , 'User',
-    '/\*([a-z0-9._-]+)/(key)(?:/(.+?)(?:/(.+))?)?$'    , 'User',
-    '/\*([a-z0-9._-]+)/(branch)(?:/(.+?)(?:/(.+))?)?$' , 'User',
-    '/([a-z0-9._-]+)/bugs(?:/(.+?)(?:/(.+))?)?$'       , 'Bug',
-    '/([a-z0-9._-]+)/doc(?:/(.+?)(?:/(.+))?)?$'        , 'Doc',
-    '/([a-z0-9._-]+)/(commiters)/(del|add)/(.+)$'        , 'Project',
-    '/([a-z0-9._-]+)/(branch)/(.+?)(?:/(.+))?$'        , 'Project',
-    '/([a-z0-9._-]+)(?:/(.+))?$'                       , 'Project', #Leave me at the bottom!
-    '.*'                                               , 'Main',
+    '/'                                                          , 'Main',
+    '/(login)'                                                   , 'User',
+    '/(logout)'                                                  , 'User',
+    '/(register)'                                                , 'User',
+    '/(profile)'                                                 , 'User',
+    '/(users)'                                                   , 'User',
+    '/message(?:/(.+))?$'                                        , 'Message',
+    '/ajax/(listusers)'                                          , 'User',
+    '/project(?:/(.+))?$'                                        , 'Project',
+    '/\*([a-z0-9._-]+)$'                                         , 'User',
+    '/\*([a-z0-9._-]+)/(key)(?:/(.+?)(?:/(.+))?)?$'              , 'User',
+    '/\*([a-z0-9._-]+)/(branch)(?:/(.+?)(?:/(.+?)(?:/(.+))?)?)?$' , 'User',
+    '/([a-z0-9._-]+)/bugs(?:/(.+?)(?:/(.+))?)?$'                 , 'Bug',
+    '/([a-z0-9._-]+)/doc(?:/(.+?)(?:/(.+))?)?$'                  , 'Doc',
+    '/([a-z0-9._-]+)/(commiters)/(del|add)/(.+)$'                , 'Project',
+    '/([a-z0-9._-]+)/(branch)/(.+?)(?:/(.+?)(?:/(.+))?)?$'        , 'Project',
+    '/([a-z0-9._-]+)(?:/(.+))?$'                                 , 'Project', #Leave at bottom!
+    '.*'                                                         , 'Main',
     )
 
 ### Runing the server
