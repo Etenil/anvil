@@ -23,10 +23,7 @@ def brush(filename):
     default_ext = 'text'
 
     for e in exts:
-        print e[0]
         for fileext in e[0]:
-            print fileext
             if filename.endswith(fileext):
-                print "filename ends with %s" % fileext
                 return e[1]
     return default_ext

@@ -26,7 +26,6 @@ import sys
 import tempfile
 import threading
 import time
-import pprint
 import traceback
 
 from bzrlib import (

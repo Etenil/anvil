@@ -71,8 +71,6 @@ def _get_branch_file(path, fileid):
     b.lock_read()
     f = (t.id2path(fileid), t.get_file_text(fileid))
     b.unlock()
-    import pprint
-    pprint.pprint(f)
     return f
 
 def get_user_branch_file(user, branch, fileid):
