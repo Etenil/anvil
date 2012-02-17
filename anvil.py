@@ -56,6 +56,7 @@ common.session = web.session.Session(app,
 # we always display the number of unread messages to the user.
 def refresh_messages(handler):
     common.msgs = model.message.num_unread_msgs(common.session.user)
+    web.header('Content-Type', 'text/html')
     return handler()
 
 app.add_processor(refresh_messages)
