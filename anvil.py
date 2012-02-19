@@ -3,6 +3,7 @@
 import web
 import common
 import sys
+import os
 
 from controller.user import User
 from controller.project import Project
@@ -65,9 +66,21 @@ app.add_processor(refresh_messages)
 class Main:
     def GET(self):
         activity = model.event.get_events(0, 30)
+        custom_logged_page=None
+        custom_visitor_page=None
+        if os.path.exists("custom.logged.html"):
+            f = open("custom.logged.html")
+            custom_logged_page = f.read()
+            f.close()
+        if os.path.exists("custom.visitor.html"):
+            f = open("custom.visitor.html")
+            custom_visitor_page = f.read()
+            f.close()
         return common.render.main(content="Welcome to " + config.val('title'),
                                   num_proj=model.project.count_proj(),
                                   activity=activity,
+                                  custom_logged_page=custom_logged_page,
+                                  custom_visitor_page=custom_visitor_page,
                                   htTitle="Welcome to " + config.val('title') + "!")
 
 # Defining the mode

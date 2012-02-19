@@ -11,6 +11,9 @@
 
   <div class="main-body">
 %if common.session.user == None:
+    %if custom_visitor_page != None:
+    ${custom_visitor_page}
+    %else:
     <p style="float:right">
       <img src="${prefix}/static/img/forge.jpg" alt="Forge freely!" />
     </p>
@@ -35,13 +38,18 @@
     <p class="smallprint">
       Photo by <a href="http://www.flickr.com/photos/zigazou76/">zigazou76</a>, CC-by
     </p>
-    <div class="clear"></div>
+    %endif
 %else:
+    %if custom_logged_page != None:
+    ${custom_logged_page}
+    %else:
     <h1>Welcome to Anvil!</h1>
     <p>
       Start up by creating a project or branching an existing one!
     </p>
+    %endif
 %endif
+    <div class="clear"></div>
     <p>
       There are ${num_proj} projects on anvil!
       <a href="${prefix}/project/list">Check them out</a>!
