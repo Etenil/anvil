@@ -61,6 +61,9 @@ def load_conf():
     if conf.has_option('anvil', 'smtp'):
         _values['smtp'] = conf.get('anvil', 'smtp')
 
+    if conf.has_option('anvil', 'host'):
+        _values['host'] = conf.get('anvil', 'host')
+
     if conf.has_option('anvil', 'prefix'):
         _values['prefix'] = conf.get('anvil', 'prefix')
         global prefix

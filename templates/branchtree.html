@@ -38,9 +38,15 @@ import markdown
 <div class="main-body">
   <div id="branch-details">
     <label>bzr branch</label>
+    %if is_project:
     <input type="text"
-           value="http://${config.val('host')}/*${item}/${branch}"
+           value="http://${config.val('host')}/src/${item}/${branch}"
            readonly="readonly" />
+    %else:
+    <input type="text"
+           value="http://${config.val('host')}/src/*${item}/${branch}"
+           readonly="readonly" />
+    %endif
     %if canedit:
       <br/>
       <label>bzr push</label>
