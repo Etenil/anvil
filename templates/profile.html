@@ -34,9 +34,13 @@ from anvillib.config import prefix
 <div id="projects" class="lefthalf">
   <h4>Projects</h4>
   <ul class="projectslist">
-    %for p in projs:
-      <li><a href="${prefix}/${p.name}">${p.name}</a></li>
-    %endfor
+    %if len(projs) == 0:
+      <p class="tip">No projects yet. <a href="${prefix}/project/new">Start a new one</a>!</p>
+    %else:
+      %for p in projs:
+        <li><a href="${prefix}/${p.name}">${p.name}</a></li>
+      %endfor
+    %endif
   </ul>
 </div>
 
