@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<%
+from datetime import date
+import hashlib
+from anvillib import config
+%>
+<rss version="2.0">
+  <channel>
+    <title>${htTitle}</title>
+    <link>${link}</link>
+    <language>en</language>
+    <pubDate>${date.today().strftime("%a, %d %b %Y %H:%M:%S +0000")}</pubDate>
+    %for e in activity:
+      <item>
+        <title>${e.get_summary()}</title>
+        <description>
+          ${e.get_msg()}
+        </description>
+        <link>http://${config.val('host')}/${config.prefix}/${e.link}</link>
+        <pubDate>${e.rss_date()}</pubDate>
+        <guid>${hashlib.sha1("%s-%s" % (e.stamp, e.get_summary())).hexdigest()}</guid>
+      </item>
+    %endfor
+  </channel>
+</rss>

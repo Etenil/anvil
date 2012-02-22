@@ -1,5 +1,10 @@
+<% from anvillib.config import prefix %>
 <div id="activity" class="lefthalf">
-  <h4>Activity</h4>
+  %if is_project:
+    <h4>Activity <a href="${prefix}/${proj.name}/events"><img src="${prefix}/static/img/feed.png" alt="RSS feed" /></h4>
+  %else:
+    <h4>Activity <a href="${prefix}/*${user.name}/events"><img src="${prefix}/static/img/feed.png" alt="RSS feed" /></h4>
+  %endif
   %for a in activity:
   <div class="event">
     <div class="date"><a href="${a.link}">${a.get_human_date()}</a></div>

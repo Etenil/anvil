@@ -105,6 +105,12 @@ class Event:
     def get_msg(self):
         return self.message.replace("%l%", self.link)
 
+    def get_summary(self):
+        msg = self.message
+        if len(msg) > 40:
+            msg = msg[0:40]
+        return msg.replace("%l%", "")
+
     def get_human_date(self):
         now = datetime.datetime.now()
         if now.year == self.stamp.year and now.month == self.stamp.month:
@@ -118,5 +124,6 @@ class Event:
                                          self.stamp.strftime("%H:%M"))
         else:
             return self.stamp.strftime("%A, %d %B %Y, %H:%M")
-        
-    
+
+    def rss_date(self):
+        return self.stamp.strftime("%a, %d %b %Y, %H:%M:00 +0000")

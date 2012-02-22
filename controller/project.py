@@ -45,6 +45,8 @@ class Project:
                     return self.add_commiter(name, arg2)
                 else:
                     return self.rem_commiter(name, arg2)
+            elif other == "events":
+                return self.events_rss(name)
             else:
                 return self.show_project(name)
     #end GET
@@ -116,6 +118,24 @@ class Project:
                                          htTitle="Project")
         except:
             raise web.notfound()
+
+    def events_rss(self, projectname):
+        try:
+            proj = model.project.Project(name=projectname)
+            activity = model.event.get_project_events(proj.id, 0, 30)
+            web.header('Content-Type', 'text/xml')
+            link = "http://%s/%s/%s" % (config.val('host'),
+                                        config.val('prefix'),
+                                        projectname)
+            link = link.replace("//", "/")
+            return common.render.eventsrss(is_main=False,
+                                           project=proj,
+                                           activity=activity,
+                                           htTitle="Events for project %s" % projectname,
+                                           link=link)
+        except:
+            web.header('Content-Type', 'text/html')
+            return web.notfound()
 
     def make_edit_form(self, proj):
         edit_form = form.Form(

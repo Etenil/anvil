@@ -70,6 +70,8 @@ class User:
                 return self.get_branch_file(action, extra, moremore)
             else:
                 return self.show_branch(action, extra)
+        elif item == "events":
+            return self.events_rss(action)
         else:
             return self.show_user(action)
 
@@ -170,6 +172,25 @@ class User:
             return common.render.main(content=str(error),
                                num_proj=model.project.count_proj(),
                                htTitle="Welcome to Anvil!")
+
+    def events_rss(self, username):
+        try:
+            user = model.user.User(name=username)
+            activity = model.event.get_user_events(user.id, 0, 30)
+            web.header('Content-Type', 'text/xml')
+            link = "http://%s/%s/*%s" % (config.val('host'),
+                                         config.val('prefix'),
+                                         username)
+            link = link.replace("//", "/")
+            return common.render.eventsrss(is_main=False,
+                                           user=user,
+                                           activity=activity,
+                                           htTitle="Events for %s" % username,
+                                           link=link)
+        except:
+            web.header('Content-Type', 'text/html')
+            return web.notfound()
+
     def list_users(self):
         users = model.user.list_users()
         return common.render.listusers(users=users,
