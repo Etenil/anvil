@@ -1,0 +1,18 @@
+<%
+from anvillib.config import prefix
+%>
+
+<div id="branches" class="righthalf">
+  <h4>Branches</h4>
+  <ul class="brancheslist">
+  %if is_project:
+    %for b in branches:
+      <li><a href="${prefix}/${proj.name}/branch/${b}">${b}</a></li>
+    %endfor
+  %else:
+    %for b in branches:
+      <li><a href="${prefix}/*${user.name}/branch/${b}">${b}</a></li>
+    %endfor
+  %endif
+  </ul>
+</div>

@@ -380,12 +380,21 @@ div.project, div.user {
     display: block;
     float: left;
     margin-right: 0.2em;
-    width: 7em;
+    width: 10em;
     color: #336688;
-    text-align: center;
+    text-align: left;
+}
+.event .date {
+    padding-left: 20px;
+    background-image: url("../img/event.png");
+    background-repeat: no-repeat;
 }
 .revision .revbody, .event .eventbody {
     float: left;
+}
+.event p {
+    margin: 0;
+    padding: 0;
 }
 .revision p.revinfo, .event .eventinfo {
     margin: 0 0 1em;

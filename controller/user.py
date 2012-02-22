@@ -160,7 +160,7 @@ class User:
             activity = model.event.get_user_events(user.id, 0, 30)
             return common.render.profile(canedit=canedit,
                                          projs=model.user.get_user_proj(),
-                                         u=user,
+                                         user=user,
                                          activity=activity,
                                          branches=branches,
                                          htTitle="Profile")

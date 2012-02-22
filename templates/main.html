@@ -73,17 +73,5 @@ from anvillib import config
       <a href="${prefix}/project/list">Check them out</a>!
     </p>
 
-    <div id="activity">
-      <h4>Recent Activity</h4>
-      %for a in activity:
-      <div class="event">
-        <div class="date">${a.stamp}</div>
-        <div class="eventbody">
-          <p class="revmessage">${a.get_msg()}</p>
-          <p class="eventinfo"><a href="${a.link}">Check it out</a></p>
-        </div>
-        <div class="clear"></div>
-      </div>
-      %endfor
-    </div>
+    <%include file="activity.html"/>
   </div>

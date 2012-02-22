@@ -37,7 +37,7 @@ class Message:
         msgs = model.message.get_user_inbox(user.id, read)
         return common.render.messages(msgs=msgs,
                                show_all=read,
-                               u=user,
+                               user=user,
                                htTitle="Inbox")
 
     def get_message(self, msgid):

@@ -28,14 +28,7 @@ from anvillib.config import prefix
   </div>
 </div>
 
-<div id="branches" class="lefthalf">
-  <h4>Branches</h4>
-  <ul class="brancheslist">
-  %for b in branches:
-    <li><a href="${prefix}/${proj.name}/branch/${b}">${b}</a></li>
-  %endfor
-  </ul>
-</div>
+<%include file="branches.html"/>
 
 <div id="commiters" class="righthalf">
   <h4>Commiters</h4>
@@ -83,16 +76,4 @@ from anvillib.config import prefix
 
 <div class="clear"></div>
 
-<div id="activity">
-  <h4>Recent Activity</h4>
-  %for a in activity:
-  <div class="event">
-    <div class="date">${a.stamp}</div>
-    <div class="eventbody">
-      <p class="revmessage">${a.get_msg()}</p>
-      <p class="eventinfo"><a href="${a.link}">Check it out</a></p>
-    </div>
-    <div class="clear"></div>
-  </div>
-  %endfor
-</div>
+<%include file="activity.html"/>

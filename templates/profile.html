@@ -10,47 +10,28 @@ from anvillib.config import prefix
   <ul id="actions" class="buttons">
     <li><a href="${prefix}/message/list">Messages</a></li>
     <li><a href="${prefix}/profile">Edit profile</a></li>
-    <li><a href="${prefix}/*${u.name}/key">SSH keys</a></li>
+    <li><a href="${prefix}/*${user.name}/key">SSH keys</a></li>
     <li><a href="${prefix}/project/new">Start a new project</a></li>
   </ul>
  %endif
 
 <div id="breadcrumbs">
-  ${u.name}
+  ${user.name}
 </div>
 
 <div id="profile">
-  <p><img class="avatar" src="${u.avatar()}" alt="avatar" /></p>
+  <p><img class="avatar" src="${user.avatar()}" alt="avatar" /></p>
   <div id="profile-details">
-    <h2>${u.name}</h2>
-    <p>Email: ${u.email.replace('@', ' at ').replace('.', ' dot ')}</p>
-    <p>Homepage: <a href="${u.homepage}" target="_blank">${u.homepage}</a></p>
+    <h2>${user.name}</h2>
+    <p>Email: ${user.email.replace('@', ' at ').replace('.', ' dot ')}</p>
+    <p>Homepage: <a href="${user.homepage}" target="_blank">${user.homepage}</a></p>
     <br />
-    ${markdown.markdown(u.description)}
+    ${markdown.markdown(user.description)}
   </div>
 </div>
 
-<div id="activity" class="lefthalf">
-  <h4>Activity</h4>
-  %for a in activity:
-  <div class="event">
-    <div class="date">${a.stamp}</div>
-    <div class="eventbody">
-      <p class="revmessage">${a.get_msg()}</p>
-      <p class="eventinfo"><a href="${a.link}">Check it out</a></p>
-    </div>
-    <div class="clear"></div>
-  </div>
-  %endfor
-</div>
+<%include file="activity.html"/>
 
-<div id="branches" class="righthalf">
-  <h4>Branches</h4>
-  <ul class="brancheslist">
-  %for b in branches:
-    <li><a href="${prefix}/*${u.name}/branch/${b}">${b}</a></li>
-  %endfor
-  </ul>
-</div>
+<%include file="branches.html"/>
 
 <div class="clear"></div>

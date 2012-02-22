@@ -2,6 +2,7 @@ import web
 import common
 import user as moduser
 import project as modproject
+import datetime
 
 # Some constants
 EV_SYSTEM  = 0
@@ -103,3 +104,19 @@ class Event:
 
     def get_msg(self):
         return self.message.replace("%l%", self.link)
+
+    def get_human_date(self):
+        now = datetime.datetime.now()
+        if now.year == self.stamp.year and now.month == self.stamp.month:
+            daydiff = now.day - self.stamp.day
+            plural = ""
+            if daydiff == 0:
+                return "today, %s" % self.stamp.strftime("%H:%M")
+            if daydiff > 1:
+                plural = "s"
+            return "%d day%s ago, %s" % (daydiff, plural, \
+                                         self.stamp.strftime("%H:%M"))
+        else:
+            return self.stamp.strftime("%A, %d %B %Y, %H:%M")
+        
+    
