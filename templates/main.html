@@ -1,7 +1,10 @@
 <%inherit file="layout.html" />
 
-<% import common %>
-<% from anvillib.config import prefix %>
+<%
+import common
+from anvillib.config import prefix
+from anvillib import config
+%>
 
 %if hasattr(common.session, "user") and common.session.user != None:
   <ul id="actions" class="buttons">
@@ -45,7 +48,22 @@
     %else:
     <h1>Welcome to Anvil!</h1>
     <p>
-      Start up by creating a project or branching an existing one!
+      Start up by creating a project or creating a branch.
+    </p>
+    <p>
+      In order to create a branch, add an SSH key, then start a new branch on
+      your local machine, then push it like so:
+    </p>
+    <pre>
+      $ bzr init &lt;somebranch&gt;
+      ... code ...
+      $ bzr add
+      $ bzr ci -m &quot;Started branch &lt;somebranch&gt;&quot;
+      $ bzr push --remember bzr+ssh://bzr@${config.val('host')}/*${common.session.user}/&lt;somebranch&gt;/
+    </pre>
+    <p>
+      Your branch will be automatically created and you'll instantly see it
+      on Anvil.
     </p>
     %endif
 %endif

@@ -46,14 +46,11 @@ from anvillib.config import prefix
 
 <div id="branches" class="righthalf">
   <h4>Branches</h4>
+  <ul class="brancheslist">
   %for b in branches:
-  <div class="event">
-    <p>
-      <a href="${prefix}/*${u.name}/branch/${b}">${b}</a>
-    </p>
-  </div>
-  <div class="clear"></div>
+    <li><a href="${prefix}/*${u.name}/branch/${b}">${b}</a></li>
   %endfor
+  </ul>
 </div>
 
 <div class="clear"></div>

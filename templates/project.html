@@ -30,7 +30,7 @@ from anvillib.config import prefix
 
 <div id="branches" class="lefthalf">
   <h4>Branches</h4>
-  <ul>
+  <ul class="brancheslist">
   %for b in branches:
     <li><a href="${prefix}/${proj.name}/branch/${b}">${b}</a></li>
   %endfor
@@ -39,7 +39,7 @@ from anvillib.config import prefix
 
 <div id="commiters" class="righthalf">
   <h4>Commiters</h4>
-  <ul id="commiterslist">
+  <ul class="commiterslist">
   %for c in commiters:
     <li>
       <a href="${prefix}/*${c.name}">${c.name}</a>

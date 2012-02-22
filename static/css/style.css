@@ -396,11 +396,21 @@ div.project, div.user {
     padding-top: 0;
 }
 
-ul#commiterslist, #branches ul {
-    padding: 0;
-}
-ul#commiterslist li, #branches ul li {
+ul.commiterslist, ul.brancheslist {
     list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+ul.commiterslist li, ul.brancheslist li {
+    padding-left: 20px;
+    background-repeat: no-repeat;
+    padding-bottom: 5px;
+}
+ul.commiterslist li {
+    background-image: url("../img/user.png");
+}
+ul.brancheslist li {
+    background-image: url("../img/branch.png");
 }
 
 /* Files list. */
