@@ -6,12 +6,14 @@ from anvillib import config
 <div id="branches" class="righthalf">
   <h4>Branches</h4>
   %if len(branches) == 0:
-  <p class="tip">You don't have any branches yet.</p>
-  <p class="tip">Push your branches with the following command:</p>
-    %if is_project:
-      <pre>bzr push bzr+ssh://bzr@${config.val('host')}/${proj.name}/&lt;branch&gt;</pre>
-    %else:
-      <pre>bzr push bzr+ssh://bzr@${config.val('host')}/*${user.name}/&lt;branch&gt;</pre>
+  <p class="tip">No branches yet.</p>
+    %if canedit:
+    <p class="tip">Push your branches with the following command:</p>
+      %if is_project:
+        <pre>bzr push bzr+ssh://bzr@${config.val('host')}/${proj.name}/&lt;branch&gt;</pre>
+      %else:
+        <pre>bzr push bzr+ssh://bzr@${config.val('host')}/*${user.name}/&lt;branch&gt;</pre>
+      %endif
     %endif
   %else:
     <ul class="brancheslist">
