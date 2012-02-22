@@ -111,6 +111,7 @@ class Project:
             branches = anvillib.bzr.list_project_branches(name)
             return common.render.project(proj=proj,
                                          is_project=True,
+                                         is_main=False,
                                          canedit=proj.isadmin(common.session.user),
                                          branches=branches,
                                          activity=model.event.get_project_events(proj.id),

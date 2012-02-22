@@ -1,6 +1,8 @@
 <% from anvillib.config import prefix %>
 <div id="activity" class="lefthalf">
-  %if is_project:
+  %if is_main:
+    <h4>Activity</h4>
+  %elif is_project:
     <h4>Activity <a href="${prefix}/${proj.name}/events"><img src="${prefix}/static/img/feed.png" alt="RSS feed" /></h4>
   %else:
     <h4>Activity <a href="${prefix}/*${user.name}/events"><img src="${prefix}/static/img/feed.png" alt="RSS feed" /></h4>

@@ -79,6 +79,7 @@ class Main:
             custom_visitor_page = f.read()
             f.close()
         return common.render.main(content="Welcome to " + config.val('title'),
+                                  is_main=True,
                                   num_proj=model.project.count_proj(),
                                   activity=activity,
                                   custom_logged_page=custom_logged_page,

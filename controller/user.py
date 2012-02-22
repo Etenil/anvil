@@ -164,6 +164,7 @@ class User:
             return common.render.profile(canedit=canedit,
                                          projs=projects,
                                          user=user,
+                                         is_main=False,
                                          activity=activity,
                                          branches=branches,
                                          htTitle="Profile")
