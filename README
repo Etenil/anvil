@@ -77,6 +77,7 @@ configuration:
 
       RewriteCond %{REQUEST_URI} !^/static
       RewriteCond %{REQUEST_URI} !^/favicon.ico
+      RewriteCond %{REQUEST_URI} !^/pavatar.png
       RewriteCond %{REQUEST_URI} !^/anvil.py
       RewriteCond %{REQUEST_URI} !^/src
       RewriteRule ^/(.*)$ /anvil.py/$1 [PT]
