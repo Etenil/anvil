@@ -18,6 +18,13 @@ def count_proj():
 def list_proj():
     return common.db.query('SELECT * FROM project ORDER BY created DESC')
 
+def get_user_projects(user):
+    results = common.db.query("SELECT project FROM commiters WHERE user='%d'" % user.id)
+    projs = []
+    for row in results:
+        projs.append(Project(id=row.project))
+    return projs
+
 class Project:
     id = None
     name = ""

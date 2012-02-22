@@ -26,14 +26,6 @@ def user_login(email, password):
         return False
 #end user_login
 
-def get_user_proj():
-    try:
-        user = User(name=common.session.user)
-    except:
-        return False
-    return common.db.select('project', where="owner=" + web.db.sqlquote(user.id))
-#end get_user_proj
-
 def list_users(hint=False):
     if not hint:
         users = common.db.query('SELECT * FROM user ORDER BY name')

@@ -419,12 +419,12 @@ div.project, div.user {
     padding-top: 0;
 }
 
-ul.commiterslist, ul.brancheslist {
+ul.commiterslist, ul.brancheslist, ul.projectslist {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
-ul.commiterslist li, ul.brancheslist li {
+ul.commiterslist li, ul.brancheslist li, ul.projectslist li {
     padding-left: 20px;
     background-repeat: no-repeat;
     padding-bottom: 5px;
@@ -434,6 +434,9 @@ ul.commiterslist li {
 }
 ul.brancheslist li {
     background-image: url("../img/branch.png");
+}
+ul.projectslist li {
+    background-image: url("../img/proj.png");
 }
 
 /* Files list. */
