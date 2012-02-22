@@ -3,9 +3,7 @@
   %for a in activity:
   <div class="event">
     <div class="date"><a href="${a.link}">${a.get_human_date()}</a></div>
-    <div class="eventbody">
-      <p>${a.get_msg()} <a href="${a.link}">&gt;&gt;</a></p>
-    </div>
+    <p>${a.get_msg()} <a href="${a.link}">&gt;&gt;</a></p>
     <div class="clear"></div>
   </div>
   %endfor

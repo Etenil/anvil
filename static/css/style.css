@@ -403,7 +403,7 @@ div.project, div.user {
     background-image: url("../img/event.png");
     background-repeat: no-repeat;
 }
-.revision .revbody, .event .eventbody {
+.revision .revbody{
     float: left;
 }
 .event p {
