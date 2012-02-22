@@ -92,7 +92,7 @@ class Project:
             event.add(user=proj.owner.id, type=event.EV_PROJECT,
                       project=proj.id,
                       link=config.prefix + '/' + proj.name,
-                      msg=("Created project %s" % proj.name))
+                      msg=("%s created project %s" % (proj.owner.name, proj.name))
 
         if error:
             raise Exception(error)
