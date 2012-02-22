@@ -34,6 +34,20 @@ a {
     font-style: italic;
 }
 
+.tip {
+    font-style: italic;
+    color: #888;
+}
+
+pre {
+    background-color: #FAFAFA;
+    border-radius: 5px;
+    border: 1px solid #CCC;
+    padding: 0.5em;
+    padding-left: 3em;
+    font-size: 80%;
+}
+
 .hl, em {
     color: #336688;
 }

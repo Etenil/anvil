@@ -318,5 +318,5 @@ class User:
             else:
                 event.add(user=user.id, type=event.EV_USER,
                           link=config.prefix + '/*' + username,
-                          msg=("%s deleted branch %s" % (username, banch)))
+                          msg=("%s deleted branch %s" % (username, branch)))
         raise web.seeother(config.prefix + '/*' + username)

@@ -54,13 +54,11 @@ from anvillib import config
       In order to create a branch, add an SSH key, then start a new branch on
       your local machine, then push it like so:
     </p>
-    <pre>
-      $ bzr init &lt;somebranch&gt;
-      ... code ...
-      $ bzr add
-      $ bzr ci -m &quot;Started branch &lt;somebranch&gt;&quot;
-      $ bzr push --remember bzr+ssh://bzr@${config.val('host')}/*${common.session.user}/&lt;somebranch&gt;/
-    </pre>
+    <pre>$ bzr init &lt;somebranch&gt;
+... code ...
+$ bzr add
+$ bzr ci -m &quot;Started branch &lt;somebranch&gt;&quot;
+$ bzr push --remember bzr+ssh://bzr@${config.val('host')}/*${common.session.user}/&lt;somebranch&gt;/</pre>
     <p>
       Your branch will be automatically created and you'll instantly see it
       on Anvil.
