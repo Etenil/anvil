@@ -1,21 +1,27 @@
-* Introduction
-Anvil is a social software forge dedicated to bazaar. It is written in
+ANVIL BAZAAR FORGE
+==================
+
+Introduction
+------------
+Anvil is a software forge dedicated to bazaar. It is written in
 python and web.py.
 
-* Install
-** Dependencies
-  - a Unix-like server
-  - MySQL
-  - web.py
-  - mako for python
-  - MySQLdb for python
-  - markdown for python
+Install
+-------
 
-** Optional dependencies
-  - Apache, lighttpd or other
-  - mod_wsgi, mod_fcgi or mod_python, mod_rewrite, suexec for the web server
+### Dependencies
+- a Unix-like server
+- MySQL
+- web.py
+- mako for python
+- MySQLdb for python
+- markdown for python
 
-** Procedure
+### Optional dependencies
+- Apache, lighttpd or other
+- mod_wsgi, mod_fcgi or mod_python, mod_rewrite, suexec for the web server
+
+### Procedure
 The setup I'm describing here uses Apache with mod_fcgid and
 mod_rewrite.
 
@@ -48,46 +54,46 @@ Now we need to setup Apache so it will run anvil.py on every request
 and pass it through fcgid running as bzr. Mimic the following
 configuration:
 
-<VirtualHost *:80>
-   ServerAdmin admin@localhost
-   DocumentRoot /var/www/anvil
+    <VirtualHost *:80>
+       ServerAdmin admin@localhost
+       DocumentRoot /var/www/anvil
 
-   SuexecUserGroup bzr bzr
+       SuexecUserGroup bzr bzr
 
-   <Directory />
-      Options FollowSymlinks
-      AllowOverride None
-   </Directory>
+       <Directory />
+          Options FollowSymlinks
+          AllowOverride None
+       </Directory>
 
-   Alias /src/ "/var/bzr/"
-   <Directory "/var/bzr/">
-      Options Indexes FollowSymlinks
-      AllowOverride None
-   </Directory>
+       Alias /src/ "/var/bzr/"
+       <Directory "/var/bzr/">
+          Options Indexes FollowSymlinks
+          AllowOverride None
+       </Directory>
 
-   <Files anvil.py>
-      SetHandler fcgid-script
-      Options +ExecCGI
-   </Files>
+       <Files anvil.py>
+          SetHandler fcgid-script
+          Options +ExecCGI
+       </Files>
 
-   <IfModule mod_rewrite.c>
-      RewriteEngine on
-      RewriteRule ^/src/\*(.+)$ /src/users/$1 [PT]
-      RewriteRule ^/src/\(.+)$ /src/projects/$1 [PT]
+       <IfModule mod_rewrite.c>
+          RewriteEngine on
+          RewriteRule ^/src/\*(.+)$ /src/users/$1 [PT]
+          RewriteRule ^/src/\(.+)$ /src/projects/$1 [PT]
 
-      RewriteCond %{REQUEST_URI} !^/static
-      RewriteCond %{REQUEST_URI} !^/favicon.ico
-      RewriteCond %{REQUEST_URI} !^/pavatar.png
-      RewriteCond %{REQUEST_URI} !^/anvil.py
-      RewriteCond %{REQUEST_URI} !^/src
-      RewriteRule ^/(.*)$ /anvil.py/$1 [PT]
-   </IfModule>
+          RewriteCond %{REQUEST_URI} !^/static
+          RewriteCond %{REQUEST_URI} !^/favicon.ico
+          RewriteCond %{REQUEST_URI} !^/pavatar.png
+          RewriteCond %{REQUEST_URI} !^/anvil.py
+          RewriteCond %{REQUEST_URI} !^/src
+          RewriteRule ^/(.*)$ /anvil.py/$1 [PT]
+       </IfModule>
 
-   ErrorLog ${APACHE_LOG_DIR}/error.log
-   LogLevel notice
+       ErrorLog ${APACHE_LOG_DIR}/error.log
+       LogLevel notice
 
-   CustomLog ${APACHE_LOG_DIR}/access.log combined
-</VirtualHost>
+       CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
 
 OK, now if you navigate on your vhost, you should see Anvil's welcome
 screen. If you go onto http://<host>/src/, you should see a dirlist
@@ -104,3 +110,4 @@ user's plugin directory: /var/bzr/.bazaar/plugins/.
 
 Now we're done. You might also want to setup your server so it
 provides https access to users.
+
